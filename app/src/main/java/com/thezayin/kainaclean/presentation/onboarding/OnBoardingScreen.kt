@@ -14,6 +14,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -31,6 +35,7 @@ import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.presentation.auth.AuthViewModel
 import com.thezayin.kainaclean.presentation.destinations.HomeScreenDestination
 import com.thezayin.kainaclean.presentation.destinations.LoginScreenDestination
+import com.thezayin.kainaclean.presentation.main.MainViewModel
 
 @Composable
 @Destination(start = true)
@@ -39,6 +44,11 @@ fun OnBoardingScreen(
 ) {
 
     val authViewModel: AuthViewModel = hiltViewModel()
+    val viewModel: MainViewModel = hiltViewModel()
+
+    var isClicked by remember { mutableStateOf(false) }
+
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.ic_onboarding),
@@ -83,11 +93,7 @@ fun OnBoardingScreen(
         )
         Button(
             onClick = {
-                if (authViewModel.isUserAuth) {
-                    navigator.navigate(HomeScreenDestination)
-                } else {
-                    navigator.navigate(LoginScreenDestination)
-                }
+                isClicked = true
             },
             modifier = Modifier
                 .padding(24.dp, 44.dp)
@@ -106,5 +112,26 @@ fun OnBoardingScreen(
             )
         }
     }
+    if (isClicked) {
+        AuthState(navigator = navigator, viewModel = viewModel, authViewModel = authViewModel)
+    }
 
 }
+
+@Composable
+private fun AuthState(
+    navigator: DestinationsNavigator,
+    viewModel: MainViewModel,
+    authViewModel: AuthViewModel
+) {
+    if (authViewModel.currentUserState) {
+        navigator.navigate(HomeScreenDestination)
+    } else {
+        if (viewModel.isEmailVerified) {
+            navigator.navigate(HomeScreenDestination)
+        } else {
+            navigator.navigate(LoginScreenDestination)
+        }
+    }
+}
+

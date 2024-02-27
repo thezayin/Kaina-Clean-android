@@ -1,21 +1,22 @@
 package com.thezayin.kainaclean.presentation.main
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.thezayin.kainaclean.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel  @Inject constructor(
-): ViewModel() {
-
-    private val _splashCondition = mutableStateOf(true)
-    val splashCondition: State<Boolean> = _splashCondition
-
+class MainViewModel @Inject constructor(
+    private val repo: AuthRepository
+) : ViewModel() {
 
     init {
-
+        getAuthState()
     }
+
+    fun getAuthState() = repo.getAuthState(viewModelScope)
+
+    val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
 }
 

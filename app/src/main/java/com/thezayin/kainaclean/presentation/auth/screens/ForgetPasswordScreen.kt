@@ -21,26 +21,37 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
+import com.thezayin.kainaclean.presentation.auth.AuthViewModel
+import com.thezayin.kainaclean.presentation.auth.screens.components.ProgressBar
+import com.thezayin.kainaclean.util.Constants.RESET_PASSWORD_MESSAGE
+import com.thezayin.kainaclean.util.Response.Failure
+import com.thezayin.kainaclean.util.Response.Loading
+import com.thezayin.kainaclean.util.Response.Success
+import com.thezayin.kainaclean.util.Utils.Companion.showMessage
 
 @Destination
 @Composable
 fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
-    val emailInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val email = remember { mutableStateOf("") }
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -87,8 +98,8 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
             }
 
             TextField(
-                value = emailInputValue.value,
-                onValueChange = { emailInputValue.value = it },
+                value = email.value,
+                onValueChange = { email.value = it },
                 placeholder = {
                     Text(text = "Enter your Email")
                 },
@@ -115,7 +126,7 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
         ) {
             Button(
                 onClick = {
-
+                    authViewModel.sendPasswordResetEmail(email.value)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -130,6 +141,27 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
                 Text(
                     text = "Submit", color = colorResource(id = R.color.white), fontSize = 20.sp
                 )
+
+                when (val sendPasswordResetEmailResponse =
+                    authViewModel.sendPasswordResetEmailResponse) {
+                    is Loading -> ProgressBar()
+                    is Success -> {
+                        val isPasswordResetEmailSent = sendPasswordResetEmailResponse.data
+                        LaunchedEffect(isPasswordResetEmailSent) {
+                            if (isPasswordResetEmailSent) {
+                                navigator.navigateUp()
+                                showMessage(context, RESET_PASSWORD_MESSAGE)
+                            }
+                        }
+                    }
+
+                    is Failure -> sendPasswordResetEmailResponse.apply {
+                        LaunchedEffect(e) {
+                            print(e)
+                            showMessage(context, e.message)
+                        }
+                    }
+                }
             }
         }
     }

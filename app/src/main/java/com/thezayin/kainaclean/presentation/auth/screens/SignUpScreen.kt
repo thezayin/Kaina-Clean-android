@@ -17,16 +17,17 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -38,9 +39,12 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.presentation.auth.AuthViewModel
-import com.thezayin.kainaclean.presentation.destinations.HomeScreenDestination
-import com.thezayin.kainaclean.presentation.toast.Toast
-import com.thezayin.kainaclean.util.Response
+import com.thezayin.kainaclean.presentation.auth.screens.components.ProgressBar
+import com.thezayin.kainaclean.util.Constants.VERIFY_EMAIL_MESSAGE
+import com.thezayin.kainaclean.util.Response.Failure
+import com.thezayin.kainaclean.util.Response.Loading
+import com.thezayin.kainaclean.util.Response.Success
+import com.thezayin.kainaclean.util.Utils
 
 
 @Destination
@@ -48,6 +52,7 @@ import com.thezayin.kainaclean.util.Response
 fun SignUpScreen(navigator: DestinationsNavigator) {
 
     val authViewModel: AuthViewModel = hiltViewModel()
+    val context = LocalContext.current
 
     val emailInputValue = remember { mutableStateOf("") }
     var passwordNumberInputValue = remember { mutableStateOf("") }
@@ -134,25 +139,6 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                     unfocusedIndicatorColor = Color.Transparent
                 )
             )
-            TextField(
-                value = passwordNumberInputValue.value,
-                onValueChange = { passwordNumberInputValue.value = it },
-                placeholder = {
-                    Text(text = "Again enter your Password")
-                },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp),
-                shape = RoundedCornerShape(8.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = colorResource(id = R.color.ed_background),
-                    unfocusedContainerColor = colorResource(id = R.color.ed_background),
-                    disabledLabelColor = colorResource(id = R.color.red),
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                )
-            )
         }
 
         Column(
@@ -163,9 +149,9 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
         ) {
             Button(
                 onClick = {
-                    authViewModel.signUp(
-                        email = emailInputValue.value,
-                        password = passwordNumberInputValue.value
+                    authViewModel.signUpWithEmailAndPassword(
+                        emailInputValue.value,
+                        passwordNumberInputValue.value
                     )
                 },
                 modifier = Modifier
@@ -182,26 +168,26 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                     text = "Sign Up", color = colorResource(id = R.color.white), fontSize = 20.sp
                 )
 
-                when (val response = authViewModel.signUpState.value) {
-                    is Response.Loading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-
-                    is Response.Success -> {
-                        if (response.data) {
-                            navigator.navigate(HomeScreenDestination)
-                        } else {
-                            Toast("Sign In Failed")
+                when (val signUpResponse = authViewModel.signUpResponse) {
+                    is Loading -> ProgressBar()
+                    is Success -> {
+                        val isUserSignedUp = signUpResponse.data
+                        LaunchedEffect(isUserSignedUp) {
+                            if (isUserSignedUp) {
+                                authViewModel.sendEmailVerification()
+                                Utils.showMessage(context, VERIFY_EMAIL_MESSAGE)
+                            }
                         }
                     }
 
-                    is Response.Error -> {
-                        Toast(message = response.message)
+                    is Failure -> signUpResponse.apply {
+                        LaunchedEffect(e) {
+                            Utils.print(e)
+                        }
                     }
                 }
             }
         }
     }
 }
+

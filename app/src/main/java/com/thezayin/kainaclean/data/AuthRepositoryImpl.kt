@@ -1,88 +1,82 @@
 package com.thezayin.kainaclean.data
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.thezayin.kainaclean.domain.model.Users
 import com.thezayin.kainaclean.domain.repository.AuthRepository
-import com.thezayin.kainaclean.util.Constants
-import com.thezayin.kainaclean.util.Response
+import com.thezayin.kainaclean.util.Response.Failure
+import com.thezayin.kainaclean.util.Response.Success
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth,
-    private val fireStore: FirebaseFirestore
+    private val auth: FirebaseAuth
 ) : AuthRepository {
-
-    var operationSuccessful: Boolean = false
-
-    override fun isUserAuthInFirebase(): Boolean {
+    override val currentUser get() = auth.currentUser
+    override suspend fun isCurrentUserAuth(): Boolean {
         return auth.currentUser != null
     }
 
-    override fun getFirebaseAuthState(): Flow<Boolean> = callbackFlow {
-        val authStateListener = FirebaseAuth.AuthStateListener {
+    override suspend fun firebaseSignUpWithEmailAndPassword(
+        email: String, password: String
+    ) = try {
+        auth.createUserWithEmailAndPassword(email, password).await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
+    }
+
+    override suspend fun sendEmailVerification() = try {
+        auth.currentUser?.sendEmailVerification()?.await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
+    }
+
+    override suspend fun firebaseSignInWithEmailAndPassword(
+        email: String, password: String
+    ) = try {
+        auth.signInWithEmailAndPassword(email, password).await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
+    }
+
+    override suspend fun reloadFirebaseUser() = try {
+        auth.currentUser?.reload()?.await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
+    }
+
+    override suspend fun sendPasswordResetEmail(email: String) = try {
+        auth.sendPasswordResetEmail(email).await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
+    }
+
+    override fun signOut() = auth.signOut()
+
+    override suspend fun revokeAccess() = try {
+        auth.currentUser?.delete()?.await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
+    }
+
+    override fun getAuthState(viewModelScope: CoroutineScope) = callbackFlow {
+        val authStateListener = FirebaseAuth.AuthStateListener { auth ->
             trySend(auth.currentUser == null)
         }
         auth.addAuthStateListener(authStateListener)
         awaitClose {
             auth.removeAuthStateListener(authStateListener)
         }
-    }
-
-    override fun firebaseSignIn(email: String, password: String): Flow<Response<Boolean>> = flow {
-        operationSuccessful = false
-        try {
-            emit(Response.Loading)
-            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-                operationSuccessful = true
-            }.await()
-            emit(Response.Success(operationSuccessful))
-        } catch (e: Exception) {
-            emit(Response.Error(e.localizedMessage ?: "An Unexpected Error"))
-        }
-    }
-
-    override fun firebaseSignOut(): Flow<Response<Boolean>> = flow {
-        try {
-            emit(Response.Loading)
-            auth.signOut()
-            emit(Response.Success(true))
-
-        } catch (e: Exception) {
-            emit(Response.Error(e.localizedMessage ?: "An Unexpected Error"))
-        }
-    }
-
-    override fun firebaseSignUp(email: String, password: String): Flow<Response<Boolean>> = flow {
-        operationSuccessful = false
-        try {
-            emit(Response.Loading)
-            auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-                operationSuccessful = true
-            }.await()
-
-            if (operationSuccessful) {
-                val userId = auth.currentUser?.uid!!
-                val obj = Users(
-                    userEmail = email,
-                    userId = userId,
-                    password = password
-                )
-                fireStore.collection(Constants.COLLECTION_NAME).document(userId).set(obj)
-                    .addOnSuccessListener {
-                    }
-                emit(Response.Success(operationSuccessful))
-            } else {
-                emit(Response.Success(operationSuccessful))
-            }
-        } catch (e: Exception) {
-            emit(Response.Error(e.localizedMessage ?: "An Unexpected Error"))
-        }
-    }
-
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), auth.currentUser == null)
 }

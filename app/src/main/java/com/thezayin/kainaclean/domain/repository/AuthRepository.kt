@@ -1,18 +1,36 @@
 package com.thezayin.kainaclean.domain.repository
 
+import com.google.firebase.auth.FirebaseUser
 import com.thezayin.kainaclean.util.Response
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.StateFlow
+
+typealias SignUpResponse = Response<Boolean>
+typealias SendEmailVerificationResponse = Response<Boolean>
+typealias SignInResponse = Response<Boolean>
+typealias ReloadUserResponse = Response<Boolean>
+typealias SendPasswordResetEmailResponse = Response<Boolean>
+typealias RevokeAccessResponse = Response<Boolean>
+typealias AuthStateResponse = StateFlow<Boolean>
+typealias IsCurrentUserAuth = Boolean
 
 interface AuthRepository {
+    val currentUser: FirebaseUser?
 
-    fun isUserAuthInFirebase(): Boolean
+    suspend fun isCurrentUserAuth(): Boolean
+    suspend fun firebaseSignUpWithEmailAndPassword(email: String, password: String): SignUpResponse
 
-    fun getFirebaseAuthState(): Flow<Boolean>
+    suspend fun sendEmailVerification(): SendEmailVerificationResponse
 
-    fun firebaseSignIn(email: String, password: String): Flow<Response<Boolean>>
+    suspend fun firebaseSignInWithEmailAndPassword(email: String, password: String): SignInResponse
 
-    fun firebaseSignOut(): Flow<Response<Boolean>>
+    suspend fun reloadFirebaseUser(): ReloadUserResponse
 
-    fun firebaseSignUp(email: String, password: String): Flow<Response<Boolean>>
+    suspend fun sendPasswordResetEmail(email: String): SendPasswordResetEmailResponse
 
+    fun signOut()
+
+    suspend fun revokeAccess(): RevokeAccessResponse
+
+    fun getAuthState(viewModelScope: CoroutineScope): AuthStateResponse
 }
