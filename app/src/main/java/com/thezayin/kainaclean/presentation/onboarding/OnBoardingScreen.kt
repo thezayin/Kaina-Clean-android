@@ -14,6 +14,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -39,6 +43,8 @@ fun OnBoardingScreen(
 ) {
 
     val authViewModel: AuthViewModel = hiltViewModel()
+    var isClicked by remember { mutableStateOf(false) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.ic_onboarding),
@@ -47,6 +53,7 @@ fun OnBoardingScreen(
             contentScale = ContentScale.Crop
         )
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -83,11 +90,7 @@ fun OnBoardingScreen(
         )
         Button(
             onClick = {
-                if (authViewModel.isUserAuth) {
-                    navigator.navigate(HomeScreenDestination)
-                } else {
-                    navigator.navigate(LoginScreenDestination)
-                }
+                isClicked = true
             },
             modifier = Modifier
                 .padding(24.dp, 44.dp)
@@ -106,5 +109,20 @@ fun OnBoardingScreen(
             )
         }
     }
-
+    if (isClicked) {
+        AuthState(navigator = navigator, authViewModel = authViewModel)
+    }
 }
+
+@Composable
+private fun AuthState(
+    navigator: DestinationsNavigator,
+    authViewModel: AuthViewModel
+) {
+    if (authViewModel.isUserAuthenticated) {
+        navigator.navigate(HomeScreenDestination)
+    } else {
+        navigator.navigate(LoginScreenDestination)
+    }
+}
+

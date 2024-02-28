@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.auth.screens
+package com.thezayin.kainaclean.presentation.auth.screens.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,14 +19,13 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +33,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,8 +45,10 @@ import com.thezayin.kainaclean.presentation.destinations.ForgetPasswordScreenDes
 import com.thezayin.kainaclean.presentation.destinations.HomeScreenDestination
 import com.thezayin.kainaclean.presentation.destinations.SignUpScreenDestination
 import com.thezayin.kainaclean.presentation.toast.Toast
-import com.thezayin.kainaclean.util.Response
-
+import com.thezayin.kainaclean.util.Response.Failure
+import com.thezayin.kainaclean.util.Response.Loading
+import com.thezayin.kainaclean.util.Response.Success
+import com.thezayin.kainaclean.util.Utils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
@@ -56,36 +58,31 @@ fun LoginScreen(
 ) {
 
     val authViewModel: AuthViewModel = hiltViewModel()
+    val emailState = remember { mutableStateOf("") }
+    val passwordState = remember { mutableStateOf("") }
+    val showProgressBar = remember { mutableStateOf(false) }
 
-    val emailInputValue = remember { mutableStateOf("") }
-    val passwordNumberInputValue = remember { mutableStateOf("") }
+    if (showProgressBar.value) {
+        Box(modifier = Modifier.fillMaxSize())
+        CircularProgressIndicator(
+            modifier = Modifier
+                .size(100.dp),
+            color = colorResource(id = R.color.btn_primary)
+        )
 
-    val email = remember {
-        mutableStateOf("")
-    }
-
-    val password = remember {
-        mutableStateOf("")
-    }
-
-    val error = remember {
-        mutableStateOf("")
     }
 
     val isBottomSheetShow = rememberSaveable {
         mutableStateOf(false)
     }
-
     val sheetState = rememberModalBottomSheetState()
-
-    val scope = rememberCoroutineScope()
-
     if (isBottomSheetShow.value) {
         ModalBottomSheet(
             sheetState = sheetState,
             onDismissRequest = {
                 isBottomSheetShow.value = false
             },
+            dragHandle = null,
             containerColor = colorResource(id = R.color.background),
             modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 40.dp),
             shape = RoundedCornerShape(30.dp)
@@ -96,34 +93,23 @@ fun LoginScreen(
                     .background(color = colorResource(id = R.color.background))
                     .fillMaxWidth()
             ) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Image(painter = painterResource(id = R.drawable.ic_close_circle),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .size(25.dp)
-                            .clickable {
-                                isBottomSheetShow.value = false
-                            })
-                }
-
                 Row(
-                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
+                    modifier = Modifier.fillMaxWidth().padding(top = 40.dp, bottom = 20.dp), horizontalArrangement = Arrangement.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_alert),
-                        contentDescription = "",
-                        modifier = Modifier.size(65.dp)
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(70.dp),
+                        color = colorResource(id = R.color.btn_primary)
                     )
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = error.value,
+                        text = "Loading",
                         fontSize = 22.sp,
                         color = colorResource(id = R.color.text_color),
-                        modifier = Modifier.padding(0.dp, 30.dp, 0.dp, 50.dp)
+                        modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 50.dp)
                     )
 
                 }
@@ -159,9 +145,9 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth()
 
             )
-            TextField(
-                value = emailInputValue.value,
-                onValueChange = { emailInputValue.value = it },
+            OutlinedTextField(
+                value = emailState.value,
+                onValueChange = { emailState.value = it },
                 placeholder = {
                     Text(text = "Enter your Email")
                 },
@@ -178,9 +164,9 @@ fun LoginScreen(
                     unfocusedIndicatorColor = Color.Transparent
                 )
             )
-            TextField(
-                value = passwordNumberInputValue.value,
-                onValueChange = { passwordNumberInputValue.value = it },
+            OutlinedTextField(
+                value = passwordState.value,
+                onValueChange = { passwordState.value = it },
                 placeholder = {
                     Text(text = "Enter your Password")
                 },
@@ -195,8 +181,10 @@ fun LoginScreen(
                     disabledLabelColor = colorResource(id = R.color.red),
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
-                )
+                ),
+                visualTransformation = PasswordVisualTransformation()
             )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -227,10 +215,8 @@ fun LoginScreen(
         ) {
             Button(
                 onClick = {
-                    authViewModel.signIn(
-                        email = emailInputValue.value,
-                        password = passwordNumberInputValue.value
-                    )
+                    isBottomSheetShow.value=true
+                    authViewModel.signIn(emailState.value, passwordState.value)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -245,27 +231,26 @@ fun LoginScreen(
                 Text(
                     text = "Sign in", color = colorResource(id = R.color.white), fontSize = 20.sp
                 )
-
-                when (val response = authViewModel.signInState.value) {
-                    is Response.Loading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.fillMaxSize()
-                        )
+                when (val signInResponse = authViewModel.signInState.value) {
+                    is Loading -> {
+                        isBottomSheetShow.value=true
                     }
 
-                    is Response.Success -> {
-                        if (response.data) {
+                    is Success -> {
+                        if (signInResponse.data) {
                             navigator.navigate(HomeScreenDestination)
-                        } else {
-Toast(message = "Unknown Error")
                         }
+                        isBottomSheetShow.value=false
                     }
 
-                    is Response.Error -> {
-                        Toast(message = response.message)
+                    is Failure -> signInResponse.apply {
+                        isBottomSheetShow.value=false
+                        Utils.print(e)
+                        Toast(message = e)
                     }
                 }
             }
         }
     }
+
 }

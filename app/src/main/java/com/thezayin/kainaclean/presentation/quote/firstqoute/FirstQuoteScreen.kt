@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.quote
+package com.thezayin.kainaclean.presentation.quote.firstqoute
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,23 +39,25 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.destinations.ThirdQuoteScreenDestination
+import com.thezayin.kainaclean.presentation.destinations.SecondQuoteScreenDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
-fun SecondQuoteScreen(
+fun FirstQuoteScreen(
     navigator: DestinationsNavigator
 ) {
-    val addressInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val cityInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val postcodeInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val nameInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val phoneNumberInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val emailInputValue = remember { mutableStateOf(TextFieldValue()) }
+
 
     val isBottomSheetShow = rememberSaveable {
         mutableStateOf(false)
     }
 
     val sheetState = rememberModalBottomSheetState()
+
 
     if (isBottomSheetShow.value) {
         ModalBottomSheet(
@@ -118,19 +120,16 @@ fun SecondQuoteScreen(
         ) {
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
+                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_back),
+                Image(painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "",
                     modifier = Modifier
                         .size(25.dp)
                         .align(Alignment.CenterVertically)
                         .clickable {
                             navigator.navigateUp()
-                        }
-                )
+                        })
                 Text(
                     text = "Request a Quote",
                     fontSize = 32.sp,
@@ -148,7 +147,7 @@ fun SecondQuoteScreen(
                     .padding(0.dp, 50.dp, 0.dp, 0.dp)
             ) {
                 Text(
-                    text = "Address",
+                    text = "Name",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
                     fontSize = 22.sp,
@@ -164,10 +163,51 @@ fun SecondQuoteScreen(
             }
 
             TextField(
-                value = addressInputValue.value,
-                onValueChange = { addressInputValue.value = it },
+                value = nameInputValue.value,
+                onValueChange = { nameInputValue.value = it },
                 placeholder = {
-                    Text(text = "Enter your address")
+                    Text(text = "Enter your full name")
+                },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = colorResource(id = R.color.ed_background),
+                    unfocusedContainerColor = colorResource(id = R.color.ed_background),
+                    disabledLabelColor = colorResource(id = R.color.red),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
+            ) {
+                Text(
+                    text = "Email",
+                    textAlign = TextAlign.Center,
+                    color = colorResource(id = R.color.text_color),
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium,
+                )
+                Text(
+                    text = "*",
+                    textAlign = TextAlign.Center,
+                    color = colorResource(id = R.color.red),
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+
+            TextField(
+                value = emailInputValue.value,
+                onValueChange = { emailInputValue.value = it },
+                placeholder = {
+                    Text(text = "Enter your email")
                 },
                 singleLine = true,
                 modifier = Modifier
@@ -189,7 +229,7 @@ fun SecondQuoteScreen(
                     .padding(0.dp, 30.dp, 0.dp, 0.dp)
             ) {
                 Text(
-                    text = "City",
+                    text = "Phone Number",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
                     fontSize = 22.sp,
@@ -205,51 +245,10 @@ fun SecondQuoteScreen(
             }
 
             TextField(
-                value = cityInputValue.value,
-                onValueChange = { cityInputValue.value = it },
+                value = phoneNumberInputValue.value,
+                onValueChange = { phoneNumberInputValue.value = it },
                 placeholder = {
-                    Text(text = "Enter your city")
-                },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                shape = RoundedCornerShape(8.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = colorResource(id = R.color.ed_background),
-                    unfocusedContainerColor = colorResource(id = R.color.ed_background),
-                    disabledLabelColor = colorResource(id = R.color.red),
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                )
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
-            ) {
-                Text(
-                    text = "Postcode",
-                    textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.text_color),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-                Text(
-                    text = "*",
-                    textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.red),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-            }
-
-            TextField(
-                value = postcodeInputValue.value,
-                onValueChange = { postcodeInputValue.value = it },
-                placeholder = {
-                    Text(text = "Enter your Postcode")
+                    Text(text = "Enter your phone number")
                 },
                 singleLine = true,
                 modifier = Modifier
@@ -273,12 +272,17 @@ fun SecondQuoteScreen(
             ) {
                 Button(
                     onClick = {
-                        if (addressInputValue.value.text.isEmpty() || cityInputValue.value.text.isEmpty() || postcodeInputValue.value.text.isEmpty()) {
+                        if (emailInputValue.value.text.isEmpty() || nameInputValue.value.text.isEmpty() || phoneNumberInputValue.value.text.isEmpty()) {
                             isBottomSheetShow.value = true
                         } else {
-                            navigator.navigate(ThirdQuoteScreenDestination)
+                            navigator.navigate(
+                                SecondQuoteScreenDestination(
+                                    nameInputValue.value.text,
+                                    emailInputValue.value.text,
+                                    phoneNumberInputValue.value.text
+                                )
+                            )
                         }
-
 
                     },
                     modifier = Modifier
@@ -292,9 +296,7 @@ fun SecondQuoteScreen(
 
                     ) {
                     Text(
-                        text = "Next",
-                        color = colorResource(id = R.color.white),
-                        fontSize = 20.sp
+                        text = "Next", color = colorResource(id = R.color.white), fontSize = 20.sp
                     )
                 }
             }

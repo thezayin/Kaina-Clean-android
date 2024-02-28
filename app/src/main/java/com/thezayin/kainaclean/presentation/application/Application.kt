@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation
+package com.thezayin.kainaclean.presentation.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -1,11 +1,12 @@
 package com.thezayin.kainaclean.domain.repository
 
+
 import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.flow.Flow
 
-interface AuthRepository {
 
-    fun isUserAuthInFirebase(): Boolean
+interface AuthRepository {
+    fun isUserAuthenticatedInFirebase(): Boolean
 
     fun getFirebaseAuthState(): Flow<Boolean>
 
@@ -15,4 +16,7 @@ interface AuthRepository {
 
     fun firebaseSignUp(email: String, password: String): Flow<Response<Boolean>>
 
+    fun firebaseRecoverPassword(email: String): Flow<Response<Boolean>>
+
+    fun getCurrentUser(): String
 }

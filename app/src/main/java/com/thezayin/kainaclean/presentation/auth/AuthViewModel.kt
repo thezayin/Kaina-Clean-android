@@ -1,10 +1,11 @@
 package com.thezayin.kainaclean.presentation.auth
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thezayin.kainaclean.domain.usecases.AuthUseCases
+import com.thezayin.kainaclean.domain.usecases.auth_usecases.AuthenticationUseCases
 import com.thezayin.kainaclean.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,9 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authUseCases: AuthUseCases
+    private val auth: AuthenticationUseCases
 ) : ViewModel() {
-    val isUserAuth get() = authUseCases.isUserAuth()
+
+    val isUserAuthenticated get() = auth.isUserAuthenticated()
 
     private val _signInState = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val signInState: State<Response<Boolean>> = _signInState
@@ -25,14 +27,16 @@ class AuthViewModel @Inject constructor(
     private val _signOutState = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val signOutState: State<Response<Boolean>> = _signOutState
 
-    private val _firebaseAuthState = mutableStateOf<Boolean>(false)
-    val firebaseAuthState: State<Boolean> = _firebaseAuthState
+    private val _authState = mutableStateOf<Boolean>(false)
+    val authState: State<Boolean> = _authState
+
+    private val _recoverPasswordState = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val recoverPasswordState: State<Response<Boolean>> = _recoverPasswordState
 
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
-            authUseCases.firebaseSignIn(
-                email = email,
-                password = password
+            auth.firebaseSignIn(
+                email, password
             ).collect {
                 _signInState.value = it
             }
@@ -41,18 +45,18 @@ class AuthViewModel @Inject constructor(
 
     fun signUp(email: String, password: String) {
         viewModelScope.launch {
-            authUseCases.firebaseSignUp(
-                email = email,
-                password = password
+            auth.firebaseSignUp(
+                email, password
             ).collect {
                 _signUpState.value = it
+                Log.d("JejeView", _signUpState.value.toString())
             }
         }
     }
 
     fun signOut() {
         viewModelScope.launch {
-            authUseCases.firebaseSignOut().collect {
+            auth.firebaseSignOut().collect {
                 _signOutState.value = it
                 if (it == Response.Success(true)) {
                     _signOutState.value = Response.Success(false)
@@ -61,10 +65,18 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun firebaseAuthState() {
+    fun recoverPassword(email: String) {
         viewModelScope.launch {
-            authUseCases.firebaseAuthState().collect {
-                _firebaseAuthState.value = it
+            auth.firebaseForgetPassword(email).collect {
+                _recoverPasswordState.value = it
+            }
+        }
+    }
+
+    fun getAuthState() {
+        viewModelScope.launch {
+            auth.firebaseAuthState().collect {
+                _authState.value = it
             }
         }
     }
