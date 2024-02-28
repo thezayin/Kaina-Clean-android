@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.quote
+package com.thezayin.kainaclean.presentation.quote.secondqoute
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,25 +39,26 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.destinations.SecondQuoteScreenDestination
+import com.thezayin.kainaclean.presentation.destinations.ThirdQuoteScreenDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
-fun FirstQuoteScreen(
-    navigator: DestinationsNavigator
+fun SecondQuoteScreen(
+    navigator: DestinationsNavigator,
+    name: String,
+    email: String,
+    phoneNumber: String
 ) {
-    val nameInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val phoneNumberInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val emailInputValue = remember { mutableStateOf(TextFieldValue()) }
-
+    val addressInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val cityInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val postcodeInputValue = remember { mutableStateOf(TextFieldValue()) }
 
     val isBottomSheetShow = rememberSaveable {
         mutableStateOf(false)
     }
 
     val sheetState = rememberModalBottomSheetState()
-
 
     if (isBottomSheetShow.value) {
         ModalBottomSheet(
@@ -120,16 +121,19 @@ fun FirstQuoteScreen(
         ) {
 
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start
             ) {
-                Image(painter = painterResource(id = R.drawable.ic_back),
+                Image(
+                    painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "",
                     modifier = Modifier
                         .size(25.dp)
                         .align(Alignment.CenterVertically)
                         .clickable {
                             navigator.navigateUp()
-                        })
+                        }
+                )
                 Text(
                     text = "Request a Quote",
                     fontSize = 32.sp,
@@ -147,7 +151,7 @@ fun FirstQuoteScreen(
                     .padding(0.dp, 50.dp, 0.dp, 0.dp)
             ) {
                 Text(
-                    text = "Name",
+                    text = "Address",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
                     fontSize = 22.sp,
@@ -163,51 +167,10 @@ fun FirstQuoteScreen(
             }
 
             TextField(
-                value = nameInputValue.value,
-                onValueChange = { nameInputValue.value = it },
+                value = addressInputValue.value,
+                onValueChange = { addressInputValue.value = it },
                 placeholder = {
-                    Text(text = "Enter your full name")
-                },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                shape = RoundedCornerShape(8.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = colorResource(id = R.color.ed_background),
-                    unfocusedContainerColor = colorResource(id = R.color.ed_background),
-                    disabledLabelColor = colorResource(id = R.color.red),
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
-            ) {
-                Text(
-                    text = "Email",
-                    textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.text_color),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-                Text(
-                    text = "*",
-                    textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.red),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-            }
-
-            TextField(
-                value = emailInputValue.value,
-                onValueChange = { emailInputValue.value = it },
-                placeholder = {
-                    Text(text = "Enter your email")
+                    Text(text = "Enter your address")
                 },
                 singleLine = true,
                 modifier = Modifier
@@ -229,7 +192,7 @@ fun FirstQuoteScreen(
                     .padding(0.dp, 30.dp, 0.dp, 0.dp)
             ) {
                 Text(
-                    text = "Phone Number",
+                    text = "City",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
                     fontSize = 22.sp,
@@ -245,10 +208,51 @@ fun FirstQuoteScreen(
             }
 
             TextField(
-                value = phoneNumberInputValue.value,
-                onValueChange = { phoneNumberInputValue.value = it },
+                value = cityInputValue.value,
+                onValueChange = { cityInputValue.value = it },
                 placeholder = {
-                    Text(text = "Enter your phone number")
+                    Text(text = "Enter your city")
+                },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = colorResource(id = R.color.ed_background),
+                    unfocusedContainerColor = colorResource(id = R.color.ed_background),
+                    disabledLabelColor = colorResource(id = R.color.red),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                )
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
+            ) {
+                Text(
+                    text = "Postcode",
+                    textAlign = TextAlign.Center,
+                    color = colorResource(id = R.color.text_color),
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium,
+                )
+                Text(
+                    text = "*",
+                    textAlign = TextAlign.Center,
+                    color = colorResource(id = R.color.red),
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+
+            TextField(
+                value = postcodeInputValue.value,
+                onValueChange = { postcodeInputValue.value = it },
+                placeholder = {
+                    Text(text = "Enter your Postcode")
                 },
                 singleLine = true,
                 modifier = Modifier
@@ -272,11 +276,21 @@ fun FirstQuoteScreen(
             ) {
                 Button(
                     onClick = {
-                        if (emailInputValue.value.text.isEmpty() || nameInputValue.value.text.isEmpty() || phoneNumberInputValue.value.text.isEmpty()) {
+                        if (addressInputValue.value.text.isEmpty() || cityInputValue.value.text.isEmpty() || postcodeInputValue.value.text.isEmpty()) {
                             isBottomSheetShow.value = true
                         } else {
-                            navigator.navigate(SecondQuoteScreenDestination)
+                            navigator.navigate(
+                                ThirdQuoteScreenDestination(
+                                    name,
+                                    email,
+                                    phoneNumber,
+                                    addressInputValue.value.text,
+                                    cityInputValue.value.text,
+                                    postcodeInputValue.value.text
+                                )
+                            )
                         }
+
 
                     },
                     modifier = Modifier
@@ -290,7 +304,9 @@ fun FirstQuoteScreen(
 
                     ) {
                     Text(
-                        text = "Next", color = colorResource(id = R.color.white), fontSize = 20.sp
+                        text = "Next",
+                        color = colorResource(id = R.color.white),
+                        fontSize = 20.sp
                     )
                 }
             }

@@ -136,6 +136,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
-//    //MongoDB
-//    implementation ("org.mongodb:mongodb-driver-kotlin:1.7.2")
+   //Date Time Picker
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
 }

@@ -8,7 +8,7 @@ import com.thezayin.kainaclean.util.Constants.TAG
 
 class Utils {
     companion object {
-        fun print(e: Exception) = Log.e(TAG, e.stackTraceToString())
+        fun print(e: String) = Log.e(TAG, e)
 
         fun showMessage(
             context: Context,

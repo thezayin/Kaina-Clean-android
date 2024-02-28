@@ -35,7 +35,6 @@ import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.presentation.auth.AuthViewModel
 import com.thezayin.kainaclean.presentation.destinations.HomeScreenDestination
 import com.thezayin.kainaclean.presentation.destinations.LoginScreenDestination
-import com.thezayin.kainaclean.presentation.main.MainViewModel
 
 @Composable
 @Destination(start = true)
@@ -44,10 +43,7 @@ fun OnBoardingScreen(
 ) {
 
     val authViewModel: AuthViewModel = hiltViewModel()
-    val viewModel: MainViewModel = hiltViewModel()
-
     var isClicked by remember { mutableStateOf(false) }
-
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -57,6 +53,7 @@ fun OnBoardingScreen(
             contentScale = ContentScale.Crop
         )
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -113,25 +110,19 @@ fun OnBoardingScreen(
         }
     }
     if (isClicked) {
-        AuthState(navigator = navigator, viewModel = viewModel, authViewModel = authViewModel)
+        AuthState(navigator = navigator, authViewModel = authViewModel)
     }
-
 }
 
 @Composable
 private fun AuthState(
     navigator: DestinationsNavigator,
-    viewModel: MainViewModel,
     authViewModel: AuthViewModel
 ) {
-    if (authViewModel.currentUserState) {
+    if (authViewModel.isUserAuthenticated) {
         navigator.navigate(HomeScreenDestination)
     } else {
-        if (viewModel.isEmailVerified) {
-            navigator.navigate(HomeScreenDestination)
-        } else {
-            navigator.navigate(LoginScreenDestination)
-        }
+        navigator.navigate(LoginScreenDestination)
     }
 }
 

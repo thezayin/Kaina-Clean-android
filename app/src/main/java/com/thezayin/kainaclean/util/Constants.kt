@@ -8,6 +8,9 @@ object Constants {
 
     const val TAG = "AppTag"
 
+    const val DATE_MASK = "##/##/####"
+    const val DATE_LENGTH = 8 // Equals to "##/##/####".count { it == '#' }
+
     //Buttons
     const val SIGN_IN_BUTTON = "Sign in"
     const val RESET_PASSWORD_BUTTON = "Reset"
@@ -50,4 +53,20 @@ object Constants {
     //Error Messages
     const val SENSITIVE_OPERATION_MESSAGE =
         "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
+
+    //Firestore
+    const val Quote = "books"
+    const val TITLE = "title"
+
+    //Actions
+    const val ADD_BOOK = "Add a book"
+    const val DELETE_BOOK = "Delete a book"
+
+    //Buttons
+    const val ADD = "Add"
+    const val DISMISS = "Dismiss"
+
+    //Placeholders
+    const val BOOK_TITLE = "Type a book title..."
+    const val AUTHOR = "Type the author name..."
 }

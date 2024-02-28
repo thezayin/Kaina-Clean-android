@@ -1,82 +1,114 @@
 package com.thezayin.kainaclean.data
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.thezayin.kainaclean.domain.model.Users
 import com.thezayin.kainaclean.domain.repository.AuthRepository
-import com.thezayin.kainaclean.util.Response.Failure
-import com.thezayin.kainaclean.util.Response.Success
-import kotlinx.coroutines.CoroutineScope
+import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
+    private val fireStore: FirebaseFirestore
 ) : AuthRepository {
-    override val currentUser get() = auth.currentUser
-    override suspend fun isCurrentUserAuth(): Boolean {
+
+    var operationIsSuccessful = false
+    override fun isUserAuthenticatedInFirebase(): Boolean {
         return auth.currentUser != null
     }
 
-    override suspend fun firebaseSignUpWithEmailAndPassword(
-        email: String, password: String
-    ) = try {
-        auth.createUserWithEmailAndPassword(email, password).await()
-        Success(true)
-    } catch (e: Exception) {
-        Failure(e)
-    }
-
-    override suspend fun sendEmailVerification() = try {
-        auth.currentUser?.sendEmailVerification()?.await()
-        Success(true)
-    } catch (e: Exception) {
-        Failure(e)
-    }
-
-    override suspend fun firebaseSignInWithEmailAndPassword(
-        email: String, password: String
-    ) = try {
-        auth.signInWithEmailAndPassword(email, password).await()
-        Success(true)
-    } catch (e: Exception) {
-        Failure(e)
-    }
-
-    override suspend fun reloadFirebaseUser() = try {
-        auth.currentUser?.reload()?.await()
-        Success(true)
-    } catch (e: Exception) {
-        Failure(e)
-    }
-
-    override suspend fun sendPasswordResetEmail(email: String) = try {
-        auth.sendPasswordResetEmail(email).await()
-        Success(true)
-    } catch (e: Exception) {
-        Failure(e)
-    }
-
-    override fun signOut() = auth.signOut()
-
-    override suspend fun revokeAccess() = try {
-        auth.currentUser?.delete()?.await()
-        Success(true)
-    } catch (e: Exception) {
-        Failure(e)
-    }
-
-    override fun getAuthState(viewModelScope: CoroutineScope) = callbackFlow {
-        val authStateListener = FirebaseAuth.AuthStateListener { auth ->
+    override fun getFirebaseAuthState(): Flow<Boolean> = callbackFlow {
+        val authListener = FirebaseAuth.AuthStateListener {
             trySend(auth.currentUser == null)
         }
-        auth.addAuthStateListener(authStateListener)
+        auth.addAuthStateListener(authListener)
         awaitClose {
-            auth.removeAuthStateListener(authStateListener)
+            auth.removeAuthStateListener(authListener)
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), auth.currentUser == null)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun firebaseSignIn(email: String, password: String): Flow<Response<Boolean>> = flow {
+        operationIsSuccessful = false
+        try {
+            emit(Response.Loading)
+            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                operationIsSuccessful = true
+            }.await()
+            val userId = auth.currentUser?.uid!!
+            val userInfo = Users(
+                userId,
+                email,
+                password
+            )
+            fireStore.collection("users_signIn").document(LocalDateTime.now().toString()).set(userInfo)
+                .addOnSuccessListener {
+                }.await()
+            emit(Response.Success(operationIsSuccessful))
+        } catch (e: Exception) {
+            emit(Response.Failure(e.localizedMessage ?: "Unexpected Error"))
+        }
+    }
+
+    override fun firebaseSignOut(): Flow<Response<Boolean>> = flow {
+        try {
+            emit(Response.Loading)
+            auth.signOut()
+            emit(Response.Success(true))
+        } catch (e: Exception) {
+            emit(Response.Failure(e.localizedMessage ?: "Unexpected Error"))
+        }
+    }
+
+    override fun firebaseSignUp(email: String, password: String): Flow<Response<Boolean>> = flow {
+        operationIsSuccessful = false
+        try {
+            emit(Response.Loading)
+            auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
+                operationIsSuccessful = true
+            }.await()
+
+            val userId = auth.currentUser?.uid!!
+            val userInfo = Users(
+                userId,
+                email,
+                password
+            )
+            fireStore.collection("users").document(email).set(userInfo).addOnSuccessListener {
+            }.await()
+
+            emit(Response.Success(true))
+        } catch (e: Exception) {
+            emit(Response.Failure(e.localizedMessage ?: "Unexpected Error"))
+        }
+    }
+
+    override fun firebaseRecoverPassword(email: String): Flow<Response<Boolean>> = flow {
+        try {
+            emit(Response.Loading)
+            auth.sendPasswordResetEmail(email)
+            emit(Response.Success(true))
+        } catch (e: Exception) {
+            emit(Response.Failure(e.localizedMessage ?: "Unexpected Error"))
+        }
+    }
+
+    override fun getCurrentUser(): String {
+        return if (auth.currentUser != null) {
+            auth.currentUser!!.uid
+        } else {
+            ""
+        }
+    }
+
 }

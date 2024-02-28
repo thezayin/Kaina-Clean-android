@@ -12,6 +12,7 @@
     <color name="background">#FFFFFFFF</color>
     <color name="yellow">#F6BE15</color>
     <color name="text_color">#FF000000</color>
+    <color name="grey">#6D000000</color>
     <color name="light_purple">#F4F2FD</color>
     <color name="ed_background">#F5F5F5</color>
     <color name="red">#E62E2E</color>

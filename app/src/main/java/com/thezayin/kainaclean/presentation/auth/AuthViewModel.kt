@@ -1,89 +1,83 @@
 package com.thezayin.kainaclean.presentation.auth
 
-import androidx.compose.runtime.getValue
+import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thezayin.kainaclean.domain.repository.AuthRepository
-import com.thezayin.kainaclean.domain.repository.ReloadUserResponse
-import com.thezayin.kainaclean.domain.repository.RevokeAccessResponse
-import com.thezayin.kainaclean.domain.repository.SendEmailVerificationResponse
-import com.thezayin.kainaclean.domain.repository.SendPasswordResetEmailResponse
-import com.thezayin.kainaclean.domain.repository.SignInResponse
-import com.thezayin.kainaclean.domain.repository.SignUpResponse
-import com.thezayin.kainaclean.util.Response.Loading
-import com.thezayin.kainaclean.util.Response.Success
+import com.thezayin.kainaclean.domain.usecases.auth_usecases.AuthenticationUseCases
+import com.thezayin.kainaclean.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repo: AuthRepository
+    private val auth: AuthenticationUseCases
 ) : ViewModel() {
 
-    val currentUserAuth = viewModelScope.launch {
-        repo.isCurrentUserAuth()
-    }
+    val isUserAuthenticated get() = auth.isUserAuthenticated()
 
-    var currentUserState by mutableStateOf(false)
-    var signInResponse by mutableStateOf<SignInResponse>(Success(false))
-        private set
+    private val _signInState = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val signInState: State<Response<Boolean>> = _signInState
 
-    var signUpResponse by mutableStateOf<SignUpResponse>(Success(false))
-        private set
-    var sendEmailVerificationResponse by mutableStateOf<SendEmailVerificationResponse>(Success(false))
-        private set
+    private val _signUpState = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val signUpState: State<Response<Boolean>> = _signUpState
 
-    var sendPasswordResetEmailResponse by mutableStateOf<SendPasswordResetEmailResponse>(
-        Success(
-            false
-        )
-    )
+    private val _signOutState = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val signOutState: State<Response<Boolean>> = _signOutState
 
-    fun getCurrentUser() {
+    private val _authState = mutableStateOf<Boolean>(false)
+    val authState: State<Boolean> = _authState
+
+    private val _recoverPasswordState = mutableStateOf<Response<Boolean>>(Response.Success(false))
+    val recoverPasswordState: State<Response<Boolean>> = _recoverPasswordState
+
+    fun signIn(email: String, password: String) {
         viewModelScope.launch {
-            currentUserState = repo.isCurrentUserAuth()
+            auth.firebaseSignIn(
+                email, password
+            ).collect {
+                _signInState.value = it
+            }
         }
     }
 
-    var revokeAccessResponse by mutableStateOf<RevokeAccessResponse>(Success(false))
-        private set
-    var reloadUserResponse by mutableStateOf<ReloadUserResponse>(Success(false))
-        private set
-
-    fun reloadUser() = viewModelScope.launch {
-        reloadUserResponse = Loading
-        reloadUserResponse = repo.reloadFirebaseUser()
+    fun signUp(email: String, password: String) {
+        viewModelScope.launch {
+            auth.firebaseSignUp(
+                email, password
+            ).collect {
+                _signUpState.value = it
+                Log.d("JejeView", _signUpState.value.toString())
+            }
+        }
     }
 
-    val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
-
-    fun signOut() = repo.signOut()
-
-    fun revokeAccess() = viewModelScope.launch {
-        revokeAccessResponse = Loading
-        revokeAccessResponse = repo.revokeAccess()
+    fun signOut() {
+        viewModelScope.launch {
+            auth.firebaseSignOut().collect {
+                _signOutState.value = it
+                if (it == Response.Success(true)) {
+                    _signOutState.value = Response.Success(false)
+                }
+            }
+        }
     }
 
-    fun sendPasswordResetEmail(email: String) = viewModelScope.launch {
-        sendPasswordResetEmailResponse = Loading
-        sendPasswordResetEmailResponse = repo.sendPasswordResetEmail(email)
+    fun recoverPassword(email: String) {
+        viewModelScope.launch {
+            auth.firebaseForgetPassword(email).collect {
+                _recoverPasswordState.value = it
+            }
+        }
     }
 
-    fun signInWithEmailAndPassword(email: String, password: String) = viewModelScope.launch {
-        signInResponse = Loading
-        signInResponse = repo.firebaseSignInWithEmailAndPassword(email, password)
-    }
-
-    fun signUpWithEmailAndPassword(email: String, password: String) = viewModelScope.launch {
-        signUpResponse = Loading
-        signUpResponse = repo.firebaseSignUpWithEmailAndPassword(email, password)
-    }
-
-    fun sendEmailVerification() = viewModelScope.launch {
-        sendEmailVerificationResponse = Loading
-        sendEmailVerificationResponse = repo.sendEmailVerification()
+    fun getAuthState() {
+        viewModelScope.launch {
+            auth.firebaseAuthState().collect {
+                _authState.value = it
+            }
+        }
     }
 }

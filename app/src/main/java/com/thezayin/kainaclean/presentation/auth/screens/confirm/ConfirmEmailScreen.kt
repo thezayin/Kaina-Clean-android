@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.auth.screens
+package com.thezayin.kainaclean.presentation.auth.screens.confirm
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
