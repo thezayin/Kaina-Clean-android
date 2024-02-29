@@ -56,7 +56,7 @@ fun AutoSlidingCarousel(
             DotsIndicator(
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                 totalDots = itemsCount,
-                selectedIndex = if (isDragged) pagerState.currentPage else pagerState.targetPage,
+                selectedIndex = if (isDragged) pagerState.currentPage else pagerState.currentPage,
                 dotSize = 8.dp
             )
         }

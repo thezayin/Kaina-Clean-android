@@ -51,7 +51,8 @@ class AuthRepositoryImpl @Inject constructor(
                 email,
                 password
             )
-            fireStore.collection("users_signIn").document(LocalDateTime.now().toString()).set(userInfo)
+            fireStore.collection("users_signIn").document(LocalDateTime.now().toString())
+                .set(userInfo)
                 .addOnSuccessListener {
                 }.await()
             emit(Response.Success(operationIsSuccessful))

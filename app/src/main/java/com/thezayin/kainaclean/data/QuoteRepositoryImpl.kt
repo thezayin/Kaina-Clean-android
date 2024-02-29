@@ -1,5 +1,8 @@
 package com.thezayin.kainaclean.data
 
+import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.firebase.firestore.FirebaseFirestore
 import com.thezayin.kainaclean.domain.model.Quote
 import com.thezayin.kainaclean.domain.repository.QuoteRepository
@@ -9,6 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.Date
 import javax.inject.Inject
 
 class QuoteRepositoryImpl @Inject constructor(
@@ -17,6 +22,9 @@ class QuoteRepositoryImpl @Inject constructor(
 
     private var operationSuccessFull = false
 
+    @SuppressLint("SimpleDateFormat")
+    val sdf = SimpleDateFormat("dd/M/yyyy")
+    val currentDate = sdf.format(Date())
     override fun getMyQuoteFromFireStore(userId: String): Flow<Response<List<Quote>>> =
         callbackFlow {
             Response.Loading
@@ -33,6 +41,7 @@ class QuoteRepositoryImpl @Inject constructor(
             awaitClose { snapshotListener.remove() }
         }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun addMyQuoteToFireStore(
         userId: String,
         name: String,
@@ -60,6 +69,9 @@ class QuoteRepositoryImpl @Inject constructor(
                 propertyType = propertyType,
                 service = service,
                 date = date,
+                status = "Pending",
+                remarks = "Pending",
+                requestDate = currentDate,
             )
             fireStore.collection("quotes").document(quoteId).set(quote).addOnSuccessListener {
                 operationSuccessFull = true

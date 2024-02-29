@@ -11,5 +11,8 @@ data class Quote(
     val postCode: String? = null,
     val propertyType: String? = null,
     val service: String? = null,
-    val date: String? = null
+    val date: String? = null,
+    val status: String? = "Pending",
+    val remarks: String? = null,
+    val requestDate: String? = null,
 )
