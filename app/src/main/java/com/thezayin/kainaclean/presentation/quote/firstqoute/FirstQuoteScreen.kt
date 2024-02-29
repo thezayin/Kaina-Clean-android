@@ -132,7 +132,7 @@ fun FirstQuoteScreen(
                         })
                 Text(
                     text = "Request a Quote",
-                    fontSize = 32.sp,
+                    fontSize = 26.sp,
                     color = colorResource(id = R.color.text_color),
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier

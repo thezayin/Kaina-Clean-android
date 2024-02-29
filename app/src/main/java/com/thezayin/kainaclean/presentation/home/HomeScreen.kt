@@ -2,6 +2,7 @@ package com.thezayin.kainaclean.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.presentation.destinations.FirstQuoteScreenDestination
+import com.thezayin.kainaclean.presentation.destinations.MyQuotesDestination
 import com.thezayin.kainaclean.presentation.home.slider.carousel.AutoSlidingCarousel
 
 @Destination
@@ -83,7 +85,10 @@ fun HomeScreen(
                         .clip(shape = CircleShape)
                         .background(color = colorResource(id = R.color.light_purple))
                         .padding(10.dp)
-                        .size(24.dp),
+                        .size(24.dp)
+                        .clickable {
+                            navigator.navigate(MyQuotesDestination)
+                        },
                     alignment = Alignment.CenterEnd
                 )
             }

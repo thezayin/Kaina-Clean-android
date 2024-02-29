@@ -94,7 +94,10 @@ fun LoginScreen(
                     .fillMaxWidth()
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 40.dp, bottom = 20.dp), horizontalArrangement = Arrangement.Center
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 40.dp, bottom = 20.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -215,7 +218,7 @@ fun LoginScreen(
         ) {
             Button(
                 onClick = {
-                    isBottomSheetShow.value=true
+                    isBottomSheetShow.value = true
                     authViewModel.signIn(emailState.value, passwordState.value)
                 },
                 modifier = Modifier
@@ -233,18 +236,18 @@ fun LoginScreen(
                 )
                 when (val signInResponse = authViewModel.signInState.value) {
                     is Loading -> {
-                        isBottomSheetShow.value=true
+                        isBottomSheetShow.value = true
                     }
 
                     is Success -> {
                         if (signInResponse.data) {
                             navigator.navigate(HomeScreenDestination)
                         }
-                        isBottomSheetShow.value=false
+                        isBottomSheetShow.value = false
                     }
 
                     is Failure -> signInResponse.apply {
-                        isBottomSheetShow.value=false
+                        isBottomSheetShow.value = false
                         Utils.print(e)
                         Toast(message = e)
                     }
