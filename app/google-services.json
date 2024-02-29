@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "993885554149",
+    "project_id": "kaina-clean",
+    "storage_bucket": "kaina-clean.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993885554149:android:93f086b3f5a9484d0e5b0c",
+        "android_client_info": {
+          "package_name": "com.thezayin.kainaclean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqY2FS2Xq0e56JOI-xEweoK5T0vrHdFAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
