@@ -3,10 +3,9 @@ package com.thezayin.kainaclean.presentation.myquote
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,13 +16,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,34 +52,33 @@ fun MyQuotes(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp)
+                .background(color = colorResource(id = R.color.background))
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp),
-                horizontalArrangement = Arrangement.Start
+            Box(
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Image(painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "",
                     modifier = Modifier
-                        .size(25.dp)
-                        .align(Alignment.CenterVertically)
+                        .size(22.dp).fillMaxHeight().align(Alignment.CenterStart)
                         .clickable {
                             navigator.navigateUp()
                         })
                 Text(
                     text = "Request a Quote",
-                    fontSize = 26.sp,
+                    fontSize = 24.sp,
                     color = colorResource(id = R.color.text_color),
                     fontWeight = FontWeight.Medium,
+                    fontFamily = FontFamily(Font(R.font.nunito_extrabold)),
                     modifier = Modifier
-                        .padding(horizontal = 50.dp)
-                        .align(Alignment.CenterVertically)
+                        .align(alignment = Alignment.Center)
 
                 )
             }
-            Scaffold() { padding ->
-                Column(modifier = Modifier.padding(10.dp)) {
+
+                Column(modifier = Modifier
+                    .padding(10.dp)
+                    .background(color = colorResource(id = R.color.background))) {
                     when (quoteUiState.quoteList) {
                         is Response.Loading -> {
                             CircularProgressIndicator(
@@ -106,6 +105,6 @@ fun MyQuotes(
             }
         }
     }
-}
+
 
 

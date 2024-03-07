@@ -34,10 +34,13 @@ fun QuoteCard(
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(top = 20.dp, bottom = 2.dp)
-            .background(color = colorResource(id = R.color.background)),
+            .background(color = colorResource(id = R.color.white)),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.white),
         )
     ) {
         Row(
@@ -63,7 +66,7 @@ fun QuoteCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Date: ${quote.requestDate!!}",
+                text = "Date: ${quote.requestDate}",
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Normal,
                 color = colorResource(

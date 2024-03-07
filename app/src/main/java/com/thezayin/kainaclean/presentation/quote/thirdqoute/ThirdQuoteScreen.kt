@@ -9,30 +9,33 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,15 +43,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.destinations.HomeScreenDestination
 import com.thezayin.kainaclean.presentation.quote.QuoteViewModel
 import com.thezayin.kainaclean.presentation.toast.Toast
 import com.thezayin.kainaclean.util.Constants.DATE_LENGTH
@@ -72,8 +77,7 @@ fun ThirdQuoteScreen(
 ) {
 
     val propertyTypeList = arrayOf(
-        "Domestic",
-        "Commercial"
+        "Domestic", "Commercial"
     )
 
     val serviceTypeList = arrayOf(
@@ -97,181 +101,9 @@ fun ThirdQuoteScreen(
     var propertySelectedText by remember { mutableStateOf(propertyTypeList[0]) }
     var serviceSelectedText by remember { mutableStateOf(propertyTypeList[0]) }
     var serviceExpanded by remember { mutableStateOf(false) }
-    val sheetState = rememberModalBottomSheetState()
     val viewModel: QuoteViewModel = hiltViewModel()
-    val isBottomSheetShow = rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    val isSuccessBottomSheetShow = rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    val isBottomLoadingSheetShow = rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    if (isBottomLoadingSheetShow.value) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                isBottomLoadingSheetShow.value = false
-            },
-            dragHandle = null,
-            containerColor = colorResource(id = R.color.background),
-            modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 40.dp),
-            shape = RoundedCornerShape(30.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(id = R.color.background))
-                    .fillMaxWidth()
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 40.dp, bottom = 20.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(70.dp),
-                        color = colorResource(id = R.color.btn_primary)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Loading",
-                        fontSize = 22.sp,
-                        color = colorResource(id = R.color.text_color),
-                        modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 50.dp)
-                    )
-
-                }
-            }
-
-        }
-    }
-
-    if (isBottomSheetShow.value) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                isBottomSheetShow.value = false
-            },
-            containerColor = colorResource(id = R.color.background),
-            modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 40.dp),
-            shape = RoundedCornerShape(30.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(id = R.color.background))
-                    .fillMaxWidth()
-            ) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Image(painter = painterResource(id = R.drawable.ic_close_circle),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .size(25.dp)
-                            .clickable {
-                                isBottomSheetShow.value = false
-                            })
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_alert),
-                        contentDescription = "",
-                        modifier = Modifier.size(65.dp)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Please Enter all the fields!",
-                        fontSize = 22.sp,
-                        color = colorResource(id = R.color.text_color),
-                        modifier = Modifier.padding(0.dp, 30.dp, 0.dp, 50.dp)
-                    )
-
-                }
-            }
-
-        }
-    }
-
-    if (isSuccessBottomSheetShow.value) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                isSuccessBottomSheetShow.value = false
-                navigator.navigate(HomeScreenDestination)
-            },
-            containerColor = colorResource(id = R.color.background),
-            modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 40.dp),
-            shape = RoundedCornerShape(30.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(id = R.color.background))
-                    .fillMaxWidth()
-            ) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Image(painter = painterResource(id = R.drawable.ic_close_circle),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .size(25.dp)
-                            .clickable {
-                                isSuccessBottomSheetShow.value = false
-                                navigator.navigate(HomeScreenDestination)
-                            })
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_success),
-                        contentDescription = "",
-                        modifier = Modifier.size(65.dp)
-                    )
-                }
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Send Successfully!",
-                        fontSize = 22.sp,
-                        color = colorResource(id = R.color.text_color),
-                        modifier = Modifier
-                            .padding(40.dp, 30.dp, 40.dp, 0.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        text = "Our representer will contact you soon",
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.text_color),
-                        modifier = Modifier
-                            .padding(40.dp, 0.dp, 40.dp, 50.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-
-        }
-    }
+    val openDialog = remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.background(color = colorResource(id = R.color.background))) {
         Column(
@@ -281,28 +113,30 @@ fun ThirdQuoteScreen(
                 .statusBarsPadding()
         ) {
 
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
+            Box(
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Image(painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "",
                     modifier = Modifier
-                        .size(25.dp)
-                        .align(Alignment.CenterVertically)
+                        .size(22.dp)
+                        .fillMaxHeight()
+                        .align(Alignment.CenterStart)
                         .clickable {
-                            navigator.popBackStack()
+                            navigator.navigateUp()
                         })
                 Text(
                     text = "Request a Quote",
-                    fontSize = 26.sp,
+                    fontSize = 24.sp,
                     color = colorResource(id = R.color.text_color),
                     fontWeight = FontWeight.Medium,
+                    fontFamily = FontFamily(Font(R.font.nunito_extrabold)),
                     modifier = Modifier
-                        .padding(horizontal = 50.dp)
-                        .align(Alignment.CenterVertically)
+                        .align(alignment = Alignment.Center)
 
                 )
             }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -312,24 +146,24 @@ fun ThirdQuoteScreen(
                     text = "Property Type",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 22.sp,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
                     fontWeight = FontWeight.Medium,
                 )
                 Text(
                     text = "*",
                     textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.red),
-                    fontSize = 22.sp,
+                    color = colorResource(id = R.color.text_color),
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
                     fontWeight = FontWeight.Medium,
                 )
             }
 
             ExposedDropdownMenuBox(
-                expanded = propertyExpanded,
-                onExpandedChange = {
+                expanded = propertyExpanded, onExpandedChange = {
                     propertyExpanded = !propertyExpanded
-                },
-                modifier = Modifier.fillMaxWidth()
+                }, modifier = Modifier.fillMaxWidth()
             ) {
                 TextField(
                     value = propertySelectedText,
@@ -347,7 +181,9 @@ fun ThirdQuoteScreen(
                         unfocusedContainerColor = colorResource(id = R.color.ed_background),
                         disabledLabelColor = colorResource(id = R.color.red),
                         focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedTextColor = colorResource(id = R.color.black),
+                        unfocusedTextColor = colorResource(id = R.color.black)
                     )
                 )
 
@@ -357,13 +193,10 @@ fun ThirdQuoteScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     propertyTypeList.forEach { item ->
-                        DropdownMenuItem(
-                            text = { Text(text = item) },
-                            onClick = {
-                                propertySelectedText = item
-                                propertyExpanded = false
-                            }
-                        )
+                        DropdownMenuItem(text = { Text(text = item) }, onClick = {
+                            propertySelectedText = item
+                            propertyExpanded = false
+                        })
                     }
                 }
             }
@@ -377,24 +210,24 @@ fun ThirdQuoteScreen(
                     text = "Service Required",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 22.sp,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
                     fontWeight = FontWeight.Medium,
                 )
                 Text(
                     text = "*",
                     textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.red),
-                    fontSize = 22.sp,
+                    color = colorResource(id = R.color.text_color),
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
                     fontWeight = FontWeight.Medium,
                 )
             }
 
             ExposedDropdownMenuBox(
-                expanded = serviceExpanded,
-                onExpandedChange = {
+                expanded = serviceExpanded, onExpandedChange = {
                     serviceExpanded = !serviceExpanded
-                },
-                modifier = Modifier.fillMaxWidth()
+                }, modifier = Modifier.fillMaxWidth()
             ) {
                 TextField(
                     value = serviceSelectedText,
@@ -412,7 +245,9 @@ fun ThirdQuoteScreen(
                         unfocusedContainerColor = colorResource(id = R.color.ed_background),
                         disabledLabelColor = colorResource(id = R.color.red),
                         focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedTextColor = colorResource(id = R.color.black),
+                        unfocusedTextColor = colorResource(id = R.color.black)
                     )
                 )
                 ExposedDropdownMenu(
@@ -421,15 +256,12 @@ fun ThirdQuoteScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     serviceTypeList.forEach { item ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = item)
-                            },
-                            onClick = {
-                                serviceSelectedText = item
-                                serviceExpanded = false
-                            }
-                        )
+                        DropdownMenuItem(text = {
+                            Text(text = item)
+                        }, onClick = {
+                            serviceSelectedText = item
+                            serviceExpanded = false
+                        })
                     }
                 }
             }
@@ -443,14 +275,16 @@ fun ThirdQuoteScreen(
                     text = "Date Event",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 22.sp,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
                     fontWeight = FontWeight.Medium,
                 )
                 Text(
                     text = "*",
                     textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.red),
-                    fontSize = 22.sp,
+                    color = colorResource(id = R.color.text_color),
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
                     fontWeight = FontWeight.Medium,
                 )
             }
@@ -476,7 +310,9 @@ fun ThirdQuoteScreen(
                     unfocusedContainerColor = colorResource(id = R.color.ed_background),
                     disabledLabelColor = colorResource(id = R.color.red),
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedTextColor = colorResource(id = R.color.black),
+                    unfocusedTextColor = colorResource(id = R.color.black)
                 )
             )
 
@@ -488,10 +324,10 @@ fun ThirdQuoteScreen(
             ) {
                 Button(
                     onClick = {
-                        isBottomLoadingSheetShow.value = true
                         if (propertySelectedText.isEmpty() || serviceSelectedText.isEmpty() || date.isEmpty()) {
-                            isBottomSheetShow.value = true
+                            openDialog.value = true
                         } else {
+                            isLoading = true
                             viewModel.sendQuote(
                                 name,
                                 email,
@@ -513,30 +349,120 @@ fun ThirdQuoteScreen(
                         containerColor = colorResource(id = R.color.btn_primary),
                         contentColor = Color.White
                     ),
-                    shape = RoundedCornerShape(12.dp),
-
-                    ) {
+                    shape = RoundedCornerShape(12.dp)
+                ) {
                     Text(
                         text = "Next", color = colorResource(id = R.color.white), fontSize = 20.sp
                     )
 
                     when (val response = viewModel.sendQuote.value) {
                         is Response.Loading -> {
-                            isBottomLoadingSheetShow.value = true
+                            isLoading = true
                         }
 
                         is Response.Success -> {
                             if (response.data) {
-                                isSuccessBottomSheetShow.value = true
-                                isBottomLoadingSheetShow.value = true
+                                navigator.popBackStack()
+                                isLoading = false
                             }
                         }
 
                         is Response.Failure -> response.apply {
-                            isBottomLoadingSheetShow.value = true
+                            isLoading = false
                             Utils.print(e)
                             Toast(message = e)
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    if (isLoading) {
+        Dialog(onDismissRequest = { }) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = colorResource(id = R.color.white),
+                )
+
+            ) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Please Wait....",
+                            fontSize = 20.sp,
+                            color = colorResource(id = R.color.text_color)
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 20.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.width(64.dp),
+                            color = colorResource(id = R.color.btn_primary),
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    if (openDialog.value) {
+        Dialog(onDismissRequest = { }) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = colorResource(id = R.color.white),
+                )
+
+            ) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp)
+                            .padding(top = 10.dp), horizontalArrangement = Arrangement.End
+                    ) {
+                        Icon(painter = painterResource(id = R.drawable.ic_close_circle),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .clickable {
+                                    openDialog.value = false
+                                })
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 20.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Please fill all fields",
+                            modifier = Modifier,
+                            textAlign = TextAlign.Center,
+                            fontSize = 22.sp,
+                            fontFamily = FontFamily(Font(R.font.nunito_bold))
+                        )
                     }
                 }
             }
