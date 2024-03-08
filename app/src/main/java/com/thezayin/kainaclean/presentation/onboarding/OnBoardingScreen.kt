@@ -72,7 +72,7 @@ fun OnBoardingScreen(
 
         Text(
             text = "Kaina Cleaner",
-            fontSize = 26.sp,
+            fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.white),
             textAlign = TextAlign.Center,
@@ -80,8 +80,7 @@ fun OnBoardingScreen(
         )
         Text(
             text = "The Best Cleaning Service Ever!",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
             color = colorResource(id = R.color.white),
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -97,13 +96,13 @@ fun OnBoardingScreen(
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id = R.color.yellow),
+                containerColor = colorResource(id = R.color.onboarding_btn),
                 contentColor = Color.White
             ),
             shape = RoundedCornerShape(size = 6.dp)
         ) {
             Text(
-                text = "Get Started", fontSize = 22.sp,
+                text = "Get Started", fontSize = 16.sp,
                 color = colorResource(id = R.color.white),
                 textAlign = TextAlign.Center,
             )

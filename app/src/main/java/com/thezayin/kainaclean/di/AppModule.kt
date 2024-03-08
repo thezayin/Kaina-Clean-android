@@ -4,10 +4,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.thezayin.kainaclean.data.AuthRepositoryImpl
-import com.thezayin.kainaclean.data.QuoteRepositoryImpl
+import com.thezayin.kainaclean.data.BookingRepositoryImpl
 import com.thezayin.kainaclean.domain.model.MessageModal
 import com.thezayin.kainaclean.domain.repository.AuthRepository
-import com.thezayin.kainaclean.domain.repository.QuoteRepository
+import com.thezayin.kainaclean.domain.repository.BookingRepository
 import com.thezayin.kainaclean.domain.usecases.auth_usecases.AuthenticationUseCases
 import com.thezayin.kainaclean.domain.usecases.auth_usecases.FirebaseAuthState
 import com.thezayin.kainaclean.domain.usecases.auth_usecases.FirebaseForgetPassword
@@ -16,9 +16,9 @@ import com.thezayin.kainaclean.domain.usecases.auth_usecases.FirebaseSignOut
 import com.thezayin.kainaclean.domain.usecases.auth_usecases.FirebaseSignUp
 import com.thezayin.kainaclean.domain.usecases.auth_usecases.GetCurrentUser
 import com.thezayin.kainaclean.domain.usecases.auth_usecases.IsUserAuthenticated
-import com.thezayin.kainaclean.domain.usecases.quote_usecases.AddQuoteUseCase
-import com.thezayin.kainaclean.domain.usecases.quote_usecases.GetQuoteUseCase
-import com.thezayin.kainaclean.domain.usecases.quote_usecases.QuoteUseCases
+import com.thezayin.kainaclean.domain.usecases.booking_usecases.AddBookingUseCase
+import com.thezayin.kainaclean.domain.usecases.booking_usecases.BookingUseCases
+import com.thezayin.kainaclean.domain.usecases.booking_usecases.GetBookingUseCase
 import com.thezayin.kainaclean.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -62,15 +62,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideQuoteRepository(fireStore: FirebaseFirestore): QuoteRepository {
-        return QuoteRepositoryImpl(fireStore)
+    fun provideBookingRepository(fireStore: FirebaseFirestore): BookingRepository {
+        return BookingRepositoryImpl(fireStore)
     }
 
     @Provides
     @Singleton
-    fun provideQuoteUseCase(repository: QuoteRepository) = QuoteUseCases(
-        getQuoteUseCase = GetQuoteUseCase(repo = repository),
-        addQuoteUseCase = AddQuoteUseCase(repo = repository)
+    fun provideBookingUseCase(repository: BookingRepository) = BookingUseCases(
+        getBookingUseCase = GetBookingUseCase(repo = repository),
+        addBookingUseCase = AddBookingUseCase(repo = repository)
     )
 
     @Provides

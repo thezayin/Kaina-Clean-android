@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.myquote.component
+package com.thezayin.kainaclean.presentation.mybooking.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,13 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.domain.model.Quote
+import com.thezayin.kainaclean.domain.model.Booking
 
 @Composable
-fun QuoteCard(
-    quote: Quote
+fun BookingCard(
+    booking: Booking
 ) {
-    val color: Int = if (quote.status == "Accepted") {
+    val color: Int = if (booking.status == "Accepted") {
         R.color.green
     } else {
         R.color.red
@@ -50,7 +50,7 @@ fun QuoteCard(
             horizontalArrangement = Arrangement.End
         ) {
             Text(
-                text = "${quote.status}",
+                text = "${booking.status}",
                 fontSize = 14.sp,
                 fontStyle = FontStyle.Italic,
                 color = colorResource(
@@ -66,7 +66,7 @@ fun QuoteCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Date: ${quote.requestDate}",
+                text = "Date: ${booking.requestDate}",
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Normal,
                 color = colorResource(
@@ -74,7 +74,7 @@ fun QuoteCard(
                 )
             )
             Text(
-                text = "Post Code: ${quote.postCode}",
+                text = "Post Code: ${booking.postCode}",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(
@@ -89,7 +89,7 @@ fun QuoteCard(
                 .padding(horizontal = 20.dp),
         ) {
             Text(
-                text = "${quote.address}",
+                text = "${booking.address}",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(
@@ -104,7 +104,7 @@ fun QuoteCard(
                 .padding(horizontal = 20.dp),
         ) {
             Text(
-                text = "Property Type: ${quote.propertyType}",
+                text = "Property Type: ${booking.propertyType}",
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Normal,
                 color = colorResource(
@@ -119,7 +119,7 @@ fun QuoteCard(
                 .padding(horizontal = 20.dp),
         ) {
             Text(
-                text = "Service Type: ${quote.service}",
+                text = "Service Type: ${booking.service}",
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Normal,
                 color = colorResource(
@@ -150,7 +150,7 @@ fun QuoteCard(
                 .padding(horizontal = 20.dp),
         ) {
             Text(
-                text = "${quote.remarks}",
+                text = "${booking.remarks}",
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Italic,
                 color = colorResource(

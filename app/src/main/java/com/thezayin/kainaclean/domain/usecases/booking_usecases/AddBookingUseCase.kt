@@ -1,9 +1,9 @@
-package com.thezayin.kainaclean.domain.usecases.quote_usecases
+package com.thezayin.kainaclean.domain.usecases.booking_usecases
 
-import com.thezayin.kainaclean.domain.repository.QuoteRepository
+import com.thezayin.kainaclean.domain.repository.BookingRepository
 
-class AddQuoteUseCase(
-    private val repo: QuoteRepository
+class AddBookingUseCase(
+    private val repo: BookingRepository
 ) {
     operator fun invoke(
         userId: String,
@@ -16,7 +16,7 @@ class AddQuoteUseCase(
         propertyType: String,
         service: String,
         date: String,
-    ) = repo.addMyQuoteToFireStore(
+    ) = repo.addMyBookingToFireStore(
         userId,
         name,
         email,

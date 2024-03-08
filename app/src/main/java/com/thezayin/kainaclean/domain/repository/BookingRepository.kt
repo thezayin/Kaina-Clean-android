@@ -1,14 +1,14 @@
 package com.thezayin.kainaclean.domain.repository
 
-import com.thezayin.kainaclean.domain.model.Quote
+import com.thezayin.kainaclean.domain.model.Booking
 import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.flow.Flow
 
-interface QuoteRepository {
+interface BookingRepository {
 
-    fun getMyQuoteFromFireStore(userId: String): Flow<Response<List<Quote>>>
+    fun getMyBookingFromFireStore(userId: String): Flow<Response<List<Booking>>>
 
-    fun addMyQuoteToFireStore(
+    fun addMyBookingToFireStore(
         userId: String,
         name: String,
         email: String,

@@ -45,8 +45,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.destinations.FirstQuoteScreenDestination
-import com.thezayin.kainaclean.presentation.destinations.MyQuotesDestination
+import com.thezayin.kainaclean.presentation.destinations.BookingScreenFirstDestination
+import com.thezayin.kainaclean.presentation.destinations.MyBookingsDestination
 import com.thezayin.kainaclean.presentation.home.drawer.model.DrawerItem
 import com.thezayin.kainaclean.presentation.home.slider.carousel.AutoSlidingCarousel
 import kotlinx.coroutines.launch
@@ -172,7 +172,7 @@ fun HomeScreen(
                             .padding(10.dp)
                             .size(24.dp)
                             .clickable {
-                                navigator.navigate(MyQuotesDestination)
+                                navigator.navigate(MyBookingsDestination)
                             },
                         alignment = Alignment.CenterEnd
                     )
@@ -211,7 +211,7 @@ fun HomeScreen(
                 ) {
                     Button(
                         onClick = {
-                            navigator.navigate(FirstQuoteScreenDestination)
+                            navigator.navigate(BookingScreenFirstDestination)
                         },
                         modifier = Modifier
                             .fillMaxWidth()

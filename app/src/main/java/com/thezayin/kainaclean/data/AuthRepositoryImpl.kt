@@ -22,7 +22,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val fireStore: FirebaseFirestore
 ) : AuthRepository {
 
-    var operationIsSuccessful = false
+    private var operationIsSuccessful = false
     override fun isUserAuthenticatedInFirebase(): Boolean {
         return auth.currentUser != null
     }

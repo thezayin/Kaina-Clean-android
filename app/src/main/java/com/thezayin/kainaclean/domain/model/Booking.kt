@@ -1,9 +1,9 @@
 package com.thezayin.kainaclean.domain.model
 
-data class Quote(
+data class Booking(
     val userId: String? = null,
     val name: String? = null,
-    val quoteId: String? = null,
+    val bookingId: String? = null,
     val email: String? = null,
     val contact: String? = null,
     val address: String? = null,

@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.firebase.firestore.FirebaseFirestore
-import com.thezayin.kainaclean.domain.model.Quote
-import com.thezayin.kainaclean.domain.repository.QuoteRepository
+import com.thezayin.kainaclean.domain.model.Booking
+import com.thezayin.kainaclean.domain.repository.BookingRepository
 import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -16,23 +16,23 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 
-class QuoteRepositoryImpl @Inject constructor(
+class BookingRepositoryImpl @Inject constructor(
     private val fireStore: FirebaseFirestore
-) : QuoteRepository {
+) : BookingRepository {
 
     private var operationSuccessFull = false
 
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/M/yyyy")
     val currentDate = sdf.format(Date())
-    override fun getMyQuoteFromFireStore(userId: String): Flow<Response<List<Quote>>> =
+    override fun getMyBookingFromFireStore(userId: String): Flow<Response<List<Booking>>> =
         callbackFlow {
             Response.Loading
-            val snapshotListener = fireStore.collection("quotes").whereEqualTo("userId", userId)
+            val snapshotListener = fireStore.collection("bookings").whereEqualTo("userId", userId)
                 .addSnapshotListener { snapShot, error ->
                     val response = if (snapShot != null) {
-                        val quoteList = snapShot.toObjects(Quote::class.java)
-                        Response.Success<List<Quote>>(quoteList)
+                        val bookingsList = snapShot.toObjects(Booking::class.java)
+                        Response.Success<List<Booking>>(bookingsList)
                     } else {
                         Response.Failure(error?.message ?: error.toString())
                     }
@@ -42,7 +42,7 @@ class QuoteRepositoryImpl @Inject constructor(
         }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun addMyQuoteToFireStore(
+    override fun addMyBookingToFireStore(
         userId: String,
         name: String,
         email: String,
@@ -56,10 +56,10 @@ class QuoteRepositoryImpl @Inject constructor(
     ): Flow<Response<Boolean>> = flow {
         operationSuccessFull = false
         try {
-            val quoteId = fireStore.collection("quotes").document().id
-            val quote = Quote(
+            val bookingsId = fireStore.collection("bookings").document().id
+            val bookings = Booking(
                 userId = userId,
-                quoteId = quoteId,
+                bookingId = bookingsId,
                 name = name,
                 email = email,
                 contact = contact,
@@ -73,9 +73,10 @@ class QuoteRepositoryImpl @Inject constructor(
                 remarks = "Pending",
                 requestDate = currentDate,
             )
-            fireStore.collection("quotes").document(quoteId).set(quote).addOnSuccessListener {
-                operationSuccessFull = true
-            }.await()
+            fireStore.collection("bookings").document(bookingsId).set(bookings)
+                .addOnSuccessListener {
+                    operationSuccessFull = true
+                }.await()
             if (operationSuccessFull) {
                 emit(Response.Success(operationSuccessFull))
             } else {

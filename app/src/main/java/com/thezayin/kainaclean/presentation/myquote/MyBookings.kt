@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.myquote
+package com.thezayin.kainaclean.presentation.mybooking
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,16 +31,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.myquote.component.QuoteCard
+import com.thezayin.kainaclean.presentation.myBooking.MyBookingsViewModel
+import com.thezayin.kainaclean.presentation.mybooking.component.BookingCard
 import com.thezayin.kainaclean.util.Response
 
 @Destination
 @Composable
-fun MyQuotes(
+fun MyBookings(
     navigator: DestinationsNavigator
 ) {
-    val quoteViewModel: MyQuotesViewModel = hiltViewModel()
-    val quoteUiState = quoteViewModel.detailUiState ?: MyQuotesViewModel.QuoteUiState()
+    val bookingViewModel: MyBookingsViewModel = hiltViewModel()
+    val bookingUiState = bookingViewModel.detailUiState ?: MyBookingsViewModel.BookingsUiState()
 
     Box(
         modifier = Modifier
@@ -60,12 +61,14 @@ fun MyQuotes(
                 Image(painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "",
                     modifier = Modifier
-                        .size(22.dp).fillMaxHeight().align(Alignment.CenterStart)
+                        .size(22.dp)
+                        .fillMaxHeight()
+                        .align(Alignment.CenterStart)
                         .clickable {
                             navigator.navigateUp()
                         })
                 Text(
-                    text = "Request a Quote",
+                    text = "Request a booking",
                     fontSize = 24.sp,
                     color = colorResource(id = R.color.text_color),
                     fontWeight = FontWeight.Medium,
@@ -76,35 +79,37 @@ fun MyQuotes(
                 )
             }
 
-                Column(modifier = Modifier
+            Column(
+                modifier = Modifier
                     .padding(10.dp)
-                    .background(color = colorResource(id = R.color.background))) {
-                    when (quoteUiState.quoteList) {
-                        is Response.Loading -> {
-                            CircularProgressIndicator(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .wrapContentSize(align = Alignment.Center)
-                            )
-                        }
+                    .background(color = colorResource(id = R.color.background))
+            ) {
+                when (bookingUiState.bookingList) {
+                    is Response.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .wrapContentSize(align = Alignment.Center)
+                        )
+                    }
 
-                        is Response.Success -> {
-                            LazyVerticalGrid(columns = GridCells.Fixed(1)) {
-                                items(quoteUiState.quoteList.data.sortedBy { it.date }
-                                    ?: emptyList()) { quote ->
-                                    QuoteCard(quote = quote)
-                                }
+                    is Response.Success -> {
+                        LazyVerticalGrid(columns = GridCells.Fixed(1)) {
+                            items(bookingUiState.bookingList.data.sortedBy { it.date }
+                                ?: emptyList()) { booking ->
+                                BookingCard(booking = booking)
                             }
                         }
+                    }
 
-                        else -> {
-                            Text(text = "There is no data")
-                        }
+                    else -> {
+                        Text(text = "There is no data")
                     }
                 }
             }
         }
     }
+}
 
 
 
