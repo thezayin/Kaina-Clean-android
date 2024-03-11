@@ -2,14 +2,12 @@ package com.thezayin.kainaclean.presentation.booking.thirdqoute
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -54,6 +52,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.presentation.booking.BookingViewModel
+import com.thezayin.kainaclean.presentation.component.TopBar
 import com.thezayin.kainaclean.presentation.toast.Toast
 import com.thezayin.kainaclean.util.Constants.DATE_LENGTH
 import com.thezayin.kainaclean.util.Constants.DATE_MASK
@@ -111,29 +110,11 @@ fun BookingScreenThird(
                 .statusBarsPadding()
         ) {
 
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Image(painter = painterResource(id = R.drawable.ic_back),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(22.dp)
-                        .fillMaxHeight()
-                        .align(Alignment.CenterStart)
-                        .clickable {
-                            navigator.navigateUp()
-                        })
-                Text(
-                    text = "Request a Booking",
-                    fontSize = 24.sp,
-                    color = colorResource(id = R.color.text_color),
-                    fontWeight = FontWeight.Medium,
-                    fontFamily = FontFamily(Font(R.font.nunito_extrabold)),
-                    modifier = Modifier
-                        .align(alignment = Alignment.Center)
-
-                )
-            }
+            TopBar(
+                modifier = Modifier,
+                title = "Booking a Service",
+                callBack = { navigator.navigateUp() }
+            )
 
             Row(
                 modifier = Modifier

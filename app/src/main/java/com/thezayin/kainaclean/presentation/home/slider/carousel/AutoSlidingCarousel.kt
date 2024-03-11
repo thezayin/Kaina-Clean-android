@@ -25,7 +25,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun AutoSlidingCarousel(
     modifier: Modifier = Modifier,
-    autoSlideDuration: Long = 3000L,
+    autoSlideDuration: Long = 4000L,
     pagerState: PagerState = remember { PagerState() },
     itemsCount: Int,
     itemContent: @Composable (index: Int) -> Unit,

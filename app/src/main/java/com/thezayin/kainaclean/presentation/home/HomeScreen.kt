@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -46,6 +47,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.presentation.destinations.BookingScreenFirstDestination
+import com.thezayin.kainaclean.presentation.destinations.ChatBotScreenDestination
 import com.thezayin.kainaclean.presentation.destinations.MyBookingsDestination
 import com.thezayin.kainaclean.presentation.home.drawer.model.DrawerItem
 import com.thezayin.kainaclean.presentation.home.slider.carousel.AutoSlidingCarousel
@@ -57,7 +59,6 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navigator: DestinationsNavigator
 ) {
-
 
     val drawerItem = listOf(
         DrawerItem(R.drawable.ic_home, "Home"),
@@ -89,8 +90,7 @@ fun HomeScreen(
                     Image(
                         painter = painterResource(id = R.drawable.ic_icon),
                         contentDescription = null,
-                        modifier = Modifier
-                            .size(100.dp)
+                        modifier = Modifier.size(100.dp)
                     )
                     Text(
                         text = "Kaina Cleans",
@@ -117,17 +117,17 @@ fun HomeScreen(
                             contentDescription = it.title,
                             modifier = Modifier.size(20.dp)
                         )
-                    }
-                )
+                    })
             }
         }
     }, drawerState = drawerState) {
         Box(modifier = Modifier.background(color = colorResource(id = R.color.background))) {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
                     .background(color = colorResource(id = R.color.background))
                     .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .padding(horizontal = 24.dp)
                     .fillMaxSize()
             ) {
                 Row(
@@ -136,32 +136,19 @@ fun HomeScreen(
                         .padding(vertical = 20.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_menu),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .clip(shape = CircleShape)
-                                .background(color = colorResource(id = R.color.icon_bg))
-                                .padding(10.dp)
-                                .size(24.dp)
-                                .clickable {
-                                    scope.launch {
-                                        drawerState.open()
-                                    }
+                    Image(painter = painterResource(id = R.drawable.ic_menu),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .clip(shape = CircleShape)
+                            .background(color = colorResource(id = R.color.icon_bg))
+                            .padding(10.dp)
+                            .size(24.dp)
+                            .clickable {
+                                scope.launch {
+                                    drawerState.open()
                                 }
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_search),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .padding(12.dp, 0.dp, 0.dp, 0.dp)
-                                .clip(shape = CircleShape)
-                                .background(color = colorResource(id = R.color.icon_bg))
-                                .padding(10.dp)
-                                .size(24.dp)
-                        )
-                    }
+                            })
+
                     Image(
                         painter = painterResource(id = R.drawable.ic_notifcation),
                         contentDescription = "",
@@ -172,7 +159,7 @@ fun HomeScreen(
                             .padding(10.dp)
                             .size(24.dp)
                             .clickable {
-                                navigator.navigate(MyBookingsDestination)
+
                             },
                         alignment = Alignment.CenterEnd
                     )
@@ -180,14 +167,12 @@ fun HomeScreen(
 
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
                 ) {
                     val images = listOf(
                         painterResource(id = R.drawable.ic_slide_first),
                         painterResource(id = R.drawable.ic_slide_sec),
                         painterResource(id = R.drawable.ic_slider_third),
-                        painterResource(id = R.drawable.ic_slider_fourth),
-                        painterResource(id = R.drawable.ic_slider_fifth),
                     )
                     Card(
                         shape = RoundedCornerShape(16.dp),
@@ -199,14 +184,13 @@ fun HomeScreen(
                                     painter = images[index],
                                     contentDescription = "Carousel Images"
                                 )
-                            }
-                        )
+                            })
                     }
                 }
+
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(0.dp, 0.dp, 0.dp, 40.dp),
+                        .fillMaxSize(),
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     Button(
@@ -215,7 +199,7 @@ fun HomeScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(50.dp),
+                            .height(55.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = colorResource(id = R.color.btn_primary),
                             contentColor = Color.White
@@ -224,15 +208,76 @@ fun HomeScreen(
 
                         ) {
                         Text(
-                            text = "Request a Quote",
+                            text = "Request a Booking",
                             color = colorResource(id = R.color.white),
                             fontSize = 20.sp
                         )
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(start = 25.dp)
+                                .padding(vertical = 10.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_home_active),
+                                contentDescription = "Home",
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Text(
+                                text = "Home",
+                                color = colorResource(id = R.color.text_color)
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .padding(vertical = 10.dp)
+                                .clickable {
+                                    navigator.navigate(MyBookingsDestination)
+                                },
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_booking),
+                                contentDescription = "Bookings",
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Text(
+                                text = "Bookings",
+                                color = colorResource(id = R.color.un_selected)
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .clickable {
+                                    navigator.navigate(ChatBotScreenDestination)
+                                }
+                                .padding(end = 25.dp)
+                                .padding(vertical = 10.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_chat),
+                                contentDescription = "Chat",
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Text(
+                                text = "Chat",
+                                color = colorResource(id = R.color.un_selected)
+                            )
+                        }
                     }
                 }
             }
         }
     }
-
-
 }

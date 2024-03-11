@@ -99,6 +99,7 @@ dependencies {
 
     //Compose Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation ("androidx.navigation:navigation-compose:2.4.0-alpha02")
 
     //Custom Navigation
     implementation("io.github.raamcosta.compose-destinations:core:1.10.1")

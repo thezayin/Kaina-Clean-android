@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.myBooking
+package com.thezayin.kainaclean.presentation.bookings
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

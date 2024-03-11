@@ -18,19 +18,21 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -61,55 +64,9 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
     val emailInputValue = remember { mutableStateOf("") }
     val passwordNumberInputValue = remember { mutableStateOf("") }
     val rePasswordValue = remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-
-    val isBottomSheetShow = rememberSaveable {
-        mutableStateOf(false)
-    }
-    val sheetState = rememberModalBottomSheetState()
-    if (isBottomSheetShow.value) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = {
-                isBottomSheetShow.value = false
-            },
-            dragHandle = null,
-            containerColor = colorResource(id = R.color.background),
-            modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 40.dp),
-            shape = RoundedCornerShape(30.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(id = R.color.background))
-                    .fillMaxWidth()
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 40.dp, bottom = 20.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(70.dp),
-                        color = colorResource(id = R.color.btn_primary)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Loading",
-                        fontSize = 22.sp,
-                        color = colorResource(id = R.color.text_color),
-                        modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 50.dp)
-                    )
-                }
-            }
-
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -293,16 +250,36 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
         Button(
             onClick = {
                 if (emailInputValue.value.isNotEmpty() && passwordNumberInputValue.value.isNotEmpty() && rePasswordValue.value.isNotEmpty()) {
-                    if (passwordNumberInputValue.value == rePasswordValue.value) {
-                        authViewModel.signUp(
-                            emailInputValue.value, passwordNumberInputValue.value
-                        )
-                    } else {
+                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInputValue.value)
+                            .matches()
+                    ) {
+                        Toast.makeText(context, "Please enter a valid email", Toast.LENGTH_LONG)
+                            .show()
+                    } else
+                        if (passwordNumberInputValue.value.length < 8) {
+                            Toast.makeText(
+                                context,
+                                "Password must be at least 8 characters",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        } else
+                            if (passwordNumberInputValue.value == rePasswordValue.value) {
+                                authViewModel.signUp(
+                                    emailInputValue.value, passwordNumberInputValue.value
+                                )
+                            } else {
 
-                        Toast.makeText(context, "Password does not match", Toast.LENGTH_LONG).show()
-                    }
+                                Toast.makeText(
+                                    context,
+                                    "Password does not match",
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+                            }
                 } else {
-                    Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_LONG)
+                        .show()
                 }
             },
             modifier = Modifier
@@ -320,24 +297,68 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
 
             when (val signUpResponse = authViewModel.signUpState.value) {
                 is Loading -> {
-                    isBottomSheetShow.value = true
+                    isLoading = true
                 }
 
                 is Success -> {
                     val isUserSignedUp = signUpResponse.data
                     LaunchedEffect(isUserSignedUp) {
-                        isBottomSheetShow.value = false
+                        isLoading = false
                         if (isUserSignedUp) {
                             navigator.navigate(HomeScreenDestination)
                         }
                     }
-                    isBottomSheetShow.value = false
+                    isLoading = false
                 }
 
                 is Failure -> signUpResponse.apply {
-                    isBottomSheetShow.value = false
+                    isLoading = false
                     LaunchedEffect(e) {
                         Utils.print(e)
+                    }
+                }
+            }
+        }
+    }
+
+    if (isLoading) {
+        Dialog(onDismissRequest = { }) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(16.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = colorResource(id = R.color.white),
+                )
+
+            ) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Please Wait....",
+                            fontSize = 16.sp,
+                            color = colorResource(id = R.color.text_color)
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(20.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.width(64.dp),
+                            color = colorResource(id = R.color.btn_primary),
+                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                        )
                     }
                 }
             }

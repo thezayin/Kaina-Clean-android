@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.data
+package com.thezayin.kainaclean.data.impl
 
 import android.annotation.SuppressLint
 import android.os.Build
