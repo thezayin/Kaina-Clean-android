@@ -67,6 +67,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("com.google.firebase:firebase-inappmessaging-display:20.4.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -96,6 +99,7 @@ dependencies {
 
     //Compose Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation ("androidx.navigation:navigation-compose:2.4.0-alpha02")
 
     //Custom Navigation
     implementation("io.github.raamcosta.compose-destinations:core:1.10.1")
@@ -139,4 +143,15 @@ dependencies {
    //Date Time Picker
     implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    //font
+    implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.2")
+
+    //Moshi
+    implementation ("com.squareup.moshi:moshi:1.14.0")
+    // Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    // Retrofit with Moshi Converter
+    implementation ("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
 }

@@ -3,7 +3,6 @@ package com.thezayin.kainaclean.util
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
 fun isValidText(text: String): Boolean {
     // Add your custom validation rules here
     return text.matches(Regex("[a-zA-Z]+"))
