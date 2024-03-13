@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.home.slider.carousel
+package com.thezayin.kainaclean.home.presentation.component.slider.carousel
 
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
-import com.thezayin.kainaclean.home.slider.indicator.DotsIndicator
+import com.thezayin.kainaclean.home.presentation.component.slider.indicator.DotsIndicator
 
 import kotlinx.coroutines.delay
 
@@ -31,12 +31,10 @@ fun AutoSlidingCarousel(
     itemContent: @Composable (index: Int) -> Unit,
 ) {
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
-
     LaunchedEffect(pagerState.currentPage) {
         delay(autoSlideDuration)
         pagerState.animateScrollToPage((pagerState.currentPage + 1) % itemsCount)
     }
-
     Box(
         modifier = modifier.fillMaxWidth(),
     ) {

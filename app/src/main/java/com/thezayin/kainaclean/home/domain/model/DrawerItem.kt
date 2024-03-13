@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.home.drawer.model
+package com.thezayin.kainaclean.home.domain.model
 
 data class DrawerItem(
     var icon: Int,

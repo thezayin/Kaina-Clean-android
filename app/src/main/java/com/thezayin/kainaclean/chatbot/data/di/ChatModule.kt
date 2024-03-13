@@ -26,7 +26,6 @@ object ChatModule {
     }
 
 
-
     @Provides
     @Singleton
     fun provideBotRepository(botApi: BotApi): BotRepository {

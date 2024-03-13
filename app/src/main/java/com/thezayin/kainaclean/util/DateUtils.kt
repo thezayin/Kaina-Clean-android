@@ -11,7 +11,7 @@ import java.util.Locale
 class DateUtils {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun convertMillisToLocalDate(millis: Long) : LocalDate {
+    fun convertMillisToLocalDate(millis: Long): LocalDate {
         return Instant
             .ofEpochMilli(millis)
             .atZone(ZoneId.systemDefault())
@@ -19,7 +19,10 @@ class DateUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun convertMillisToLocalDateWithFormatter(date: LocalDate, dateTimeFormatter: DateTimeFormatter) : LocalDate {
+    fun convertMillisToLocalDateWithFormatter(
+        date: LocalDate,
+        dateTimeFormatter: DateTimeFormatter
+    ): LocalDate {
         //Convert the date to a long in millis using a date formatter
         val dateInMillis = LocalDate.parse(date.format(dateTimeFormatter), dateTimeFormatter)
             .atStartOfDay(ZoneId.systemDefault())
