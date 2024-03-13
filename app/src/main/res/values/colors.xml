@@ -10,25 +10,31 @@
     <color name="transparent">#00000000</color>
 
     <color name="btn_primary">#6739D2</color>
-    <color name="background">#FFFFFFFF</color>
-    <color name="yellow">#F6BE15</color>
-    <color name="text_color">#FF000000</color>
-    <color name="grey">#777777</color>
     <color name="icon_bg">#F4F2FD</color>
     <color name="ed_background">#F5F5F5</color>
-    <color name="red">#E62E2E</color>
-    <color name="light_yellow">#E9C16E</color>
-    <color name="light_yellow_level_1">#F6D9A5</color>
+    <color name="background">#FFFFFFFF</color>
+    <color name="text_color">#FF000000</color>
     <color name="un_selected">#9EA2B3</color>
     <color name="onboarding_btn">#39B6D2</color>
+
+    <color name="yellow">#F6BE15</color>
+    <color name="light_yellow">#E9C16E</color>
+    <color name="light_yellow_level_1">#F6D9A5</color>
+    <color name="light_yellow_level_2">#EFD700</color>
+    <color name="light_yellow_level_3">#1CF2E915</color>
+
+    <color name="grey_level_2">#6B6F80</color>
+    <color name="grey">#777777</color>
+    <color name="grey_level_5">#DCDEE6</color>
+
+    <color name="green">#069952</color>
+    <color name="light_green">#E6FFF3</color>
+
+    <color name="red">#E62E2E</color>
 
     //onboarding background gradient
     <color name="color_starting">#00000000</color>
     <color name="color_mid">#B3000000</color>
     <color name="color_end">#000000</color>
-
-    <color name="btnColor">#6739D2</color>
-    <color name="green">#008000</color>
-
 
 </resources>
