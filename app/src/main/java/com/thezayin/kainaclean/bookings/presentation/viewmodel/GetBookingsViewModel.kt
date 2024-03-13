@@ -1,6 +1,5 @@
 package com.thezayin.kainaclean.bookings.presentation.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -37,14 +36,8 @@ class GetBookingsViewModel @Inject constructor(
     fun getCurrentBookings(bookingId: String) = viewModelScope.launch {
         useCases.getCurrentBookings(bookingId).collect { response ->
             getBookingMutableState = getBookingMutableState.copy(bookingList = response)
-            Log.d("GetBookingsViewModel", "getCurrentBookings: $response")
-            Log.d(
-                "GetBookingsViewModelGetBookingMutableState",
-                "getCurrentBookings: ${getBookingMutableState.bookingList}"
-            )
         }
     }
-
 
     data class BookingsUiState(
         val bookingList: Response<List<Bookings>> = Response.Loading

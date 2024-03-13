@@ -40,7 +40,7 @@ fun HomeScreen(
     ) {
         HomeTopBar()
         HomeImageSlider(modifier = Modifier)
-        HomeIcons(homeViewModel = homeViewModel, modifier = Modifier)
+        HomeIcons(homeViewModel = homeViewModel, modifier = Modifier, navigator = navigator)
 
         Column(
             modifier = Modifier.fillMaxHeight(),

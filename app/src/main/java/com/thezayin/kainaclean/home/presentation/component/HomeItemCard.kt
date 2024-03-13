@@ -1,6 +1,7 @@
 package com.thezayin.kainaclean.home.presentation.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.home.domain.model.Home
 
@@ -29,7 +31,9 @@ fun HomeItemCard(home: Home, modifier: Modifier) {
             end = 8.dp,
             top = 8.dp,
             bottom = 8.dp,
-        ),
+        ).clickable {
+
+        },
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.background),
         ),

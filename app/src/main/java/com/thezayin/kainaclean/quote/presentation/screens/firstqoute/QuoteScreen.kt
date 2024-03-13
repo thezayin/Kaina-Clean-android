@@ -1,21 +1,22 @@
-package com.thezayin.kainaclean.booking.presentation.screens
+package com.thezayin.kainaclean.quote.presentation.screens.firstqoute
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -23,10 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,6 +44,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,27 +56,16 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.booking.presentation.viewmodel.BookingViewModel
 import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
-import com.thezayin.kainaclean.destinations.HomeScreenDestination
-import com.thezayin.kainaclean.toast.Toast
-import com.thezayin.kainaclean.util.Constants.DATE_LENGTH
+import com.thezayin.kainaclean.util.Constants
 import com.thezayin.kainaclean.util.DateUtils
-import com.thezayin.kainaclean.util.Response
-import com.thezayin.kainaclean.util.Utils
 
 @OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 @Destination
 @Composable
-fun BookingScreenThird(
-    navigator: DestinationsNavigator,
-    name: String,
-    email: String,
-    phoneNumber: String,
-    address: String,
-    city: String,
-    postCode: String
+fun QuoteScreen(
+    navigator: DestinationsNavigator
 ) {
-
     val dateState = rememberDatePickerState()
     val millisToLocalDate = dateState.selectedDateMillis?.let {
         DateUtils().convertMillisToLocalDate(it)
@@ -84,12 +73,9 @@ fun BookingScreenThird(
     val dateToString = millisToLocalDate?.let {
         DateUtils().dateToString(millisToLocalDate)
     } ?: "Select"
-
+    val addressInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val quoteInput = remember { mutableStateOf(TextFieldValue()) }
     var showDialog by remember { mutableStateOf(false) }
-
-    val propertyTypeList = arrayOf(
-        "Domestic", "Commercial"
-    )
 
     val serviceTypeList = arrayOf(
         "General Cleaning",
@@ -106,92 +92,22 @@ fun BookingScreenThird(
         "Gyms & Clubs"
     )
 
-    var propertyExpanded by remember { mutableStateOf(false) }
     var date by remember { mutableStateOf("") }
-    var propertySelectedText by remember { mutableStateOf(propertyTypeList[0]) }
-    var serviceSelectedText by remember { mutableStateOf(serviceTypeList[0]) }
-    var serviceExpanded by remember { mutableStateOf(false) }
     val viewModel: BookingViewModel = hiltViewModel()
     val openDialog = remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.background(color = colorResource(id = R.color.background))) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp)
-                .statusBarsPadding()
-        ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding(),
+    ) {
+        TopBar(modifier = Modifier, title = "Request a Quote") {
+            navigator.navigateUp()
+        }
 
-            TopBar(
-                modifier = Modifier,
-                title = "Booking a Service",
-                callBack = { navigator.navigateUp() }
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 50.dp, 0.dp, 0.dp)
-            ) {
-                Text(
-                    text = "Property Type",
-                    textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
-                    fontWeight = FontWeight.Medium,
-                )
-                Text(
-                    text = "*",
-                    textAlign = TextAlign.Center,
-                    color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
-                    fontWeight = FontWeight.Medium,
-                )
-            }
-
-            ExposedDropdownMenuBox(
-                expanded = propertyExpanded, onExpandedChange = {
-                    propertyExpanded = !propertyExpanded
-                }, modifier = Modifier.fillMaxWidth()
-            ) {
-                TextField(
-                    value = propertySelectedText,
-                    onValueChange = { },
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = propertyExpanded) },
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
-                        .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = colorResource(id = R.color.ed_background),
-                        unfocusedContainerColor = colorResource(id = R.color.ed_background),
-                        disabledLabelColor = colorResource(id = R.color.red),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = colorResource(id = R.color.black),
-                        unfocusedTextColor = colorResource(id = R.color.black)
-                    )
-                )
-
-                ExposedDropdownMenu(
-                    expanded = propertyExpanded,
-                    onDismissRequest = { propertyExpanded = false },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    propertyTypeList.forEach { item ->
-                        DropdownMenuItem(text = { Text(text = item) }, onClick = {
-                            propertySelectedText = item
-                            propertyExpanded = false
-                        })
-                    }
-                }
-            }
+        Column(modifier = Modifier.fillMaxWidth()) {
 
             Row(
                 modifier = Modifier
@@ -199,7 +115,7 @@ fun BookingScreenThird(
                     .padding(0.dp, 30.dp, 0.dp, 0.dp)
             ) {
                 Text(
-                    text = "Service Required",
+                    text = "Address",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
                     fontSize = 18.sp,
@@ -216,47 +132,36 @@ fun BookingScreenThird(
                 )
             }
 
-            ExposedDropdownMenuBox(
-                expanded = serviceExpanded, onExpandedChange = {
-                    serviceExpanded = !serviceExpanded
-                }, modifier = Modifier.fillMaxWidth()
-            ) {
-                TextField(
-                    value = serviceSelectedText,
-                    onValueChange = { },
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = serviceExpanded) },
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
-                        .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = colorResource(id = R.color.ed_background),
-                        unfocusedContainerColor = colorResource(id = R.color.ed_background),
-                        disabledLabelColor = colorResource(id = R.color.red),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = colorResource(id = R.color.black),
-                        unfocusedTextColor = colorResource(id = R.color.black)
-                    )
-                )
-                ExposedDropdownMenu(
-                    expanded = serviceExpanded,
-                    onDismissRequest = { serviceExpanded = false },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    serviceTypeList.forEach { item ->
-                        DropdownMenuItem(text = {
-                            Text(text = item)
-                        }, onClick = {
-                            serviceSelectedText = item
-                            serviceExpanded = false
-                        })
+            TextField(
+                value = addressInputValue.value,
+                onValueChange = {
+                    if (it.text.length <= 30) {
+                        addressInputValue.value = it
                     }
-                }
-            }
+                },
+                placeholder = {
+                    Text(
+                        text = "Enter your address",
+                        color = colorResource(id = R.color.grey),
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.nunito_medium)),
+                    )
+                },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = colorResource(id = R.color.ed_background),
+                    unfocusedContainerColor = colorResource(id = R.color.ed_background),
+                    disabledLabelColor = colorResource(id = R.color.red),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedTextColor = colorResource(id = R.color.black),
+                    unfocusedTextColor = colorResource(id = R.color.black)
+                ),
+            )
 
             Row(
                 modifier = Modifier
@@ -313,64 +218,88 @@ fun BookingScreenThird(
                 )
             )
 
-            Column(
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(0.dp, 0.dp, 0.dp, 40.dp),
-                verticalArrangement = Arrangement.Bottom
+                    .fillMaxWidth()
+                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
             ) {
-                Button(
-                    onClick = {
-                        if (propertySelectedText.isEmpty() || serviceSelectedText.isEmpty() || dateToString.length < DATE_LENGTH) {
-                            openDialog.value = true
-                        } else {
-                            isLoading = true
-                            viewModel.sendBooking(
-                                name,
-                                email,
-                                phoneNumber,
-                                address,
-                                city,
-                                postCode,
-                                propertySelectedText,
-                                serviceSelectedText,
-                                dateToString
-                            )
-                        }
-
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.btn_primary),
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text(
-                        text = "Next", color = colorResource(id = R.color.white), fontSize = 20.sp
-                    )
-
-                    when (val response = viewModel.sendBooking.value) {
-                        is Response.Loading -> {
-                            isLoading = true
-                        }
-
-                        is Response.Success -> {
-                            if (response.data) {
-                                navigator.navigate(HomeScreenDestination)
-                                isLoading = false
-                            }
-                        }
-
-                        is Response.Failure -> response.apply {
-                            isLoading = false
-                            Utils.print(e)
-                            Toast(message = e)
-                        }
+                Text(
+                    text = "Write you quote",
+                    textAlign = TextAlign.Center,
+                    color = colorResource(id = R.color.text_color),
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontWeight = FontWeight.Medium,
+                )
+                Text(
+                    text = "*",
+                    textAlign = TextAlign.Center,
+                    color = colorResource(id = R.color.text_color),
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+            TextField(
+                value = quoteInput.value,
+                onValueChange = {
+                    if (it.text.length <= 11) {
+                        quoteInput.value = it
                     }
-                }
+                },
+                placeholder = {
+                    Text(
+                        text = "Enter your phone number",
+                        color = colorResource(id = R.color.grey),
+                        fontSize = 18.sp,
+                        fontFamily = FontFamily(Font(R.font.nunito_medium)),
+                    )
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                singleLine = false,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp, max = 200.dp)
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = colorResource(id = R.color.ed_background),
+                    unfocusedContainerColor = colorResource(id = R.color.ed_background),
+                    disabledLabelColor = colorResource(id = R.color.red),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedTextColor = colorResource(id = R.color.black),
+                    unfocusedTextColor = colorResource(id = R.color.black)
+                )
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(0.dp, 0.dp, 0.dp, 15.dp),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Button(
+                onClick = {
+                    if (addressInputValue.value.text.isEmpty() || quoteInput.value.text.isEmpty() || dateToString.length < Constants.DATE_LENGTH) {
+                        openDialog.value = true
+                    } else {
+                        //To do
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.btn_primary),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(12.dp),
+
+                ) {
+                Text(
+                    text = "Submit", color = colorResource(id = R.color.white), fontSize = 20.sp
+                )
             }
         }
     }
@@ -491,3 +420,4 @@ fun BookingScreenThird(
         }
     }
 }
+
