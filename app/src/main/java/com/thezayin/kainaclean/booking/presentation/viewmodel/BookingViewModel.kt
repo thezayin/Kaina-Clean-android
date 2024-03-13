@@ -4,7 +4,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thezayin.kainaclean.booking.domain.model.Booking
 import com.thezayin.kainaclean.auth.domain.usecases.AuthenticationUseCases
 import com.thezayin.kainaclean.booking.domain.usecases.BookingUseCases
 import com.thezayin.kainaclean.util.Response
@@ -17,8 +16,6 @@ class BookingViewModel @Inject constructor(
     private val useCases: BookingUseCases,
     private val authUseCases: AuthenticationUseCases
 ) : ViewModel() {
-    private val _bookingData = mutableStateOf<Response<List<Booking>>>(Response.Loading)
-    val BookingData: State<Response<List<Booking>>> = _bookingData
 
     private val _sendBooking = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val sendBooking: State<Response<Boolean>> = _sendBooking

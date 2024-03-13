@@ -61,7 +61,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -74,19 +74,19 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.02"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //firebase
-    implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation("com.google.firebase:firebase-database:20.3.1")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("com.google.firebase:firebase-appcheck-debug:17.1.2")
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
 
     // Add the dependency for the App Check library
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -99,59 +99,57 @@ dependencies {
 
     //Compose Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation ("androidx.navigation:navigation-compose:2.4.0-alpha02")
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
 
     //Custom Navigation
-    implementation("io.github.raamcosta.compose-destinations:core:1.10.1")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.10.1")
-
+    implementation("io.github.raamcosta.compose-destinations:core:1.10.2")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.10.2")
 
     //Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.49")
-    kapt("com.google.dagger:hilt-compiler:2.48")
+    implementation("com.google.dagger:hilt-android:2.51")
+    kapt("com.google.dagger:hilt-compiler:2.51")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     //Coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     //Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //Compose Foundation
-    implementation("androidx.compose.foundation:foundation:1.6.2")
+    implementation("androidx.compose.foundation:foundation:1.6.3")
 
     //Accompanist
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 
     //Paging 3
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.paging:paging-compose:3.2.1")
 
     //slider
-    implementation("com.google.accompanist:accompanist-pager:0.22.0-rc")
+    implementation("com.google.accompanist:accompanist-pager:0.34.0")
 
     //Room
     implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
    //Date Time Picker
-    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.9.0")
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
 
     //font
-    implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.2")
+    implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.3")
 
     //Moshi
-    implementation ("com.squareup.moshi:moshi:1.14.0")
+    implementation ("com.squareup.moshi:moshi:1.15.1")
     // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     // Retrofit with Moshi Converter
-    implementation ("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.15.1")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
 }

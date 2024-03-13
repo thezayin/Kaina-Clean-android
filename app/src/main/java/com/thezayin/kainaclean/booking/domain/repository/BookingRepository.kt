@@ -1,6 +1,5 @@
 package com.thezayin.kainaclean.booking.domain.repository
 
-import com.thezayin.kainaclean.booking.domain.model.Booking
 import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.flow.Flow
 

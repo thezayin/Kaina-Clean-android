@@ -57,7 +57,7 @@ fun BookingsDetailsCard(
                     modifier = Modifier
                         .clip(RoundedCornerShape(40.dp))
                         .size(48.dp)
-                        .background(colorResource(id = R.color.icon_bg))
+                        .background(colorResource(id = R.color.light_purple))
                         .align(Alignment.CenterVertically),
                 ) {
                     Image(

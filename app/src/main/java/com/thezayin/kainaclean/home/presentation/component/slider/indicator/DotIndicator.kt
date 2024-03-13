@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.home.slider.indicator
+package com.thezayin.kainaclean.home.presentation.component.slider.indicator
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding

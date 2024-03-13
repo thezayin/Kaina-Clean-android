@@ -34,7 +34,8 @@ fun BookingCard(bookings: Bookings, callBack: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 20.dp).clickable { callBack() },
+            .padding(top = 20.dp)
+            .clickable { callBack() },
         colors = CardDefaults.cardColors(
             colorResource(id = R.color.background)
         ),
@@ -50,7 +51,7 @@ fun BookingCard(bookings: Bookings, callBack: () -> Unit) {
                 modifier = Modifier
                     .clip(RoundedCornerShape(40.dp))
                     .size(48.dp)
-                    .background(colorResource(id = R.color.icon_bg))
+                    .background(colorResource(id = R.color.light_purple))
                     .align(Alignment.CenterVertically),
             ) {
                 Image(
