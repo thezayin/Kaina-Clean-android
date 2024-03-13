@@ -45,7 +45,7 @@ fun HomeItemCard(home: Home, modifier: Modifier) {
                 modifier = Modifier
                     .padding(
                         vertical = 5.dp
-                    )
+                    ).padding(10.dp)
                     .size(80.dp),
                 alignment = Alignment.Center
             )
@@ -54,7 +54,8 @@ fun HomeItemCard(home: Home, modifier: Modifier) {
                 text = home.title,
                 modifier = Modifier
                     .padding(bottom = 20.dp)
-                    .widthIn(60.dp).fillMaxWidth(),
+                    .widthIn(60.dp)
+                    .fillMaxWidth(),
                 fontSize = 14.sp,
                 color = colorResource(id = R.color.black),
                 textAlign = TextAlign.Center

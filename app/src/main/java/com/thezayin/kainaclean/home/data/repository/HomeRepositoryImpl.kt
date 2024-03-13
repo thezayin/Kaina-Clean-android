@@ -18,7 +18,7 @@ class HomeRepositoryImpl @Inject constructor() : HomeRepository {
                 Home(icon = R.drawable.ic_stuf, title = "Services"),
                 Home(icon = R.drawable.ic_bulltet, title = "Quote History"),
                 Home(icon = R.drawable.ic_list, title = "Estimate History"),
-                Home(icon = R.drawable.ic_stuf, title = "Logout")
+                Home(icon = R.drawable.ic_price, title = "Pricing")
             )
             emit(Response.Success(list))
         } catch (e: Exception) {
