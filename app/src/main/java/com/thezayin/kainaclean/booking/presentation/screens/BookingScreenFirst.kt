@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.booking.presentation.screens
+package com.thezayin.kainaclean.booking.presentation.screens
 
 import android.os.Build
 import android.util.Patterns
@@ -47,8 +47,8 @@ import androidx.compose.ui.window.Dialog
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.component.TopBar
-import com.thezayin.kainaclean.presentation.destinations.BookingScreenSecondDestination
+import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
+import com.thezayin.kainaclean.destinations.BookingScreenSecondDestination
 
 
 @RequiresApi(Build.VERSION_CODES.Q)

@@ -1,11 +1,11 @@
-package com.thezayin.kainaclean.presentation.auth.data.repository
+package com.thezayin.kainaclean.auth.data.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.thezayin.kainaclean.presentation.auth.domain.model.Users
-import com.thezayin.kainaclean.presentation.auth.domain.repository.AuthRepository
+import com.thezayin.kainaclean.auth.domain.model.Users
+import com.thezayin.kainaclean.auth.domain.repository.AuthRepository
 import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

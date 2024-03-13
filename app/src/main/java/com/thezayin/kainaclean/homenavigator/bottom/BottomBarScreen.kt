@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.homenavigator.bottom
+package com.thezayin.kainaclean.homenavigator.bottom
 
 import com.thezayin.kainaclean.R
 

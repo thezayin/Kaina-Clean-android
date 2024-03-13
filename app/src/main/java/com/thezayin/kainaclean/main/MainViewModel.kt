@@ -1,7 +1,7 @@
-package com.thezayin.kainaclean.presentation.main
+package com.thezayin.kainaclean.main
 
 import androidx.lifecycle.ViewModel
-import com.thezayin.kainaclean.presentation.auth.domain.repository.AuthRepository
+import com.thezayin.kainaclean.auth.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.auth.presentation.screens.forget
+package com.thezayin.kainaclean.auth.presentation.screens.forget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,7 +46,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.auth.presentation.viewmodel.AuthViewModel
+import com.thezayin.kainaclean.auth.presentation.viewmodel.AuthViewModel
 import com.thezayin.kainaclean.util.Constants.RESET_PASSWORD_MESSAGE
 import com.thezayin.kainaclean.util.Response.Failure
 import com.thezayin.kainaclean.util.Response.Loading

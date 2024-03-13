@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.domain.model
+package com.thezayin.kainaclean.chatbot.domain.model
 
 data class Message(
     val sender:String?,

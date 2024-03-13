@@ -1,8 +1,8 @@
-package com.thezayin.kainaclean.data.repository
+package com.thezayin.kainaclean.chatbot.data.repository
 
-import com.thezayin.kainaclean.data.api.BotApi
-import com.thezayin.kainaclean.domain.model.Message
-import com.thezayin.kainaclean.domain.repository.BotRepository
+import com.thezayin.kainaclean.chatbot.data.api.BotApi
+import com.thezayin.kainaclean.chatbot.domain.model.Message
+import com.thezayin.kainaclean.chatbot.domain.repository.BotRepository
 import javax.inject.Inject
 
 class BotRepositoryImpl @Inject constructor(private val botApi: BotApi) : BotRepository {

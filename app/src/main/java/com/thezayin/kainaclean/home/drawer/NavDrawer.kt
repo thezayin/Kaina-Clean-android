@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.home.drawer
+package com.thezayin.kainaclean.home.drawer
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.home.drawer.model.DrawerItem
+import com.thezayin.kainaclean.home.drawer.model.DrawerItem
 import kotlinx.coroutines.launch
 
 @Preview

@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.chatbot.component
+package com.thezayin.kainaclean.chatbot.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

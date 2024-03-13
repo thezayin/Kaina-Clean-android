@@ -1,15 +1,13 @@
-package com.thezayin.kainaclean.presentation.booking.data.repository
+package com.thezayin.kainaclean.booking.data.repository
 
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.firebase.firestore.FirebaseFirestore
-import com.thezayin.kainaclean.presentation.booking.domain.model.Booking
-import com.thezayin.kainaclean.presentation.booking.domain.repository.BookingRepository
+import com.thezayin.kainaclean.booking.domain.model.Booking
+import com.thezayin.kainaclean.booking.domain.repository.BookingRepository
 import com.thezayin.kainaclean.util.Response
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
@@ -25,21 +23,6 @@ class BookingRepositoryImpl @Inject constructor(
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/M/yyyy")
     val currentDate = sdf.format(Date())
-    override fun getMyBookingFromFireStore(userId: String): Flow<Response<List<Booking>>> =
-        callbackFlow {
-            Response.Loading
-            val snapshotListener = fireStore.collection("bookings").whereEqualTo("userId", userId)
-                .addSnapshotListener { snapShot, error ->
-                    val response = if (snapShot != null) {
-                        val bookingsList = snapShot.toObjects(Booking::class.java)
-                        Response.Success<List<Booking>>(bookingsList)
-                    } else {
-                        Response.Failure(error?.message ?: error.toString())
-                    }
-                    trySend(response).isSuccess
-                }
-            awaitClose { snapshotListener.remove() }
-        }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun addMyBookingToFireStore(
@@ -69,7 +52,7 @@ class BookingRepositoryImpl @Inject constructor(
                 propertyType = propertyType,
                 service = service,
                 date = date,
-                status = "Pending",
+                status = false,
                 remarks = "Pending",
                 requestDate = currentDate,
             )

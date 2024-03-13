@@ -1,6 +1,6 @@
-package com.thezayin.kainaclean.presentation.booking.domain.usecases
+package com.thezayin.kainaclean.booking.domain.usecases
 
-import com.thezayin.kainaclean.presentation.booking.domain.repository.BookingRepository
+import com.thezayin.kainaclean.booking.domain.repository.BookingRepository
 
 class AddBookingUseCase(
     private val repo: BookingRepository

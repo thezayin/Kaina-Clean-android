@@ -1,10 +1,10 @@
-package com.thezayin.kainaclean.domain.usecases.bot_usecases
+package com.thezayin.kainaclean.chatbot.domain.usecases.bot_usecases
 
 import android.net.http.HttpException
 import android.os.Build
 import androidx.annotation.RequiresExtension
-import com.thezayin.kainaclean.domain.model.Message
-import com.thezayin.kainaclean.domain.repository.BotRepository
+import com.thezayin.kainaclean.chatbot.domain.model.Message
+import com.thezayin.kainaclean.chatbot.domain.repository.BotRepository
 import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

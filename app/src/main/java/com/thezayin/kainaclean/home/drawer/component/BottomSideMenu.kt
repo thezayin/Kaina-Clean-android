@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.home.drawer.component
+package com.thezayin.kainaclean.home.drawer.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview

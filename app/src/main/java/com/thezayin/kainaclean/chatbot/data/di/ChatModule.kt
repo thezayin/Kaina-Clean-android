@@ -1,10 +1,10 @@
-package com.thezayin.kainaclean.data.di
+package com.thezayin.kainaclean.chatbot.data.di
 
-import com.thezayin.kainaclean.data.api.BotApi
-import com.thezayin.kainaclean.data.repository.BotRepositoryImpl
-import com.thezayin.kainaclean.domain.repository.BotRepository
-import com.thezayin.kainaclean.domain.usecases.bot_usecases.BotUseCase
-import com.thezayin.kainaclean.domain.usecases.bot_usecases.MessageUseCases
+import com.thezayin.kainaclean.chatbot.data.api.BotApi
+import com.thezayin.kainaclean.chatbot.data.repository.BotRepositoryImpl
+import com.thezayin.kainaclean.chatbot.domain.repository.BotRepository
+import com.thezayin.kainaclean.chatbot.domain.usecases.bot_usecases.BotUseCase
+import com.thezayin.kainaclean.chatbot.domain.usecases.bot_usecases.MessageUseCases
 import com.thezayin.kainaclean.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides

@@ -1,12 +1,12 @@
-package com.thezayin.kainaclean.presentation.booking.presentation.viewmodel
+package com.thezayin.kainaclean.booking.presentation.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thezayin.kainaclean.presentation.booking.domain.model.Booking
-import com.thezayin.kainaclean.presentation.auth.domain.usecases.AuthenticationUseCases
-import com.thezayin.kainaclean.presentation.booking.domain.usecases.BookingUseCases
+import com.thezayin.kainaclean.booking.domain.model.Booking
+import com.thezayin.kainaclean.auth.domain.usecases.AuthenticationUseCases
+import com.thezayin.kainaclean.booking.domain.usecases.BookingUseCases
 import com.thezayin.kainaclean.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

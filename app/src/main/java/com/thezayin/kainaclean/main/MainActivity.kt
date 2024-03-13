@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.main
+package com.thezayin.kainaclean.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,7 +9,7 @@ import com.google.firebase.appcheck.appCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.initialize
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.thezayin.kainaclean.presentation.NavGraphs
+import com.thezayin.kainaclean.NavGraphs
 import com.thezayin.kainaclean.ui.theme.KainaCleanTheme
 import dagger.hilt.android.AndroidEntryPoint
 

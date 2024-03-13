@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.booking.domain.model
+package com.thezayin.kainaclean.booking.domain.model
 
 data class Booking(
     val userId: String? = null,
@@ -12,7 +12,7 @@ data class Booking(
     val propertyType: String? = null,
     val service: String? = null,
     val date: String? = null,
-    val status: String? = "Pending",
+    val status: Boolean? = false,
     val remarks: String? = null,
     val requestDate: String? = null,
 )

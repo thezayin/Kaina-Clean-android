@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.services
+package com.thezayin.kainaclean.services
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.component.TopBar
+import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
 
 @Destination
 @Composable

@@ -1,6 +1,6 @@
-package com.thezayin.kainaclean.domain.repository
+package com.thezayin.kainaclean.chatbot.domain.repository
 
-import com.thezayin.kainaclean.domain.model.Message
+import com.thezayin.kainaclean.chatbot.domain.model.Message
 
 interface BotRepository {
     suspend fun sendMessage(string: String): Message

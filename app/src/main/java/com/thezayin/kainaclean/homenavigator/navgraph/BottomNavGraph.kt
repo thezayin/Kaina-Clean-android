@@ -1,10 +1,10 @@
-package com.thezayin.kainaclean.presentation.homenavigator.navgraph
+package com.thezayin.kainaclean.homenavigator.navgraph
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.thezayin.kainaclean.presentation.homenavigator.bottom.BottomBarScreen
+import com.thezayin.kainaclean.homenavigator.bottom.BottomBarScreen
 
 
 @Composable

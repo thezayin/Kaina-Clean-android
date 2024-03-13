@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.booking.presentation.screens
+package com.thezayin.kainaclean.booking.presentation.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -21,6 +21,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -30,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,12 +54,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.booking.presentation.viewmodel.BookingViewModel
-import com.thezayin.kainaclean.presentation.component.TopBar
-import com.thezayin.kainaclean.presentation.toast.Toast
+import com.thezayin.kainaclean.booking.presentation.viewmodel.BookingViewModel
+import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
+import com.thezayin.kainaclean.destinations.HomeScreenDestination
+import com.thezayin.kainaclean.toast.Toast
 import com.thezayin.kainaclean.util.Constants.DATE_LENGTH
-import com.thezayin.kainaclean.util.Constants.DATE_MASK
-import com.thezayin.kainaclean.util.MaskVisualTransformation
+import com.thezayin.kainaclean.util.DateUtils
 import com.thezayin.kainaclean.util.Response
 import com.thezayin.kainaclean.util.Utils
 
@@ -73,6 +76,16 @@ fun BookingScreenThird(
     city: String,
     postCode: String
 ) {
+
+    val dateState = rememberDatePickerState()
+    val millisToLocalDate = dateState.selectedDateMillis?.let {
+        DateUtils().convertMillisToLocalDate(it)
+    }
+    val dateToString = millisToLocalDate?.let {
+        DateUtils().dateToString(millisToLocalDate)
+    } ?: "Select"
+
+    var showDialog by remember { mutableStateOf(false) }
 
     val propertyTypeList = arrayOf(
         "Domestic", "Commercial"
@@ -269,20 +282,21 @@ fun BookingScreenThird(
             }
 
             TextField(
-                value = date,
+                value = dateToString,
                 onValueChange = {
-                    if (it.length <= DATE_LENGTH) {
-                        date = it
-                    }
+                    date = dateToString
                 },
                 placeholder = {
-                    Text(text = "DD-MM-YYYY")
+                    Text(text = "DD-MM-YYYY", color = colorResource(id = R.color.black))
                 },
-                visualTransformation = MaskVisualTransformation(DATE_MASK),
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                    .clickable {
+                        showDialog = true
+                    },
+                enabled = false,
                 shape = RoundedCornerShape(8.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = colorResource(id = R.color.ed_background),
@@ -290,8 +304,12 @@ fun BookingScreenThird(
                     disabledLabelColor = colorResource(id = R.color.red),
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
+                    disabledTextColor = colorResource(id = R.color.black),
                     focusedTextColor = colorResource(id = R.color.black),
-                    unfocusedTextColor = colorResource(id = R.color.black)
+                    unfocusedTextColor = colorResource(id = R.color.black),
+                    disabledSupportingTextColor = colorResource(id = R.color.black),
+                    focusedSupportingTextColor = colorResource(id = R.color.black),
+                    disabledContainerColor = colorResource(id = R.color.ed_background)
                 )
             )
 
@@ -303,7 +321,7 @@ fun BookingScreenThird(
             ) {
                 Button(
                     onClick = {
-                        if (propertySelectedText.isEmpty() || serviceSelectedText.isEmpty() || date.isEmpty()) {
+                        if (propertySelectedText.isEmpty() || serviceSelectedText.isEmpty() || dateToString.length < DATE_LENGTH) {
                             openDialog.value = true
                         } else {
                             isLoading = true
@@ -316,7 +334,7 @@ fun BookingScreenThird(
                                 postCode,
                                 propertySelectedText,
                                 serviceSelectedText,
-                                date
+                                dateToString
                             )
                         }
 
@@ -341,7 +359,7 @@ fun BookingScreenThird(
 
                         is Response.Success -> {
                             if (response.data) {
-                                navigator.popBackStack()
+                                navigator.navigate(HomeScreenDestination)
                                 isLoading = false
                             }
                         }
@@ -445,6 +463,31 @@ fun BookingScreenThird(
                     }
                 }
             }
+        }
+    }
+
+    if (showDialog) {
+        DatePickerDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                Button(
+                    onClick = { showDialog = false }
+                ) {
+                    Text(text = "OK")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showDialog = false }
+                ) {
+                    Text(text = "Cancel")
+                }
+            }
+        ) {
+            DatePicker(
+                state = dateState,
+                showModeToggle = true
+            )
         }
     }
 }

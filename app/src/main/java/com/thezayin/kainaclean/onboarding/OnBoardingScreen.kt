@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.onboarding
+package com.thezayin.kainaclean.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,15 +36,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.auth.presentation.viewmodel.AuthViewModel
-import com.thezayin.kainaclean.presentation.destinations.HomeScreenDestination
-import com.thezayin.kainaclean.presentation.destinations.LoginScreenDestination
+import com.thezayin.kainaclean.auth.presentation.viewmodel.AuthViewModel
+import com.thezayin.kainaclean.destinations.HomeScreenDestination
+import com.thezayin.kainaclean.destinations.LoginScreenDestination
 import com.thezayin.kainaclean.util.checkForInternet
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
-@Destination(start = true)
 fun OnBoardingScreen(
     navigator: DestinationsNavigator
 ) {

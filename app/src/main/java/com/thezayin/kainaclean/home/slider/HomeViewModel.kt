@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.home.slider
+package com.thezayin.kainaclean.home.slider
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

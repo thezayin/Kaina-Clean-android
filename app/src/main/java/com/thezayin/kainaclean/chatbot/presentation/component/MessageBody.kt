@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.chatbot.component
+package com.thezayin.kainaclean.chatbot.presentation.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +18,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.domain.model.Message
+import com.thezayin.kainaclean.chatbot.domain.model.Message
 
 @Composable
 fun MessageBody(message: Message) {

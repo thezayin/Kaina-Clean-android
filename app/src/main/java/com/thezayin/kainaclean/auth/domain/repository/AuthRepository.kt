@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.auth.domain.repository
+package com.thezayin.kainaclean.auth.domain.repository
 
 
 import com.thezayin.kainaclean.util.Response

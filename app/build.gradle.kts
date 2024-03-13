@@ -3,9 +3,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
     id ("com.google.devtools.ksp") version "1.9.22-1.0.17"
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
 }
 
 android {

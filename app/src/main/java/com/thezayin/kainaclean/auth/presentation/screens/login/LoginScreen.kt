@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.auth.presentation.screens.login
+package com.thezayin.kainaclean.auth.presentation.screens.login
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -47,14 +47,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.auth.presentation.viewmodel.AuthViewModel
-import com.thezayin.kainaclean.presentation.destinations.ForgetPasswordScreenDestination
-import com.thezayin.kainaclean.presentation.destinations.HomeScreenDestination
-import com.thezayin.kainaclean.presentation.destinations.SignUpScreenDestination
+import com.thezayin.kainaclean.auth.presentation.viewmodel.AuthViewModel
+import com.thezayin.kainaclean.destinations.ForgetPasswordScreenDestination
+import com.thezayin.kainaclean.destinations.HomeScreenDestination
+import com.thezayin.kainaclean.destinations.SignUpScreenDestination
 import com.thezayin.kainaclean.util.Response.Failure
 import com.thezayin.kainaclean.util.Response.Loading
 import com.thezayin.kainaclean.util.Response.Success
-
 @Destination
 @Composable
 fun LoginScreen(

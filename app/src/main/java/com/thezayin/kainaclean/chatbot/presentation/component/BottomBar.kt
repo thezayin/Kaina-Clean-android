@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.chatbot.component
+package com.thezayin.kainaclean.chatbot.presentation.component
 
 import android.os.Build
 import androidx.annotation.RequiresExtension
@@ -32,7 +32,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.chatbot.ChatBotViewModel
+import com.thezayin.kainaclean.chatbot.presentation.ChatBotViewModel
 import kotlinx.coroutines.launch
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)

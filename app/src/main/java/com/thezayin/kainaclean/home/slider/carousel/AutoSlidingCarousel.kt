@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.home.slider.carousel
+package com.thezayin.kainaclean.home.slider.carousel
 
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
-import com.thezayin.kainaclean.presentation.home.slider.indicator.DotsIndicator
+import com.thezayin.kainaclean.home.slider.indicator.DotsIndicator
 
 import kotlinx.coroutines.delay
 

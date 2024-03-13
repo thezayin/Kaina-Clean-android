@@ -5,7 +5,7 @@
 //import androidx.lifecycle.ViewModel
 //import androidx.lifecycle.viewModelScope
 //import com.thezayin.kainaclean.domain.model.Quote
-//import com.thezayin.kainaclean.presentation.auth.domain.usecases.AuthenticationUseCases
+//import com.thezayin.kainaclean.auth.domain.usecases.AuthenticationUseCases
 //import com.thezayin.kainaclean.presentation.booking.domain.usecase.BookingUseCases
 //import com.thezayin.kainaclean.util.Response
 //import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.auth.domain.usecases
+package com.thezayin.kainaclean.auth.domain.usecases
 
 data class AuthenticationUseCases(
     val firebaseAuthState: FirebaseAuthState,

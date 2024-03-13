@@ -1,6 +1,6 @@
-package com.thezayin.kainaclean.presentation.auth.domain.usecases
+package com.thezayin.kainaclean.auth.domain.usecases
 
-import com.thezayin.kainaclean.presentation.auth.domain.repository.AuthRepository
+import com.thezayin.kainaclean.auth.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class GetCurrentUser @Inject constructor(

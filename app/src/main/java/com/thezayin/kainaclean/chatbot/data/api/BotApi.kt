@@ -1,6 +1,6 @@
-package com.thezayin.kainaclean.data.api
+package com.thezayin.kainaclean.chatbot.data.api
 
-import com.thezayin.kainaclean.domain.model.Message
+import com.thezayin.kainaclean.chatbot.domain.model.Message
 import retrofit2.http.GET
 import retrofit2.http.Query
 

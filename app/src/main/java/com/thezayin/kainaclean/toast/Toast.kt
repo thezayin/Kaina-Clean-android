@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.toast
+package com.thezayin.kainaclean.toast
 
 import android.widget.Toast.makeText
 import androidx.compose.runtime.Composable

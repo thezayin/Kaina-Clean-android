@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.home
+package com.thezayin.kainaclean.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,11 +46,11 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.destinations.BookingScreenFirstDestination
-import com.thezayin.kainaclean.presentation.destinations.ChatBotScreenDestination
-import com.thezayin.kainaclean.presentation.destinations.MyBookingsDestination
-import com.thezayin.kainaclean.presentation.home.drawer.model.DrawerItem
-import com.thezayin.kainaclean.presentation.home.slider.carousel.AutoSlidingCarousel
+import com.thezayin.kainaclean.destinations.BookingScreenFirstDestination
+import com.thezayin.kainaclean.destinations.ChatBotScreenDestination
+import com.thezayin.kainaclean.destinations.GetBookingsDestination
+import com.thezayin.kainaclean.home.drawer.model.DrawerItem
+import com.thezayin.kainaclean.home.slider.carousel.AutoSlidingCarousel
 import kotlinx.coroutines.launch
 
 @Destination
@@ -241,7 +241,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(vertical = 10.dp)
                                 .clickable {
-                                    navigator.navigate(MyBookingsDestination)
+                                    navigator.navigate(GetBookingsDestination)
                                 },
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {

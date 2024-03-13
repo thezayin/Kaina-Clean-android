@@ -1,8 +1,8 @@
-package com.thezayin.kainaclean.presentation.onboarding
+package com.thezayin.kainaclean.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thezayin.kainaclean.presentation.onboarding.event.OnBoardingEvent
+import com.thezayin.kainaclean.onboarding.event.OnBoardingEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

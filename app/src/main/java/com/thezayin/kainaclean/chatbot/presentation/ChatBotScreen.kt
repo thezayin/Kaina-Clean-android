@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.chatbot
+package com.thezayin.kainaclean.chatbot.presentation
 
 import android.os.Build
 import androidx.annotation.RequiresExtension
@@ -19,9 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.presentation.chatbot.component.BottomBar
-import com.thezayin.kainaclean.presentation.chatbot.component.MessageBody
-import com.thezayin.kainaclean.presentation.component.TopBar
+import com.thezayin.kainaclean.chatbot.presentation.component.BottomBar
+import com.thezayin.kainaclean.chatbot.presentation.component.MessageBody
+import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
 
 @Destination
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)

@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.auth.domain.model
+package com.thezayin.kainaclean.auth.domain.model
 
 data class Users(
     var userId: String = "",

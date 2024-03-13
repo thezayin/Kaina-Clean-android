@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.presentation.chatbot
+package com.thezayin.kainaclean.chatbot.presentation
 
 import android.os.Build
 import android.util.Log
@@ -6,8 +6,8 @@ import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thezayin.kainaclean.domain.model.Message
-import com.thezayin.kainaclean.domain.usecases.bot_usecases.MessageUseCases
+import com.thezayin.kainaclean.chatbot.domain.model.Message
+import com.thezayin.kainaclean.chatbot.domain.usecases.bot_usecases.MessageUseCases
 import com.thezayin.kainaclean.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

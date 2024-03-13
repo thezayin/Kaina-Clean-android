@@ -1,12 +1,10 @@
-package com.thezayin.kainaclean.presentation.booking.domain.repository
+package com.thezayin.kainaclean.booking.domain.repository
 
-import com.thezayin.kainaclean.presentation.booking.domain.model.Booking
+import com.thezayin.kainaclean.booking.domain.model.Booking
 import com.thezayin.kainaclean.util.Response
 import kotlinx.coroutines.flow.Flow
 
 interface BookingRepository {
-
-    fun getMyBookingFromFireStore(userId: String): Flow<Response<List<Booking>>>
 
     fun addMyBookingToFireStore(
         userId: String,
