@@ -2,6 +2,7 @@ package com.thezayin.kainaclean.home.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,25 +30,35 @@ fun HomeScreen(
     navigator: DestinationsNavigator
 ) {
     val homeViewModel: HomeViewModel = hiltViewModel()
-
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(horizontal = 20.dp)
             .navigationBarsPadding()
-            .background(color = colorResource(R.color.background)),
+            .background(color = colorResource(R.color.background))
     ) {
-        HomeTopBar()
-        HomeImageSlider(modifier = Modifier)
-        HomeIcons(homeViewModel = homeViewModel, modifier = Modifier, navigator = navigator)
-
         Column(
-            modifier = Modifier.fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
+            modifier = Modifier
+                .fillMaxSize()
+
+                .padding(horizontal = 20.dp),
         ) {
-            HomeBottomNav(navigator = navigator, modifier = Modifier)
+            HomeTopBar(modifier = Modifier.weight(0.11f))
+            HomeImageSlider(modifier = Modifier.weight(0.3f))
+            HomeIcons(
+                homeViewModel = homeViewModel,
+                modifier = Modifier.weight(0.4f),
+                navigator = navigator
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.2f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                HomeBottomNav(navigator = navigator, modifier = Modifier)
+            }
         }
     }
 }

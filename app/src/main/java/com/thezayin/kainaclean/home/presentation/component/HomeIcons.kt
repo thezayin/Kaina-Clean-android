@@ -1,10 +1,9 @@
 package com.thezayin.kainaclean.home.presentation.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -14,9 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
+import com.thezayin.kainaclean.destinations.QuoteHistoryScreenDestination
 import com.thezayin.kainaclean.destinations.QuoteScreenDestination
 import com.thezayin.kainaclean.home.presentation.viewmodel.HomeViewModel
 import com.thezayin.kainaclean.util.Response
@@ -26,8 +27,7 @@ fun HomeIcons(homeViewModel: HomeViewModel, modifier: Modifier, navigator: Desti
     val state = homeViewModel.getHomeState.list
     Scaffold(
         modifier = modifier
-            .background(color = colorResource(R.color.background))
-            .heightIn(max = 400.dp),
+            .background(color = colorResource(R.color.background)),
         containerColor = colorResource(
             id = R.color.background
         ),
@@ -46,7 +46,11 @@ fun HomeIcons(homeViewModel: HomeViewModel, modifier: Modifier, navigator: Desti
                 }
 
                 is Response.Failure -> {
-                    Text(text = "Unable to load data", modifier = Modifier.fillMaxWidth())
+                    Text(
+                        text = "Unable to load data",
+                        modifier = Modifier.fillMaxSize(),
+                        textAlign = TextAlign.Center
+                    )
                 }
 
                 is Response.Success -> {
@@ -55,14 +59,28 @@ fun HomeIcons(homeViewModel: HomeViewModel, modifier: Modifier, navigator: Desti
                         modifier = Modifier
                             .background(color = colorResource(R.color.background))
                             .fillMaxWidth()
-                            .heightIn(max = 400.dp)
+                            .padding(bottom = 18.dp, top = 10.dp)
                     ) {
                         items(state.data.size) { item ->
-                            HomeItemCard(state.data[item], modifier = Modifier.clickable {
-                                if (state.data[item].title == "Quote") {
-                                    navigator.navigate(QuoteScreenDestination)
-                                }
-                            })
+                            HomeItemCard(
+                                state.data[item],
+                                modifier = Modifier,
+                                onItemClick = { selected ->
+                                    if (selected.title == "Quote") {
+                                        navigator.navigate(QuoteScreenDestination)
+                                    } else if (selected.title == "Estimate") {
+//                                        navigator.navigate("estimate")
+                                    } else if (selected.title == "Services") {
+//                                        navigator.navigate("services")
+                                    } else if (selected.title == "Quote History") {
+                                        navigator.navigate(QuoteHistoryScreenDestination)
+                                    } else if (selected.title == "Estimate History") {
+                                        navigator.navigate(QuoteScreenDestination)
+                                    } else if (selected.title == "Pricing") {
+//                                        navigator.navigate("pricing")
+                                    }
+
+                                })
                         }
                     }
                 }

@@ -20,7 +20,6 @@ class BookingViewModel @Inject constructor(
     private val _sendBooking = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val sendBooking: State<Response<Boolean>> = _sendBooking
 
-
     fun sendBooking(
         name: String,
         email: String,

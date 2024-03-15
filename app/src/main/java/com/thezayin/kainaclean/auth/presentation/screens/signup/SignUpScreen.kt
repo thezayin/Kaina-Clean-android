@@ -55,7 +55,6 @@ import com.thezayin.kainaclean.util.Response.Success
 import com.thezayin.kainaclean.util.Utils
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun SignUpScreen(navigator: DestinationsNavigator) {

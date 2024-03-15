@@ -8,7 +8,6 @@ interface QuoteServiceRepository {
         userId: String,
         serviceType: String,
         address: String,
-        date: String,
         quote: String,
     ): Flow<Response<Boolean>>
 }

@@ -5,7 +5,6 @@ data class QuoteService(
     val quoteId: String,
     val serviceType: String,
     val address: String,
-    val date: String,
     val status: Boolean,
     val remarks: String,
     val currentDate: String,

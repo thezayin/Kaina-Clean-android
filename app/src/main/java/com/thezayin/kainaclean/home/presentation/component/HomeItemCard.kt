@@ -19,21 +19,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.home.domain.model.Home
 
 @Composable
-fun HomeItemCard(home: Home, modifier: Modifier) {
+fun HomeItemCard(home: Home, modifier: Modifier, onItemClick: (Home) -> Unit) {
     Card(
-        modifier = modifier.padding(
-            start = 8.dp,
-            end = 8.dp,
-            top = 8.dp,
-            bottom = 8.dp,
-        ).clickable {
-
-        },
+        modifier = modifier
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                top = 8.dp,
+                bottom = 8.dp,
+            )
+            .clickable {
+                onItemClick(home)
+            },
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.background),
         ),
@@ -49,7 +50,8 @@ fun HomeItemCard(home: Home, modifier: Modifier) {
                 modifier = Modifier
                     .padding(
                         vertical = 5.dp
-                    ).padding(10.dp)
+                    )
+                    .padding(10.dp)
                     .size(80.dp),
                 alignment = Alignment.Center
             )

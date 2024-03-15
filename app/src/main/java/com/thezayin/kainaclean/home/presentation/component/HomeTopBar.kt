@@ -20,11 +20,10 @@ import androidx.compose.ui.unit.dp
 import com.thezayin.kainaclean.R
 import kotlinx.coroutines.launch
 
-@Preview
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(modifier: Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 20.dp),
         horizontalArrangement = Arrangement.SpaceBetween

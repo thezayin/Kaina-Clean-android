@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 
+@Suppress("NAME_SHADOWING")
 class QuoteServiceRepositoryImpl @Inject constructor(val fireStore: FirebaseFirestore) :
     QuoteServiceRepository {
 
@@ -19,13 +20,12 @@ class QuoteServiceRepositoryImpl @Inject constructor(val fireStore: FirebaseFire
 
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/MM/yyyy")
-    private val currentDate = sdf.format(Date())
+    private val currentDate: String = sdf.format(Date())
 
     override fun addQuoteService(
         userId: String,
         serviceType: String,
         address: String,
-        date: String,
         quote: String,
     ): Flow<Response<Boolean>> = flow {
         operationSuccessFull = false
@@ -36,13 +36,12 @@ class QuoteServiceRepositoryImpl @Inject constructor(val fireStore: FirebaseFire
                 quoteId = quoteId,
                 address = address,
                 serviceType = serviceType,
-                date = date,
                 status = false,
                 currentDate = currentDate,
                 remarks = "Pending",
                 quote = quote,
             )
-            fireStore.collection("bookings").document(quoteId).set(quote)
+            fireStore.collection("quotes").document(quoteId).set(quote)
                 .addOnSuccessListener {
                     operationSuccessFull = true
                 }.await()

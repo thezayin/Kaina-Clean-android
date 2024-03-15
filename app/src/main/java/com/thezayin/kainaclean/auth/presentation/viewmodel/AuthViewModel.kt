@@ -1,6 +1,5 @@
 package com.thezayin.kainaclean.auth.presentation.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -27,9 +26,6 @@ class AuthViewModel @Inject constructor(
     private val _signOutState = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val signOutState: State<Response<Boolean>> = _signOutState
 
-    private val _authState = mutableStateOf<Boolean>(false)
-    val authState: State<Boolean> = _authState
-
     private val _recoverPasswordState = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val recoverPasswordState: State<Response<Boolean>> = _recoverPasswordState
 
@@ -49,7 +45,6 @@ class AuthViewModel @Inject constructor(
                 email, password
             ).collect {
                 _signUpState.value = it
-                Log.d("JejeView", _signUpState.value.toString())
             }
         }
     }
@@ -69,14 +64,6 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             auth.firebaseForgetPassword(email).collect {
                 _recoverPasswordState.value = it
-            }
-        }
-    }
-
-    fun getAuthState() {
-        viewModelScope.launch {
-            auth.firebaseAuthState().collect {
-                _authState.value = it
             }
         }
     }
