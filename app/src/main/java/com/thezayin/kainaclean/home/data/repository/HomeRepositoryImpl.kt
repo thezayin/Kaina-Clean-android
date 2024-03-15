@@ -13,13 +13,13 @@ class HomeRepositoryImpl @Inject constructor() : HomeRepository {
         try {
             emit(Response.Loading)
             val list = listOf(
-                Home(icon = R.drawable.ic_quote, title = "Quote"),
-                Home(icon = R.drawable.ic_estimate, title = "Estimate"),
+                Home(icon = R.drawable.ic_price, title = "Pricing"),
                 Home(icon = R.drawable.ic_stuf, title = "Services"),
+                Home(icon = R.drawable.ic_quote, title = "Request Quote"),
+                Home(icon = R.drawable.ic_estimate, title = "Request Estimate"),
                 Home(icon = R.drawable.ic_bulltet, title = "Quote History"),
                 Home(icon = R.drawable.ic_list, title = "Estimate History"),
-                Home(icon = R.drawable.ic_price, title = "Pricing")
-            )
+                )
             emit(Response.Success(list))
         } catch (e: Exception) {
             emit(Response.Failure(e.localizedMessage ?: "Unexpected Error"))

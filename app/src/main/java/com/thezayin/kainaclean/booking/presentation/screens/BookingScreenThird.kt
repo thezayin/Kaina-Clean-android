@@ -109,7 +109,7 @@ fun BookingScreenThird(
     var propertyExpanded by remember { mutableStateOf(false) }
     var date by remember { mutableStateOf("") }
     var propertySelectedText by remember { mutableStateOf(propertyTypeList[0]) }
-    var serviceSelectedText by remember { mutableStateOf(propertyTypeList[0]) }
+    var serviceSelectedText by remember { mutableStateOf(serviceTypeList[0]) }
     var serviceExpanded by remember { mutableStateOf(false) }
     val viewModel: BookingViewModel = hiltViewModel()
     val openDialog = remember { mutableStateOf(false) }

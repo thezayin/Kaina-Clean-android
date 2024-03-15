@@ -22,7 +22,7 @@ class BookingRepositoryImpl @Inject constructor(
 
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("dd/M/yyyy")
-    val currentDate = sdf.format(Date())
+    private val currentDate: String = sdf.format(Date())
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun addMyBookingToFireStore(

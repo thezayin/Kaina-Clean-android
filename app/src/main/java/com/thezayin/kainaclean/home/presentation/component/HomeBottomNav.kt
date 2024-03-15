@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
+import com.thezayin.kainaclean.destinations.BookingHistoryDestination
 import com.thezayin.kainaclean.destinations.BookingScreenFirstDestination
 import com.thezayin.kainaclean.destinations.ChatBotScreenDestination
-import com.thezayin.kainaclean.destinations.GetBookingsDestination
 
 @Composable
 fun HomeBottomNav(
@@ -85,7 +85,7 @@ fun HomeBottomNav(
                 modifier = Modifier
                     .padding(vertical = 10.dp)
                     .clickable {
-                        navigator.navigate(GetBookingsDestination)
+                        navigator.navigate(BookingHistoryDestination)
                     },
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

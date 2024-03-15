@@ -15,16 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thezayin.kainaclean.R
-import kotlinx.coroutines.launch
 
-@Preview
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(modifier: Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 20.dp),
         horizontalArrangement = Arrangement.SpaceBetween
