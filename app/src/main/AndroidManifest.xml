@@ -29,7 +29,6 @@
         <activity
             android:name=".main.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/App.Starting.Theme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

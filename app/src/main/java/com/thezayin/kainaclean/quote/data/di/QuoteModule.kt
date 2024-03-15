@@ -2,13 +2,9 @@ package com.thezayin.kainaclean.quote.data.di
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.thezayin.kainaclean.quote.data.repository.QuoteServiceRepositoryImpl
-import com.thezayin.kainaclean.services.data.repository.ServiceOptionsRepositoryImpl
 import com.thezayin.kainaclean.quote.domain.repository.QuoteServiceRepository
-import com.thezayin.kainaclean.services.domain.repository.ServiceOptionsRepository
-import com.thezayin.kainaclean.services.domain.usecases.QuoteServiceCase
 import com.thezayin.kainaclean.quote.domain.usecases.QuoteUseCases
-import com.thezayin.kainaclean.quote.domain.usecases.service.ServiceUseCases
-import com.thezayin.kainaclean.services.domain.usecases.ServicesOptionCase
+import com.thezayin.kainaclean.services.domain.usecases.QuoteServiceCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

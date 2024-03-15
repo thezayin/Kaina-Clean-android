@@ -66,18 +66,30 @@ fun HomeIcons(homeViewModel: HomeViewModel, modifier: Modifier, navigator: Desti
                                 state.data[item],
                                 modifier = Modifier,
                                 onItemClick = { selected ->
-                                    if (selected.title == "Quote") {
-                                        navigator.navigate(QuoteScreenDestination)
-                                    } else if (selected.title == "Estimate") {
-//                                        navigator.navigate("estimate")
-                                    } else if (selected.title == "Services") {
-//                                        navigator.navigate("services")
-                                    } else if (selected.title == "Quote History") {
-                                        navigator.navigate(QuoteHistoryScreenDestination)
-                                    } else if (selected.title == "Estimate History") {
-                                        navigator.navigate(QuoteScreenDestination)
-                                    } else if (selected.title == "Pricing") {
-//                                        navigator.navigate("pricing")
+                                    when (selected.title) {
+                                        "Quote" -> {
+                                            navigator.navigate(QuoteScreenDestination)
+                                        }
+
+                                        "Estimate" -> {
+                                            //                                        navigator.navigate("estimate")
+                                        }
+
+                                        "Services" -> {
+                                            //                                        navigator.navigate("services")
+                                        }
+
+                                        "Quote History" -> {
+                                            navigator.navigate(QuoteHistoryScreenDestination)
+                                        }
+
+                                        "Estimate History" -> {
+                                            navigator.navigate(QuoteScreenDestination)
+                                        }
+
+                                        "Pricing" -> {
+                                            //                                        navigator.navigate("pricing")
+                                        }
                                     }
 
                                 })
