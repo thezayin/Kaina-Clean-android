@@ -19,7 +19,7 @@ class HomeRepositoryImpl @Inject constructor() : HomeRepository {
                 Home(icon = R.drawable.ic_estimate, title = "Request Estimate"),
                 Home(icon = R.drawable.ic_bulltet, title = "Quote History"),
                 Home(icon = R.drawable.ic_list, title = "Estimate History"),
-                )
+            )
             emit(Response.Success(list))
         } catch (e: Exception) {
             emit(Response.Failure(e.localizedMessage ?: "Unexpected Error"))

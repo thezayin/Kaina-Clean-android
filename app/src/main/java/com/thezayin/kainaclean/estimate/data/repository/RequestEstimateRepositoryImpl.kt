@@ -29,7 +29,7 @@ class RequestEstimateRepositoryImpl @Inject constructor(val fireStore: FirebaseF
     ): Flow<Response<Boolean>> = flow {
         operationSuccessFull = false
         try {
-            val estimateId = fireStore.collection("estimate").document().id
+            val estimateId = fireStore.collection("requested_estimated").document().id
             val estimate = Estimate(
                 userId = userId,
                 estimateId = estimateId,
@@ -37,9 +37,10 @@ class RequestEstimateRepositoryImpl @Inject constructor(val fireStore: FirebaseF
                 date = date,
                 serviceRequired = service,
                 addedDate = currentDate,
-                propertyType = propertyType
+                propertyType = propertyType,
+                status = false
             )
-            fireStore.collection("estimate").document(estimateId).set(estimate)
+            fireStore.collection("requested_estimates").document(estimateId).set(estimate)
                 .addOnSuccessListener {
                     operationSuccessFull = true
                 }.await()

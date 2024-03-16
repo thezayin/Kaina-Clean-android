@@ -4,6 +4,7 @@ import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -15,8 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.PagerScope
 import com.thezayin.kainaclean.home.presentation.component.slider.indicator.DotsIndicator
 
 import kotlinx.coroutines.delay
@@ -38,7 +38,12 @@ fun AutoSlidingCarousel(
     Box(
         modifier = modifier.fillMaxWidth(),
     ) {
-        HorizontalPager(count = itemsCount, state = pagerState) { page ->
+        PaddingValues(0.dp)
+        PagerDefaults.flingBehavior(
+            state = state,
+            endContentPadding = contentPadding.calculateEndPadding(LayoutDirection.Ltr),
+        )
+        fun PagerScope.(page: Int) {
             itemContent(page)
         }
 

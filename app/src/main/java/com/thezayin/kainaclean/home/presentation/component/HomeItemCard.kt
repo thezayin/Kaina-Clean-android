@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,6 +65,7 @@ fun HomeItemCard(home: Home, modifier: Modifier, onItemClick: (Home) -> Unit) {
                     .widthIn(60.dp)
                     .fillMaxWidth(),
                 fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                 color = colorResource(id = R.color.black),
                 textAlign = TextAlign.Center
             )

@@ -1,5 +1,8 @@
 package com.thezayin.kainaclean.util
 
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
 object Constants {
 
     const val USER_SETTINGS = "user_settings"
@@ -21,57 +24,46 @@ object Constants {
     const val RESET_PASSWORD_BUTTON = "Reset"
     const val SIGN_UP_BUTTON = "Sign up"
 
-    //Menu Items
-    const val SIGN_OUT_ITEM = "Sign out"
-    const val REVOKE_ACCESS_ITEM = "Revoke Access"
+    //SIZES
+    val BUTTON_SIZE = 50.dp
+    val ALERT_CROSS_ICON = 22.dp
+    val ALERT_DIALOG_HEIGHT = 200.dp
+    val ALERT_DIALOG_HORIZONTAL = 24.dp
+    val ALERT_DIALOG_CORNERS = 8.dp
 
-    //Screens
-    const val SIGN_IN_SCREEN = "Sign in"
-    const val FORGOT_PASSWORD_SCREEN = "Forgot password"
-    const val SIGN_UP_SCREEN = "Sign up"
-    const val VERIFY_EMAIL_SCREEN = "Verify email"
-    const val PROFILE_SCREEN = "Profile"
+    //Text sizes
+    val TEXT_SIZE_NORMAL = 16.sp
+    val TEXT_OP_HEADING = 24.sp
+    val TEXT_SUBTITLE = 12.sp
+    val TEXT_FIELD_TEXT_SIZE = 12.sp
+    val ALERT_TITLE = 20.sp
 
-    //Labels
-    const val EMAIL_LABEL = "Email"
-    const val PASSWORD_LABEL = "Password"
+    //Corners
+    val TEXT_FIELD_CORNER_RADIUS = 4.dp
+    val BUTTON_CORNERS_RADIUS = 12.dp
 
-    //Useful
-    const val EMPTY_STRING = ""
-    const val VERTICAL_DIVIDER = "|"
+    //PADDING
+    val HORIZONTAL_PADDING = 20.dp
+    val BOOKING_TEXT_TOP_PADDING = 15.dp
+    val TOP_BAR_BOTTOM_PADDING = 35.dp
+    val TEXT_FIELD_TOP_PADDING = 4.dp
+    val BUTTON_BOTTOM_PADDING = 35.dp
+    val ALERT_DIALOG_BUTTON_PADDING = 35.dp
 
-    //Texts
-    const val FORGOT_PASSWORD = "Forgot password?"
-    const val NO_ACCOUNT = "No account? Sign up."
-    const val ALREADY_USER = "Already a user? Sign in."
-    const val WELCOME_MESSAGE = "Welcome to our app."
-    const val ALREADY_VERIFIED = "Already verified?"
-    const val SPAM_EMAIL = "If not, please also check the spam folder."
+    //CARD
+    val CARDS_CORNERS = 4.dp
+    val CARD_STROKE = 1.dp
+    val CARD_ROW_PADDING = 16.dp
+    val BOUNDARY_CARD_RADIUS = 150.dp
+    val BOUNDARY_CARD_SIZE = 48.dp
+    val CARD_IMAGE_SIZE = 20.dp
+    val CARD_COLUMN_PADDING_START = 12.dp
+    val CARD_TEXT_HISTORY_WIDTH = 180.dp
+    val CARD_TEXT_ABOVE_PADDING = 4.dp
+    val CARD_SUB_TEXT_SIZE = 16.sp
+    val TEXT_SUBTITLE_SIZE = 12.sp
 
-    //Messages
-    const val VERIFY_EMAIL_MESSAGE = "We've sent you an email with a link to verify the email."
-    const val EMAIL_NOT_VERIFIED_MESSAGE = "Your email is not verified."
+
     const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."
-    const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."
-    const val ACCESS_REVOKED_MESSAGE = "Your access has been revoked."
 
-    //Error Messages
-    const val SENSITIVE_OPERATION_MESSAGE =
-        "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
-
-    //Firestore
-    const val Quote = "books"
-    const val TITLE = "title"
-
-    //Actions
-    const val ADD_BOOK = "Add a book"
-    const val DELETE_BOOK = "Delete a book"
-
-    //Buttons
-    const val ADD = "Add"
-    const val DISMISS = "Dismiss"
-
-    //Placeholders
-    const val BOOK_TITLE = "Type a book title..."
-    const val AUTHOR = "Type the author name..."
 }

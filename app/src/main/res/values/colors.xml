@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
 
+    <color name="blue">#2960EC</color>
+
     <color name="btn_primary">#6739D2</color>
     <color name="ed_background">#F5F5F5</color>
     <color name="background">#FFFFFFFF</color>

@@ -5,6 +5,7 @@ data class Estimate(
     val estimateId: String? = null,
     val address: String? = null,
     val date: String? = null,
+    val status: Boolean? = false,
     val addedDate: String? = null,
     val serviceRequired: String? = null,
     val propertyType: String? = null

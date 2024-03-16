@@ -6,5 +6,4 @@ class HomeItem(
     private val repo: HomeRepository
 ) {
     operator fun invoke() = repo.getDrawerItems()
-
 }

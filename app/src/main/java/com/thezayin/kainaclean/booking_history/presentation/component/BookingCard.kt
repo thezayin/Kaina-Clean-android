@@ -23,34 +23,48 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.booking_history.domain.model.BookingHistory
+import com.thezayin.kainaclean.util.Constants.BOUNDARY_CARD_RADIUS
+import com.thezayin.kainaclean.util.Constants.BOUNDARY_CARD_SIZE
+import com.thezayin.kainaclean.util.Constants.CARDS_CORNERS
+import com.thezayin.kainaclean.util.Constants.CARD_COLUMN_PADDING_START
+import com.thezayin.kainaclean.util.Constants.CARD_IMAGE_SIZE
+import com.thezayin.kainaclean.util.Constants.CARD_ROW_PADDING
+import com.thezayin.kainaclean.util.Constants.CARD_STROKE
+import com.thezayin.kainaclean.util.Constants.CARD_SUB_TEXT_SIZE
+import com.thezayin.kainaclean.util.Constants.CARD_TEXT_ABOVE_PADDING
+import com.thezayin.kainaclean.util.Constants.CARD_TEXT_HISTORY_WIDTH
+import com.thezayin.kainaclean.util.Constants.HORIZONTAL_PADDING
+import com.thezayin.kainaclean.util.Constants.TEXT_SIZE_NORMAL
+import com.thezayin.kainaclean.util.Constants.TEXT_SUBTITLE_SIZE
 
 @Composable
 fun BookingCard(bookingHistory: BookingHistory, callBack: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 20.dp)
+            .padding(top = HORIZONTAL_PADDING)
             .clickable { callBack() },
         colors = CardDefaults.cardColors(
             colorResource(id = R.color.background)
         ),
-        shape = RoundedCornerShape(4.dp),
-        border = BorderStroke(1.dp, colorResource(id = R.color.grey_level_5))
+        shape = RoundedCornerShape(CARDS_CORNERS),
+        border = BorderStroke(CARD_STROKE, colorResource(id = R.color.grey_level_5))
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(CARD_ROW_PADDING)
         ) {
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(40.dp))
-                    .size(48.dp)
+                    .clip(RoundedCornerShape(BOUNDARY_CARD_RADIUS))
+                    .size(BOUNDARY_CARD_SIZE)
                     .background(colorResource(id = R.color.light_purple))
                     .align(Alignment.CenterVertically),
             ) {
@@ -58,38 +72,45 @@ fun BookingCard(bookingHistory: BookingHistory, callBack: () -> Unit) {
                     painter = painterResource(R.drawable.ic_check),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(20.dp)
+                        .size(CARD_IMAGE_SIZE)
                         .align(Alignment.Center),
                     contentScale = ContentScale.Fit,
                     alignment = Alignment.Center,
                 )
             }
 
-            Column(modifier = Modifier.padding(start = 12.dp)) {
+            Column(modifier = Modifier.padding(start = CARD_COLUMN_PADDING_START)) {
                 Text(
                     text = bookingHistory.address!!,
-                    modifier = Modifier.widthIn(max = 180.dp),
+                    modifier = Modifier.widthIn(max = CARD_TEXT_HISTORY_WIDTH),
                     color = colorResource(
                         id = R.color.text_color
                     ),
-                    fontSize = 16.sp,
+                    fontSize = TEXT_SIZE_NORMAL,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium
                 )
                 Row(
-                    modifier = Modifier.padding(top = 4.dp)
+                    modifier = Modifier.padding(top = CARD_TEXT_ABOVE_PADDING)
                 ) {
                     Text(
-                        text = "Service: ", color = colorResource(
+                        text = "Service: ",
+                        color = colorResource(
                             id = R.color.grey_level_2
-                        ), fontSize = 14.sp, fontWeight = FontWeight.Medium
+
+                        ),
+                        fontSize = CARD_SUB_TEXT_SIZE,
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     )
                     Text(
                         text = bookingHistory.service!!,
                         color = colorResource(
                             id = R.color.grey_level_2
                         ),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                         modifier = Modifier.widthIn(max = 120.dp),
-                        fontSize = 14.sp,
+                        fontSize = CARD_SUB_TEXT_SIZE,
                     )
                 }
             }
@@ -108,19 +129,22 @@ fun BookingCard(bookingHistory: BookingHistory, callBack: () -> Unit) {
                 ) {
                     Text(
                         text = if (bookingHistory.status == true) "Success" else "Pending",
-                        fontSize = 12.sp,
+                        fontSize = TEXT_SUBTITLE_SIZE,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                         fontWeight = FontWeight.Medium,
                         color = colorResource(id = if (bookingHistory.status == true) R.color.green else R.color.light_yellow_level_2),
                         modifier = Modifier.padding(
                             vertical = 4.dp, horizontal = 12.dp
                         )
+
                     )
                 }
 
                 Text(
                     text = bookingHistory.date!!,
                     color = colorResource(id = R.color.grey_level_2),
-                    fontSize = 14.sp,
+                    fontSize = CARD_SUB_TEXT_SIZE,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
                         .padding(top = 4.dp, end = 4.dp)

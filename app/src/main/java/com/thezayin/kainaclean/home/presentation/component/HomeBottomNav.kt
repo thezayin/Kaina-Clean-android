@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -53,6 +55,7 @@ fun HomeBottomNav(
             ) {
             Text(
                 text = "Request a Booking",
+                fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                 color = colorResource(id = R.color.white),
                 fontSize = 20.sp
             )
@@ -77,6 +80,7 @@ fun HomeBottomNav(
                 )
                 Text(
                     text = "Home",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.text_color)
                 )
             }
@@ -96,6 +100,7 @@ fun HomeBottomNav(
                 )
                 Text(
                     text = "Bookings",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.un_selected)
                 )
             }
@@ -116,6 +121,7 @@ fun HomeBottomNav(
                 )
                 Text(
                     text = "Chat",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.un_selected)
                 )
             }

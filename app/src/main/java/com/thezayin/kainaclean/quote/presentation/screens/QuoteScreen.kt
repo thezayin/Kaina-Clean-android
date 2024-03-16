@@ -17,10 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -33,11 +36,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
+import com.thezayin.kainaclean.main.component.TopBar
 import com.thezayin.kainaclean.quote.presentation.screens.component.BottomButtonComponent
-import com.thezayin.kainaclean.quote.presentation.screens.component.ServicesComponent
 import com.thezayin.kainaclean.quote.presentation.viewmodel.QuoteViewModel
-import com.thezayin.kainaclean.quote.presentation.viewmodel.ServiceOptionsViewModel
+import com.thezayin.kainaclean.services.presentation.screens.components.ServicesComponent
+import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsViewModel
+import com.thezayin.kainaclean.util.checkForInternet
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Destination
@@ -50,6 +54,13 @@ fun QuoteScreen(
 
     val addressInputValue = remember { mutableStateOf(TextFieldValue()) }
     val quoteInput = remember { mutableStateOf(TextFieldValue()) }
+
+    val context = LocalContext.current
+    var checkNetwork by remember { mutableStateOf(false) }
+    if (!checkForInternet(context)) {
+        checkNetwork = true
+
+    }
 
     Box(
         modifier = Modifier
@@ -64,7 +75,13 @@ fun QuoteScreen(
                 .fillMaxSize()
 
         ) {
-            TopBar(modifier = Modifier.weight(0.1f), title = "Request a Quote") {
+            TopBar(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 20.dp)
+                    .weight(0.1f),
+                title = "Request a Quote"
+            ) {
                 navigator.navigateUp()
             }
 
@@ -86,7 +103,7 @@ fun QuoteScreen(
                         textAlign = TextAlign.Center,
                         color = colorResource(id = R.color.text_color),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                         fontWeight = FontWeight.Medium,
                     )
                     Text(
@@ -94,7 +111,7 @@ fun QuoteScreen(
                         textAlign = TextAlign.Center,
                         color = colorResource(id = R.color.red),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                         fontWeight = FontWeight.Medium,
                     )
                 }
@@ -111,7 +128,7 @@ fun QuoteScreen(
                             text = "Enter your address",
                             color = colorResource(id = R.color.grey),
                             fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.nunito_medium)),
+                            fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                         )
                     },
                     singleLine = true,
@@ -140,7 +157,7 @@ fun QuoteScreen(
                         textAlign = TextAlign.Center,
                         color = colorResource(id = R.color.text_color),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                         fontWeight = FontWeight.Medium,
                     )
                     Text(
@@ -148,7 +165,7 @@ fun QuoteScreen(
                         textAlign = TextAlign.Center,
                         color = colorResource(id = R.color.red),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                         fontWeight = FontWeight.Medium,
                     )
                 }
@@ -162,7 +179,7 @@ fun QuoteScreen(
                             text = "Enter your quote here",
                             color = colorResource(id = R.color.grey),
                             fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.nunito_medium)),
+                            fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                         )
                     },
                     singleLine = false,

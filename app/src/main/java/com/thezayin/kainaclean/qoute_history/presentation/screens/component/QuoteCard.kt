@@ -23,6 +23,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,6 +70,7 @@ fun QuoteCard(quote: QuoteHistory, callBack: () -> Unit) {
             Column(modifier = Modifier.padding(start = 12.dp)) {
                 Text(
                     text = quote.address!!,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     modifier = Modifier.widthIn(max = 180.dp),
                     color = colorResource(
                         id = R.color.text_color
@@ -79,15 +82,20 @@ fun QuoteCard(quote: QuoteHistory, callBack: () -> Unit) {
                     modifier = Modifier.padding(top = 4.dp)
                 ) {
                     Text(
-                        text = "Service: ", color = colorResource(
+                        text = "Service: ",
+                        color = colorResource(
                             id = R.color.grey_level_2
-                        ), fontSize = 14.sp, fontWeight = FontWeight.Medium
+                        ),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     )
                     Text(
                         text = quote.serviceType!!,
                         color = colorResource(
                             id = R.color.grey_level_2
                         ),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                         modifier = Modifier.widthIn(max = 120.dp),
                         fontSize = 14.sp,
                     )
@@ -103,14 +111,15 @@ fun QuoteCard(quote: QuoteHistory, callBack: () -> Unit) {
                     modifier = Modifier,
                     shape = RoundedCornerShape(40.dp),
                     colors = CardDefaults.cardColors(
-                        colorResource(id = if (quote.status==true) R.color.light_green else R.color.light_yellow_level_3)
+                        colorResource(id = if (quote.status == true) R.color.light_green else R.color.light_yellow_level_3)
                     )
                 ) {
                     Text(
-                        text = if (quote.status==true) "Success" else "Pending",
+                        text = if (quote.status == true) "Success" else "Pending",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
-                        color = colorResource(id = if (quote.status==true) R.color.green else R.color.light_yellow_level_2),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+                        color = colorResource(id = if (quote.status == true) R.color.green else R.color.light_yellow_level_2),
                         modifier = Modifier.padding(
                             vertical = 4.dp, horizontal = 12.dp
                         )
@@ -121,6 +130,7 @@ fun QuoteCard(quote: QuoteHistory, callBack: () -> Unit) {
                     text = quote.currentDate!!,
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
                         .padding(top = 4.dp, end = 4.dp)
