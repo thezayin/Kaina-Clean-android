@@ -87,11 +87,14 @@ fun ChatBottomBar(modifier: Modifier, chatViewModel: ChatBotViewModel, listState
                 contentColor = Color.White
             ),
             onClick = {
-                chatViewModel.sendMessage(message = chatBoxValue.text, user = "user")
-                chatBoxValue = TextFieldValue("")
-                coroutineScope.launch {
-
-                    listState.animateScrollToItem(index = 30)
+                if (chatBoxValue.text.isEmpty()) {
+                    return@IconButton
+                } else {
+                    chatViewModel.sendMessage(message = chatBoxValue.text, user = "user")
+                    chatBoxValue = TextFieldValue("")
+                    coroutineScope.launch {
+                        listState.animateScrollToItem(index = 30)
+                    }
                 }
             }
         ) {

@@ -123,15 +123,13 @@ dependencies {
     //Compose Foundation
     implementation("androidx.compose.foundation:foundation:1.6.3")
 
-    //Accompanist
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 
     //Paging 3
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.paging:paging-compose:3.2.1")
 
     //slider
-    implementation("com.google.accompanist:accompanist-pager:0.34.0")
+    implementation ("com.google.accompanist:accompanist-pager:0.22.0-rc")
 
     //Room
     implementation("androidx.room:room-runtime:2.6.1")

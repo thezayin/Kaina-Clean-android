@@ -1,5 +1,6 @@
 package com.thezayin.kainaclean.home.presentation.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,6 +31,7 @@ import com.thezayin.kainaclean.home.presentation.component.HomeTopBar
 import com.thezayin.kainaclean.home.presentation.viewmodel.HomeViewModel
 import com.thezayin.kainaclean.main.component.dialogs.NetworkDialog
 import com.thezayin.kainaclean.util.checkForInternet
+import com.thezayin.kainaclean.util.getActivity
 
 @Destination
 @Composable
@@ -38,6 +40,12 @@ fun HomeScreen(
 ) {
     val homeViewModel: HomeViewModel = hiltViewModel()
     val context = LocalContext.current
+    val activity = LocalContext.current.getActivity()
+
+    BackHandler() {
+        activity?.finish()
+    }
+
     var checkNetwork by remember { mutableStateOf(false) }
 
     if (!checkForInternet(context)) {
