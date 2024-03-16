@@ -20,12 +20,9 @@ class ChatBotViewModel @Inject constructor(
     var _messageState = mutableStateListOf<Message>()
         private set
 
-
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun sendMessage(message: String, user: String) {
-
         _messageState.add(Message(sender = user, cnt = message))
-
         viewModelScope.launch {
             useCase.botUseCase(message).collect { response ->
                 when (response) {

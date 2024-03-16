@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
+import com.thezayin.kainaclean.main.component.TopBar
 
 @Destination
 @Composable

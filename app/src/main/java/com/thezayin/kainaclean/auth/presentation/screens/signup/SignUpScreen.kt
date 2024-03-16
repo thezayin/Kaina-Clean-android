@@ -18,11 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -38,20 +34,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.auth.presentation.viewmodel.AuthViewModel
 import com.thezayin.kainaclean.destinations.HomeScreenDestination
+import com.thezayin.kainaclean.main.component.dialogs.LoadingDialog
+import com.thezayin.kainaclean.main.component.dialogs.NetworkDialog
 import com.thezayin.kainaclean.util.Response.Failure
 import com.thezayin.kainaclean.util.Response.Loading
 import com.thezayin.kainaclean.util.Response.Success
 import com.thezayin.kainaclean.util.Utils
+import com.thezayin.kainaclean.util.checkForInternet
 
 
 @Destination
@@ -62,9 +61,22 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
     val emailInputValue = remember { mutableStateOf("") }
     val passwordNumberInputValue = remember { mutableStateOf("") }
     val rePasswordValue = remember { mutableStateOf("") }
-    var isLoading by remember { mutableStateOf(false) }
-
+    val showProgressBar = remember { mutableStateOf(false) }
+    var checkNetwork by remember { mutableStateOf(false) }
     val context = LocalContext.current
+
+    if (!checkForInternet(context)) {
+        checkNetwork = true
+    }
+
+    if (checkNetwork) {
+        NetworkDialog(showDialog = { checkNetwork = it })
+    }
+
+    if (showProgressBar.value) {
+        LoadingDialog()
+    }
+
 
     Column(
         modifier = Modifier
@@ -113,8 +125,8 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
             Text(
                 text = "Email",
                 color = colorResource(id = R.color.black),
+                fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                 fontSize = 16.sp,
-                fontFamily = FontFamily.SansSerif,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 5.dp)
@@ -127,8 +139,8 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                     Text(
                         text = "Enter your Email",
                         color = colorResource(id = R.color.black),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
                     )
                 },
                 trailingIcon = {
@@ -156,7 +168,7 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                 text = "Password",
                 color = colorResource(id = R.color.black),
                 fontSize = 16.sp,
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp, bottom = 5.dp)
@@ -171,7 +183,7 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                         text = "Enter your Password",
                         color = colorResource(id = R.color.black),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     )
                 },
                 trailingIcon = {
@@ -199,7 +211,7 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                 text = "Confirm Password",
                 color = colorResource(id = R.color.black),
                 fontSize = 16.sp,
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp, bottom = 5.dp)
@@ -213,7 +225,7 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                         text = "Re-Enter your Password",
                         color = colorResource(id = R.color.black),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     )
                 },
                 trailingIcon = {
@@ -290,73 +302,32 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
 
             ) {
             Text(
-                text = "Sign Up", color = colorResource(id = R.color.white), fontSize = 16.sp
+                text = "Sign Up",
+                color = colorResource(id = R.color.white),
+                fontSize = 16.sp,
+                fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
             )
 
             when (val signUpResponse = authViewModel.signUpState.value) {
                 is Loading -> {
-                    isLoading = true
+                    showProgressBar.value = true
                 }
 
                 is Success -> {
                     val isUserSignedUp = signUpResponse.data
                     LaunchedEffect(isUserSignedUp) {
-                        isLoading = false
+                        showProgressBar.value = false
                         if (isUserSignedUp) {
                             navigator.navigate(HomeScreenDestination)
                         }
                     }
-                    isLoading = false
+                    showProgressBar.value = false
                 }
 
                 is Failure -> signUpResponse.apply {
-                    isLoading = false
+                    showProgressBar.value = false
                     LaunchedEffect(e) {
                         Utils.print(e)
-                    }
-                }
-            }
-        }
-    }
-
-    if (isLoading) {
-        Dialog(onDismissRequest = { }) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.white),
-                )
-
-            ) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Please Wait....",
-                            fontSize = 16.sp,
-                            color = colorResource(id = R.color.text_color)
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(20.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.width(64.dp),
-                            color = colorResource(id = R.color.btn_primary),
-                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                        )
                     }
                 }
             }

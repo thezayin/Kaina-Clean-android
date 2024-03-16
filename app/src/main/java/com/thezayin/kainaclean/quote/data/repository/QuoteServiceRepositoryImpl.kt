@@ -30,7 +30,7 @@ class QuoteServiceRepositoryImpl @Inject constructor(val fireStore: FirebaseFire
     ): Flow<Response<Boolean>> = flow {
         operationSuccessFull = false
         try {
-            val quoteId = fireStore.collection("quotes").document().id
+            val quoteId = fireStore.collection("requested_quotes").document().id
             val quote = QuoteService(
                 userId = userId,
                 quoteId = quoteId,
@@ -41,7 +41,7 @@ class QuoteServiceRepositoryImpl @Inject constructor(val fireStore: FirebaseFire
                 remarks = "Pending",
                 quote = quote,
             )
-            fireStore.collection("quotes").document(quoteId).set(quote)
+            fireStore.collection("requested_quotes").document(quoteId).set(quote)
                 .addOnSuccessListener {
                     operationSuccessFull = true
                 }.await()

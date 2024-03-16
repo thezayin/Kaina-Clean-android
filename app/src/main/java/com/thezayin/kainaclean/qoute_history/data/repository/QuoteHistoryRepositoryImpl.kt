@@ -15,23 +15,24 @@ class QuoteHistoryRepositoryImpl @Inject constructor(val fireStore: FirebaseFire
     override fun getMyQuotesFromFireStore(userId: String): Flow<Response<List<QuoteHistory>>> =
         callbackFlow {
             Response.Loading
-            val snapshotListener = fireStore.collection("quotes").whereEqualTo("userId", userId)
-                .addSnapshotListener { snapShot, error ->
-                    val response = if (snapShot != null) {
-                        val quoteList = snapShot.toObjects(QuoteHistory::class.java)
-                        Response.Success<List<QuoteHistory>>(quoteList)
-                    } else {
-                        Response.Failure(error?.message ?: error.toString())
+            val snapshotListener =
+                fireStore.collection("requested_quotes").whereEqualTo("userId", userId)
+                    .addSnapshotListener { snapShot, error ->
+                        val response = if (snapShot != null) {
+                            val quoteList = snapShot.toObjects(QuoteHistory::class.java)
+                            Response.Success<List<QuoteHistory>>(quoteList)
+                        } else {
+                            Response.Failure(error?.message ?: error.toString())
+                        }
+                        trySend(response).isSuccess
                     }
-                    trySend(response).isSuccess
-                }
             awaitClose { snapshotListener.remove() }
         }
 
     override fun getCurrentQuoteFromFireStore(quoteId: String): Flow<Response<QuoteHistory>> =
         callbackFlow {
             Response.Loading
-            val snapshotListener = fireStore.collection("quotes").document(quoteId)
+            val snapshotListener = fireStore.collection("requested_quotes").document(quoteId)
                 .addSnapshotListener { snapShot, error ->
                     val response = if (snapShot != null) {
                         val quote = snapShot.toObject<QuoteHistory>()

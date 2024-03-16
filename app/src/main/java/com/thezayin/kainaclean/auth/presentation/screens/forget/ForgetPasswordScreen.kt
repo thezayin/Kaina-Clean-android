@@ -18,11 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -38,20 +34,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.auth.presentation.viewmodel.AuthViewModel
+import com.thezayin.kainaclean.main.component.dialogs.LoadingDialog
+import com.thezayin.kainaclean.main.component.dialogs.NetworkDialog
 import com.thezayin.kainaclean.util.Constants.RESET_PASSWORD_MESSAGE
 import com.thezayin.kainaclean.util.Response.Failure
 import com.thezayin.kainaclean.util.Response.Loading
 import com.thezayin.kainaclean.util.Response.Success
 import com.thezayin.kainaclean.util.Utils.Companion.showMessage
+import com.thezayin.kainaclean.util.checkForInternet
 
 @Destination
 @Composable
@@ -59,7 +58,21 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
     val email = remember { mutableStateOf("") }
     val authViewModel: AuthViewModel = hiltViewModel()
     val context = LocalContext.current
-    var isLoading by remember { mutableStateOf(false) }
+    val isLoading = remember { mutableStateOf(false) }
+    var checkNetwork by remember { mutableStateOf(false) }
+
+    if (!checkForInternet(context)) {
+        checkNetwork = true
+    }
+
+    if (checkNetwork) {
+        NetworkDialog(showDialog = { checkNetwork = it })
+    }
+
+    if (isLoading.value) {
+        LoadingDialog()
+    }
+
 
     Box(
         modifier = Modifier
@@ -110,7 +123,7 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
                     text = "Email",
                     color = colorResource(id = R.color.black),
                     fontSize = 16.sp,
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 50.dp, bottom = 5.dp)
@@ -124,7 +137,7 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
                             text = "Enter your email",
                             color = colorResource(id = R.color.black),
                             fontSize = 16.sp,
-                            fontFamily = FontFamily.SansSerif,
+                            fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                         )
                     },
                     trailingIcon = {
@@ -180,17 +193,20 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
 
                 ) {
                 Text(
-                    text = "Submit", color = colorResource(id = R.color.white), fontSize = 16.sp
+                    text = "Submit",
+                    color = colorResource(id = R.color.white),
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                 )
 
                 when (val sendPasswordResetEmailResponse =
                     authViewModel.recoverPasswordState.value) {
                     is Loading -> {
-                        isLoading = true
+                        isLoading.value = true
                     }
 
                     is Success -> {
-                        isLoading = false
+                        isLoading.value = false
                         val isPasswordResetEmailSent = sendPasswordResetEmailResponse.data
                         LaunchedEffect(isPasswordResetEmailSent) {
                             if (isPasswordResetEmailSent) {
@@ -202,54 +218,10 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
 
                     is Failure -> sendPasswordResetEmailResponse.apply {
                         LaunchedEffect(e) {
-                            isLoading = false
+                            isLoading.value = false
                             print(e)
                             showMessage(context, e)
                         }
-                    }
-                }
-            }
-        }
-    }
-
-    if (isLoading) {
-        Dialog(onDismissRequest = { }) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.white),
-                )
-
-            ) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Please Wait....",
-                            fontSize = 16.sp,
-                            color = colorResource(id = R.color.text_color)
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(20.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.width(64.dp),
-                            color = colorResource(id = R.color.btn_primary),
-                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                        )
                     }
                 }
             }

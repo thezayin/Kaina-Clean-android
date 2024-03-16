@@ -21,7 +21,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -80,6 +81,7 @@ fun QuoteDetailsCard(quoteHistory: QuoteHistory) {
                         text = if (quoteHistory.status == true) "Success" else "Pending",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                         color = colorResource(id = if (quoteHistory.status == true) R.color.green else R.color.light_yellow_level_2),
                         modifier = Modifier.padding(
                             vertical = 4.dp, horizontal = 12.dp
@@ -91,6 +93,7 @@ fun QuoteDetailsCard(quoteHistory: QuoteHistory) {
                 text = quoteHistory.address!!,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                 color = colorResource(id = R.color.black),
                 modifier = Modifier.padding(top = 12.dp)
             )
@@ -99,12 +102,14 @@ fun QuoteDetailsCard(quoteHistory: QuoteHistory) {
             ) {
                 Text(
                     text = "Service: ",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = quoteHistory.serviceType!!,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                 )
@@ -117,12 +122,14 @@ fun QuoteDetailsCard(quoteHistory: QuoteHistory) {
             ) {
                 Text(
                     text = "Quote:",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = quoteHistory.quote!!,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                 )
@@ -135,19 +142,18 @@ fun QuoteDetailsCard(quoteHistory: QuoteHistory) {
             ) {
                 Text(
                     text = "Remarks:",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     color = colorResource(id = R.color.black),
                     fontSize = 14.sp,
-                    fontStyle = FontStyle.Italic,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = quoteHistory.remarks!!,
-                    color = colorResource(id = R.color.black),
+                    fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
+                    color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
-                    fontStyle = FontStyle.Italic,
                 )
             }
-
         }
     }
 }

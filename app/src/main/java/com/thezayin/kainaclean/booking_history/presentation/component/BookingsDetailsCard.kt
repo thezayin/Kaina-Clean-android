@@ -22,6 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -82,6 +84,7 @@ fun BookingsDetailsCard(
                         text = if (bookingHistory.status == true) "Success" else "Pending",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                         color = colorResource(id = if (bookingHistory.status == true) R.color.green else R.color.light_yellow_level_2),
                         modifier = Modifier.padding(
                             vertical = 4.dp, horizontal = 12.dp
@@ -93,6 +96,7 @@ fun BookingsDetailsCard(
                 text = bookingHistory.address!!,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                 color = colorResource(id = R.color.black),
                 modifier = Modifier.padding(top = 12.dp)
             )
@@ -103,10 +107,12 @@ fun BookingsDetailsCard(
                     text = "Service: ",
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = bookingHistory.service!!,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                 )
@@ -116,12 +122,14 @@ fun BookingsDetailsCard(
             ) {
                 Text(
                     text = "Property Type: ",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = bookingHistory.propertyType!!,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.grey_level_2),
                     modifier = Modifier.widthIn(max = 120.dp),
                     fontSize = 14.sp,
@@ -132,12 +140,14 @@ fun BookingsDetailsCard(
             ) {
                 Text(
                     text = "Postal Code: ",
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = bookingHistory.postCode!!,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                     color = colorResource(id = R.color.grey_level_2),
                     fontSize = 14.sp,
                 )
@@ -145,6 +155,7 @@ fun BookingsDetailsCard(
             Text(
                 text = bookingHistory.date!!,
                 fontSize = 16.sp,
+                fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                 color = colorResource(id = R.color.grey_level_2),
                 modifier = Modifier.padding(top = 8.dp)
             )

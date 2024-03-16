@@ -19,9 +19,9 @@ class QuoteHistoryViewModel @Inject constructor(
     private val authUseCases: AuthenticationUseCases,
 ) : ViewModel() {
 
-    var getQuotesMutableState by mutableStateOf(GetQuoteMutableState())
+    var getSelectedQuote by mutableStateOf(GetSelectedQuoteMutableState())
         private set
-    var detailUiState by mutableStateOf(QuotesUiState())
+    var getAllQuotes by mutableStateOf(QuotesUiState())
         private set
 
     init {
@@ -30,22 +30,22 @@ class QuoteHistoryViewModel @Inject constructor(
 
     private fun getQuotes() = viewModelScope.launch {
         useCases.getAllQuote(authUseCases.getCurrentUser.invoke()).collect { response ->
-            detailUiState = detailUiState.copy(bookingList = response)
+            getAllQuotes = getAllQuotes.copy(quoteList = response)
         }
     }
 
     fun getCurrentQuote(quoteId: String) = viewModelScope.launch {
         useCases.getCurrentQuoteHistory(quoteId).collect { response ->
-            getQuotesMutableState = getQuotesMutableState.copy(bookingList = response)
+            getSelectedQuote = getSelectedQuote.copy(quoteList = response)
         }
     }
 
     data class QuotesUiState(
-        val bookingList: Response<List<QuoteHistory>> = Response.Loading
+        val quoteList: Response<List<QuoteHistory>> = Response.Loading
     )
 
-    data class GetQuoteMutableState(
-        val bookingList: Response<QuoteHistory> = Response.Loading
+    data class GetSelectedQuoteMutableState(
+        val quoteList: Response<QuoteHistory> = Response.Loading
     )
 }
 

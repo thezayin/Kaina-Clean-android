@@ -12,56 +12,54 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.booking.presentation.viewmodel.BookingViewModel
-import com.thezayin.kainaclean.chatbot.presentation.component.TopBar
 import com.thezayin.kainaclean.destinations.HomeScreenDestination
-import com.thezayin.kainaclean.toast.Toast
+import com.thezayin.kainaclean.main.component.TopBar
+import com.thezayin.kainaclean.main.component.dialogs.CustomDialog
+import com.thezayin.kainaclean.main.component.dialogs.DateSelectorDialog
+import com.thezayin.kainaclean.main.component.dialogs.LoadingDialog
+import com.thezayin.kainaclean.main.component.dialogs.SuccessDialog
+import com.thezayin.kainaclean.util.Constants.BOOKING_TEXT_TOP_PADDING
+import com.thezayin.kainaclean.util.Constants.BUTTON_BOTTOM_PADDING
+import com.thezayin.kainaclean.util.Constants.BUTTON_CORNERS_RADIUS
+import com.thezayin.kainaclean.util.Constants.BUTTON_SIZE
 import com.thezayin.kainaclean.util.Constants.DATE_LENGTH
-import com.thezayin.kainaclean.util.DateUtils
+import com.thezayin.kainaclean.util.Constants.HORIZONTAL_PADDING
+import com.thezayin.kainaclean.util.Constants.TEXT_FIELD_CORNER_RADIUS
+import com.thezayin.kainaclean.util.Constants.TEXT_FIELD_TOP_PADDING
+import com.thezayin.kainaclean.util.Constants.TEXT_SIZE_NORMAL
 import com.thezayin.kainaclean.util.Response
+import com.thezayin.kainaclean.util.Toast
 import com.thezayin.kainaclean.util.Utils
+import com.thezayin.kainaclean.util.checkForInternet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -76,16 +74,8 @@ fun BookingScreenThird(
     city: String,
     postCode: String
 ) {
-
-    val dateState = rememberDatePickerState()
-    val millisToLocalDate = dateState.selectedDateMillis?.let {
-        DateUtils().convertMillisToLocalDate(it)
-    }
-    val dateToString = millisToLocalDate?.let {
-        DateUtils().dateToString(millisToLocalDate)
-    } ?: "Select"
-
-    var showDialog by remember { mutableStateOf(false) }
+    val viewModel: BookingViewModel = hiltViewModel()
+    var showDateDialog by remember { mutableStateOf(false) }
 
     val propertyTypeList = arrayOf(
         "Domestic", "Commercial"
@@ -105,49 +95,79 @@ fun BookingScreenThird(
         "After Builders Cleaning",
         "Gyms & Clubs"
     )
-
     var propertyExpanded by remember { mutableStateOf(false) }
-    var date by remember { mutableStateOf("") }
+    var date by remember { mutableStateOf("Select") }
     var propertySelectedText by remember { mutableStateOf(propertyTypeList[0]) }
     var serviceSelectedText by remember { mutableStateOf(serviceTypeList[0]) }
     var serviceExpanded by remember { mutableStateOf(false) }
-    val viewModel: BookingViewModel = hiltViewModel()
-    val openDialog = remember { mutableStateOf(false) }
-    var isLoading by remember { mutableStateOf(false) }
+    val showAlertDialog = remember { mutableStateOf(false) }
+    var showLoadingDialog by remember { mutableStateOf(false) }
+    var showSuccessDialog by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
+    var checkNetwork by remember { mutableStateOf(false) }
+
+    if (!checkForInternet(context)) {
+        checkNetwork = true
+
+    }
+
+    if (showAlertDialog.value) {
+        CustomDialog {
+            showAlertDialog.value = it
+        }
+    }
+
+    if (showDateDialog) {
+        DateSelectorDialog(setShowDialog = {
+            showDateDialog = it
+        }) {
+            date = it
+        }
+    }
+
+    if (showLoadingDialog) {
+        LoadingDialog()
+    }
+
+    if (showSuccessDialog) {
+        SuccessDialog(callBack = { navigator.navigate(HomeScreenDestination) }) {
+            showSuccessDialog = it
+        }
+    }
 
     Box(modifier = Modifier.background(color = colorResource(id = R.color.background))) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp)
+                .padding(HORIZONTAL_PADDING)
                 .statusBarsPadding()
         ) {
 
-            TopBar(
-                modifier = Modifier,
+            TopBar(modifier = Modifier,
                 title = "Booking a Service",
-                callBack = { navigator.navigateUp() }
-            )
+                callBack = { navigator.navigateUp() })
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 50.dp, 0.dp, 0.dp)
+                    .padding(top = BOOKING_TEXT_TOP_PADDING)
             ) {
                 Text(
                     text = "Property Type",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontSize = TEXT_SIZE_NORMAL,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium,
                 )
                 Text(
                     text = "*",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontSize = TEXT_SIZE_NORMAL,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium,
                 )
             }
@@ -166,8 +186,8 @@ fun BookingScreenThird(
                     modifier = Modifier
                         .fillMaxWidth()
                         .menuAnchor()
-                        .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                    shape = RoundedCornerShape(8.dp),
+                        .padding(top = TEXT_FIELD_TOP_PADDING),
+                    shape = RoundedCornerShape(TEXT_FIELD_CORNER_RADIUS),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = colorResource(id = R.color.ed_background),
                         unfocusedContainerColor = colorResource(id = R.color.ed_background),
@@ -185,7 +205,13 @@ fun BookingScreenThird(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     propertyTypeList.forEach { item ->
-                        DropdownMenuItem(text = { Text(text = item) }, onClick = {
+                        DropdownMenuItem(text = {
+                            Text(
+                                text = item,
+                                fontSize = TEXT_SIZE_NORMAL,
+                                fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
+                            )
+                        }, onClick = {
                             propertySelectedText = item
                             propertyExpanded = false
                         })
@@ -196,22 +222,22 @@ fun BookingScreenThird(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
+                    .padding(top = BOOKING_TEXT_TOP_PADDING)
             ) {
                 Text(
                     text = "Service Required",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontSize = TEXT_SIZE_NORMAL,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium,
                 )
                 Text(
                     text = "*",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontSize = TEXT_SIZE_NORMAL,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium,
                 )
             }
@@ -230,8 +256,8 @@ fun BookingScreenThird(
                     modifier = Modifier
                         .fillMaxWidth()
                         .menuAnchor()
-                        .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                    shape = RoundedCornerShape(8.dp),
+                        .padding(top = TEXT_FIELD_TOP_PADDING),
+                    shape = RoundedCornerShape(TEXT_FIELD_CORNER_RADIUS),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = colorResource(id = R.color.ed_background),
                         unfocusedContainerColor = colorResource(id = R.color.ed_background),
@@ -249,7 +275,11 @@ fun BookingScreenThird(
                 ) {
                     serviceTypeList.forEach { item ->
                         DropdownMenuItem(text = {
-                            Text(text = item)
+                            Text(
+                                text = item,
+                                fontSize = TEXT_SIZE_NORMAL,
+                                fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
+                            )
                         }, onClick = {
                             serviceSelectedText = item
                             serviceExpanded = false
@@ -261,43 +291,47 @@ fun BookingScreenThird(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 30.dp, 0.dp, 0.dp)
+                    .padding(top = BOOKING_TEXT_TOP_PADDING)
             ) {
                 Text(
                     text = "Date Event",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontSize = TEXT_SIZE_NORMAL,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium,
                 )
                 Text(
                     text = "*",
                     textAlign = TextAlign.Center,
                     color = colorResource(id = R.color.text_color),
-                    fontSize = 18.sp,
-                    fontFamily = FontFamily(Font(R.font.nunito_bold)),
+                    fontSize = TEXT_SIZE_NORMAL,
+                    fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
                     fontWeight = FontWeight.Medium,
                 )
             }
 
             TextField(
-                value = dateToString,
+                value = date,
                 onValueChange = {
-                    date = dateToString
                 },
                 placeholder = {
-                    Text(text = "DD-MM-YYYY", color = colorResource(id = R.color.black))
+                    Text(
+                        fontSize = TEXT_SIZE_NORMAL,
+                        text = "Select",
+                        color = colorResource(id = R.color.black),
+                        fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
+                    )
                 },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                    .padding(top = TEXT_FIELD_TOP_PADDING)
                     .clickable {
-                        showDialog = true
+                        showDateDialog = true
                     },
                 enabled = false,
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(TEXT_FIELD_CORNER_RADIUS),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = colorResource(id = R.color.ed_background),
                     unfocusedContainerColor = colorResource(id = R.color.ed_background),
@@ -316,15 +350,15 @@ fun BookingScreenThird(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(0.dp, 0.dp, 0.dp, 40.dp),
+                    .padding(bottom = BUTTON_BOTTOM_PADDING),
                 verticalArrangement = Arrangement.Bottom
             ) {
                 Button(
                     onClick = {
-                        if (propertySelectedText.isEmpty() || serviceSelectedText.isEmpty() || dateToString.length < DATE_LENGTH) {
-                            openDialog.value = true
+                        if (propertySelectedText.isEmpty() || serviceSelectedText.isEmpty() || date.length < DATE_LENGTH) {
+                            showAlertDialog.value = true
                         } else {
-                            isLoading = true
+                            showLoadingDialog = true
                             viewModel.sendBooking(
                                 name,
                                 email,
@@ -334,160 +368,47 @@ fun BookingScreenThird(
                                 postCode,
                                 propertySelectedText,
                                 serviceSelectedText,
-                                dateToString
+                                date
                             )
                         }
 
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(60.dp),
+                        .height(BUTTON_SIZE),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorResource(id = R.color.btn_primary),
                         contentColor = Color.White
                     ),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(BUTTON_CORNERS_RADIUS)
                 ) {
                     Text(
-                        text = "Next", color = colorResource(id = R.color.white), fontSize = 20.sp
+                        text = "Next",
+                        color = colorResource(id = R.color.white),
+                        fontSize = TEXT_SIZE_NORMAL,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_medium)),
                     )
 
                     when (val response = viewModel.sendBooking.value) {
                         is Response.Loading -> {
-                            isLoading = true
+                            showLoadingDialog = true
                         }
 
                         is Response.Success -> {
                             if (response.data) {
-                                navigator.navigate(HomeScreenDestination)
-                                isLoading = false
+                                showLoadingDialog = false
+                                showSuccessDialog = true
                             }
                         }
 
                         is Response.Failure -> response.apply {
-                            isLoading = false
+                            showLoadingDialog = false
                             Utils.print(e)
                             Toast(message = e)
                         }
                     }
                 }
             }
-        }
-    }
-
-    if (isLoading) {
-        Dialog(onDismissRequest = { }) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.white),
-                )
-
-            ) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = "Please Wait....",
-                            fontSize = 20.sp,
-                            color = colorResource(id = R.color.text_color)
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = 20.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.width(64.dp),
-                            color = colorResource(id = R.color.btn_primary),
-                            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    if (openDialog.value) {
-        Dialog(onDismissRequest = { }) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = colorResource(id = R.color.white),
-                )
-
-            ) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp)
-                            .padding(top = 10.dp), horizontalArrangement = Arrangement.End
-                    ) {
-                        Icon(painter = painterResource(id = R.drawable.ic_close_circle),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(20.dp)
-                                .clickable {
-                                    openDialog.value = false
-                                })
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = 20.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Please fill all fields",
-                            modifier = Modifier,
-                            textAlign = TextAlign.Center,
-                            fontSize = 22.sp,
-                            fontFamily = FontFamily(Font(R.font.nunito_bold))
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    if (showDialog) {
-        DatePickerDialog(
-            onDismissRequest = { showDialog = false },
-            confirmButton = {
-                Button(
-                    onClick = { showDialog = false }
-                ) {
-                    Text(text = "OK")
-                }
-            },
-            dismissButton = {
-                Button(
-                    onClick = { showDialog = false }
-                ) {
-                    Text(text = "Cancel")
-                }
-            }
-        ) {
-            DatePicker(
-                state = dateState,
-                showModeToggle = true
-            )
         }
     }
 }
