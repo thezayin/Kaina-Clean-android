@@ -19,6 +19,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.destinations.AddEstimateScreenDestination
 import com.thezayin.kainaclean.destinations.EstimateHistoryScreenDestination
+import com.thezayin.kainaclean.destinations.PricingScreenDestination
 import com.thezayin.kainaclean.destinations.QuoteHistoryScreenDestination
 import com.thezayin.kainaclean.destinations.QuoteScreenDestination
 import com.thezayin.kainaclean.destinations.ServicesScreenDestination
@@ -95,7 +96,7 @@ fun HomeMenuIcons(
                                         }
 
                                         "Pricing" -> {
-                                            //                                        navigator.navigate("pricing")
+                                            navigator.navigate(PricingScreenDestination)
                                         }
                                     }
 

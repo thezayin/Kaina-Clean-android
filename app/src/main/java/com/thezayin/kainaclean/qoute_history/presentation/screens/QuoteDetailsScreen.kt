@@ -58,11 +58,12 @@ fun QuoteDetailsScreen(
         TopBar(
             modifier = Modifier
                 .padding(horizontal = 20.dp)
-                .padding(top = 20.dp),
-            title = "Bookings Details"
+                .padding(top = 20.dp, bottom = 40.dp),
+            title = "Quote Details"
         ) {
             navigator.navigateUp()
         }
+
         when (quoteUiState.quoteList) {
             is Response.Loading -> {
                 showProgressBar.value = true

@@ -58,10 +58,10 @@ fun SplashScreen(
             checkNetwork = true
         } else {
             if (authViewModel.isUserAuthenticated) {
-                delay(4000L)
+                delay(2000L)
                 navigator.navigate(HomeScreenDestination)
             } else {
-                delay(4000L)
+                delay(2000L)
                 navigator.navigate(OnBoardingScreenDestination)
             }
         }

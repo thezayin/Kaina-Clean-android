@@ -42,7 +42,6 @@ class ServiceOptionsViewModel @Inject constructor(
                         Log.e("service view model", "Error getting service options")
                     }
                 }
-
             }
         }
     }
