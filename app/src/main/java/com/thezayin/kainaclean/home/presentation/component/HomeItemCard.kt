@@ -44,7 +44,7 @@ fun HomeItemCard(home: Home, modifier: Modifier, onItemClick: (Home) -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.background),
         ),
-        elevation = CardDefaults.cardElevation(5.dp)
+        elevation = CardDefaults.cardElevation(7.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxSize()

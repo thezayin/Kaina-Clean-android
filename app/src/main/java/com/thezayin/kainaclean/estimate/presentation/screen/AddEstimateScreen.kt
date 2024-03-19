@@ -97,135 +97,25 @@ fun AddEstimateScreen(
             TopBar(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
-                    .padding(top = 20.dp)
+                    .padding(top = 20.dp, bottom = 10.dp)
                     .weight(0.1f),
                 title = "Request a Quote"
             ) {
                 navigator.navigateUp()
             }
 
-            ServicesComponent(serviceViewModel = serviceViewModel, modifier = Modifier.weight(0.2f))
+
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.6f)
-                    .padding(horizontal = 20.dp)
+                    .weight(0.8f)
                     .padding(top = 10.dp)
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Address",
-                        textAlign = TextAlign.Center,
-                        color = colorResource(id = R.color.text_color),
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
-                        fontWeight = FontWeight.Medium,
-                    )
-                    Text(
-                        text = "*",
-                        textAlign = TextAlign.Center,
-                        color = colorResource(id = R.color.red),
-                        fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
-                        fontWeight = FontWeight.Medium,
-                    )
-                }
-
-                TextField(
-                    value = addressInputValue.value,
-                    onValueChange = {
-                        if (it.text.length <= 30) {
-                            addressInputValue.value = it
-                        }
-                    },
-                    placeholder = {
-                        Text(
-                            text = "Enter your address",
-                            color = colorResource(id = R.color.grey),
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
-                        )
-                    },
-                    singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(0.dp, 5.dp, 0.dp, 0.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = colorResource(id = R.color.ed_background),
-                        unfocusedContainerColor = colorResource(id = R.color.ed_background),
-                        disabledLabelColor = colorResource(id = R.color.red),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = colorResource(id = R.color.black),
-                        unfocusedTextColor = colorResource(id = R.color.black)
-                    ),
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Constants.BOOKING_TEXT_TOP_PADDING)
-                ) {
-                    Text(
-                        text = "Date Event",
-                        textAlign = TextAlign.Center,
-                        color = colorResource(id = R.color.text_color),
-                        fontSize = Constants.TEXT_SIZE_NORMAL,
-                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
-                        fontWeight = FontWeight.Medium,
-                    )
-                    Text(
-                        text = "*",
-                        textAlign = TextAlign.Center,
-                        color = colorResource(id = R.color.text_color),
-                        fontSize = Constants.TEXT_SIZE_NORMAL,
-                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
-                        fontWeight = FontWeight.Medium,
-                    )
-                }
-
-                TextField(
-                    value = date,
-                    onValueChange = {},
-                    placeholder = {
-                        Text(
-                            fontSize = Constants.TEXT_SIZE_NORMAL,
-                            text = "Select",
-                            color = colorResource(id = R.color.black),
-                            fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
-                        )
-                    },
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Constants.TEXT_FIELD_TOP_PADDING)
-                        .clickable {
-                            showDateDialog = true
-                        },
-                    enabled = false,
-                    shape = RoundedCornerShape(Constants.TEXT_FIELD_CORNER_RADIUS),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = colorResource(id = R.color.ed_background),
-                        unfocusedContainerColor = colorResource(id = R.color.ed_background),
-                        disabledLabelColor = colorResource(id = R.color.red),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledTextColor = colorResource(id = R.color.black),
-                        focusedTextColor = colorResource(id = R.color.black),
-                        unfocusedTextColor = colorResource(id = R.color.black),
-                        disabledSupportingTextColor = colorResource(id = R.color.black),
-                        focusedSupportingTextColor = colorResource(id = R.color.black),
-                        disabledContainerColor = colorResource(id = R.color.ed_background)
-                    )
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
                         .padding(top = Constants.BOOKING_TEXT_TOP_PADDING)
                 ) {
                     Text(
@@ -249,7 +139,9 @@ fun AddEstimateScreen(
                 ExposedDropdownMenuBox(
                     expanded = propertyExpanded, onExpandedChange = {
                         propertyExpanded = !propertyExpanded
-                    }, modifier = Modifier.fillMaxWidth()
+                    }, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
                 ) {
                     TextField(
                         value = propertySelectedText,
@@ -292,6 +184,127 @@ fun AddEstimateScreen(
                         }
                     }
                 }
+
+                ServicesComponent(
+                    serviceViewModel = serviceViewModel,
+                    modifier = Modifier.padding(top = 10.dp)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 10.dp)
+                ) {
+                    Text(
+                        text = "Address",
+                        textAlign = TextAlign.Center,
+                        color = colorResource(id = R.color.text_color),
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+                        fontWeight = FontWeight.Medium,
+                    )
+                    Text(
+                        text = "*",
+                        textAlign = TextAlign.Center,
+                        color = colorResource(id = R.color.red),
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+                        fontWeight = FontWeight.Medium,
+                    )
+                }
+
+                TextField(
+                    value = addressInputValue.value,
+                    onValueChange = {
+                        if (it.text.length <= 30) {
+                            addressInputValue.value = it
+                        }
+                    },
+                    placeholder = {
+                        Text(
+                            text = "Enter your address",
+                            color = colorResource(id = R.color.grey),
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
+                        )
+                    },
+                    singleLine = true,
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth()
+                        .padding(0.dp, 5.dp, 0.dp, 0.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = colorResource(id = R.color.ed_background),
+                        unfocusedContainerColor = colorResource(id = R.color.ed_background),
+                        disabledLabelColor = colorResource(id = R.color.red),
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedTextColor = colorResource(id = R.color.black),
+                        unfocusedTextColor = colorResource(id = R.color.black)
+                    ),
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .padding(top = Constants.BOOKING_TEXT_TOP_PADDING)
+                ) {
+                    Text(
+                        text = "Date Event",
+                        textAlign = TextAlign.Center,
+                        color = colorResource(id = R.color.text_color),
+                        fontSize = Constants.TEXT_SIZE_NORMAL,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+                        fontWeight = FontWeight.Medium,
+                    )
+                    Text(
+                        text = "*",
+                        textAlign = TextAlign.Center,
+                        color = colorResource(id = R.color.text_color),
+                        fontSize = Constants.TEXT_SIZE_NORMAL,
+                        fontFamily = FontFamily(Font(R.font.noto_sans_bold)),
+                        fontWeight = FontWeight.Medium,
+                    )
+                }
+
+                TextField(
+                    value = date,
+                    onValueChange = {},
+                    placeholder = {
+                        Text(
+                            fontSize = Constants.TEXT_SIZE_NORMAL,
+                            text = "Select",
+                            color = colorResource(id = R.color.black),
+                            fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
+                        )
+                    },
+                    singleLine = true,
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth()
+                        .padding(top = Constants.TEXT_FIELD_TOP_PADDING)
+                        .clickable {
+                            showDateDialog = true
+                        },
+                    enabled = false,
+                    shape = RoundedCornerShape(Constants.TEXT_FIELD_CORNER_RADIUS),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = colorResource(id = R.color.ed_background),
+                        unfocusedContainerColor = colorResource(id = R.color.ed_background),
+                        disabledLabelColor = colorResource(id = R.color.red),
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledTextColor = colorResource(id = R.color.black),
+                        focusedTextColor = colorResource(id = R.color.black),
+                        unfocusedTextColor = colorResource(id = R.color.black),
+                        disabledSupportingTextColor = colorResource(id = R.color.black),
+                        focusedSupportingTextColor = colorResource(id = R.color.black),
+                        disabledContainerColor = colorResource(id = R.color.ed_background)
+                    )
+                )
             }
             EstimateButton(
                 modifier = Modifier.weight(0.1f),

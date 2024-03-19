@@ -34,6 +34,12 @@ class ServiceOptionsRepositoryImpl @Inject constructor() : ServiceOptionsReposit
                     isSelected = false
                 ),
                 ServiceOptions(
+                    name = "End of Tenancy Cleaning",
+                    icon = R.drawable.ic_cleaning_tenc,
+                    details = "Ensure a seamless transition with our End of Tenancy Cleaning service, designed to leave your property immaculate and ready for new occupants. Our expert team meticulously cleans every inch of the space, from top to bottom, ensuring no detail is overlooked. From deep cleaning carpets to sanitizing bathrooms, we restore the property to its original pristine condition. With our thorough and reliable service, you can leave with peace of mind, knowing your former home is left in impeccable condition.",
+                    isSelected = false
+                ),
+                ServiceOptions(
                     name = "Sparkle Cleaning",
                     icon = R.drawable.ic_cleaning_sparkle,
                     details = "Elevate your space to new heights of brilliance with our sparkle cleaning service. Designed to dazzle, our meticulous approach ensures every surface gleams with a radiant shine. From polishing fixtures to wiping down surfaces, we meticulously attend to every detail, leaving your space sparkling and inviting. Experience the magic of sparkle cleaning and step into a world of unparalleled cleanliness and allure.",

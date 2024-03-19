@@ -78,7 +78,7 @@ fun QuoteScreen(
             TopBar(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
-                    .padding(top = 20.dp)
+                    .padding(top = 20.dp, bottom = 10.dp)
                     .weight(0.1f),
                 title = "Request a Quote"
             ) {

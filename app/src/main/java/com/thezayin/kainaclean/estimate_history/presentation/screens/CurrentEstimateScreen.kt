@@ -58,7 +58,7 @@ fun CurrentEstimateScreen(
         TopBar(
             modifier = Modifier
                 .padding(horizontal = 20.dp)
-                .padding(top = 20.dp),
+                .padding(top = 20.dp, bottom = 40.dp),
             title = "Estimate Details"
         ) {
             navigator.navigateUp()
