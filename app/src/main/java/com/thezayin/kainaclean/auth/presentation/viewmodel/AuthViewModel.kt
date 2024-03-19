@@ -23,8 +23,8 @@ class AuthViewModel @Inject constructor(
     private val _signUpState = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val signUpState: State<Response<Boolean>> = _signUpState
 
-    private val _signOutState = mutableStateOf<Response<Boolean>>(Response.Success(false))
-    val signOutState: State<Response<Boolean>> = _signOutState
+    private val _signOutState = mutableStateOf<Boolean>(false)
+    val signOutState: State<Boolean> = _signOutState
 
     private val _recoverPasswordState = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val recoverPasswordState: State<Response<Boolean>> = _recoverPasswordState
@@ -49,12 +49,21 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun signOut() {
+    fun logout() {
         viewModelScope.launch {
             auth.firebaseSignOut().collect {
-                _signOutState.value = it
-                if (it == Response.Success(true)) {
-                    _signOutState.value = Response.Success(false)
+                when (it) {
+                    is Response.Success -> {
+                        _signOutState.value = it.data
+                    }
+
+                    is Response.Failure -> {
+                        _signOutState.value = false
+                    }
+
+                    is Response.Loading -> {
+                      _signOutState.value = false
+                    }
                 }
             }
         }

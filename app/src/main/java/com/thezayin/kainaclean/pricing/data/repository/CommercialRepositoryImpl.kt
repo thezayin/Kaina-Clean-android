@@ -17,7 +17,7 @@ class CommercialRepositoryImpl @Inject constructor() : CommercialRepository {
                     name = "Hotel & Restaurant Cleaning",
                     price = "150",
                     icon = R.drawable.ic_cleaning_hotel,
-                    isSelected = true
+                    isSelected = false
                 ),
                 CommercialServices(
                     name = "Gyms & Clubs Cleaning",

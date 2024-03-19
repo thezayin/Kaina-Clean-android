@@ -4,6 +4,6 @@ import java.util.UUID
 
 data class PropertyType(
     val id: UUID = UUID.randomUUID(),
-    val name: String? = "",
+    val name: String? = null,
     val isSelected: Boolean? = true
 )

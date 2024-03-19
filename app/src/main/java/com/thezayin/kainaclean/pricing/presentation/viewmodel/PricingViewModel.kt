@@ -13,6 +13,9 @@ import com.thezayin.kainaclean.pricing.domain.model.DomesticServices
 import com.thezayin.kainaclean.pricing.domain.model.PropertyType
 import com.thezayin.kainaclean.pricing.domain.usecase.property.PropertyUseCases
 import com.thezayin.kainaclean.pricing.domain.usecase.serices.ServicesUseCases
+import com.thezayin.kainaclean.pricing.presentation.screen.state.model.CommercialState
+import com.thezayin.kainaclean.pricing.presentation.screen.state.model.DomesticState
+import com.thezayin.kainaclean.pricing.presentation.screen.state.model.PropertyState
 import com.thezayin.kainaclean.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -31,7 +34,7 @@ class PricingViewModel @Inject constructor(
     var getCommercialType by mutableStateOf(CommercialState())
         private set
 
-    var selectedProperty by mutableStateOf("Domestic")
+    var selectedProperty by mutableStateOf("")
     var selectedService by mutableStateOf("")
     var price by mutableStateOf("0")
 
@@ -89,84 +92,6 @@ class PricingViewModel @Inject constructor(
         }
     }
 
-    data class DomesticState(
-        val list: List<DomesticServices> = emptyList()
-    )
 
-    data class CommercialState(
-        val list: List<CommercialServices> = emptyList()
-    )
 
-    data class PropertyState(
-        val list: List<PropertyType> = emptyList()
-    )
-
-    class DomesticDataState {
-        var domestic = mutableStateListOf<DomesticServices>()
-        fun itemSelected(domesticService: DomesticServices) {
-            val iterator = domestic.listIterator()
-            while (iterator.hasNext()) {
-                val item = iterator.next()
-                iterator.set(
-                    if (item.id == domesticService.id) {
-                        domesticService
-                    } else {
-                        item.copy(
-                            isSelected = false
-                        )
-                    }
-                )
-            }
-        }
-
-        fun setNewDomesticList(domesticServices: List<DomesticServices>) {
-            this.domestic = domesticServices.toMutableStateList()
-        }
-    }
-
-    class CommercialDataState {
-        var commercial = mutableStateListOf<CommercialServices>()
-        fun itemSelected(commercialServices: CommercialServices) {
-            val iterator = commercial.listIterator()
-            while (iterator.hasNext()) {
-                val item = iterator.next()
-                iterator.set(
-                    if (item.id == commercialServices.id) {
-                        commercialServices
-                    } else {
-                        item.copy(
-                            isSelected = false
-                        )
-                    }
-                )
-            }
-        }
-
-        fun setNewCommercialList(commercialServices: List<CommercialServices>) {
-            this.commercial = commercialServices.toMutableStateList()
-        }
-    }
-
-    class PropertyDataState {
-        var property = mutableStateListOf<PropertyType>()
-        fun itemSelected(propertyType: PropertyType) {
-            val iterator = property.listIterator()
-            while (iterator.hasNext()) {
-                val item = iterator.next()
-                iterator.set(
-                    if (item.id == propertyType.id) {
-                        propertyType
-                    } else {
-                        item.copy(
-                            isSelected = false
-                        )
-                    }
-                )
-            }
-        }
-
-        fun setNewPropertyList(propertyType: List<PropertyType>) {
-            this.property = propertyType.toMutableStateList()
-        }
-    }
 }

@@ -68,7 +68,7 @@ fun HomeScreen(
 
                 .padding(horizontal = 20.dp),
         ) {
-            HomeTopBar(modifier = Modifier.weight(0.11f))
+            HomeTopBar(modifier = Modifier.weight(0.11f), navigator = navigator)
             HomeImageSlider(modifier = Modifier.weight(0.3f))
             HomeMenuIcons(
                 homeViewModel = homeViewModel,

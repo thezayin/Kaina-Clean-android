@@ -16,10 +16,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
+import com.thezayin.kainaclean.destinations.SettingScreenDestination
 
 @Composable
-fun HomeTopBar(modifier: Modifier) {
+fun HomeTopBar(modifier: Modifier, navigator: DestinationsNavigator) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -34,7 +36,7 @@ fun HomeTopBar(modifier: Modifier) {
                 .padding(10.dp)
                 .size(24.dp)
                 .clickable {
-
+                    navigator.navigate(SettingScreenDestination)
                 })
 
         Image(

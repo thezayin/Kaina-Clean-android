@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +42,6 @@ fun SplashScreen(
     val authViewModel: AuthViewModel = hiltViewModel()
     var checkNetwork by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
 
     if (!checkForInternet(context)) {
         checkNetwork = true
@@ -85,7 +83,8 @@ fun SplashScreen(
             text = "Loading setting....",
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 10.dp)
+                .padding(bottom = 10.dp),
+            color = colorResource(id = R.color.grey)
         )
     }
 }

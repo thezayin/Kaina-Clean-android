@@ -12,7 +12,7 @@ class PropertyTypeRepositoryImpl @Inject constructor() : PropertyTypeRepository 
         try {
             emit(Response.Loading)
             val propertyTypes = listOf(
-                PropertyType(name = "Domestic", isSelected = true),
+                PropertyType(name = "Domestic", isSelected = false),
                 PropertyType(name = "Commercial", isSelected = false),
             )
             emit(Response.Success(propertyTypes))

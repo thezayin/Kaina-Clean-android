@@ -12,6 +12,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.thezayin.kainaclean.pricing.presentation.screen.state.CommercialDataState
+import com.thezayin.kainaclean.pricing.presentation.screen.state.DomesticDataState
+import com.thezayin.kainaclean.pricing.presentation.screen.state.PropertyDataState
 import com.thezayin.kainaclean.pricing.presentation.viewmodel.PricingViewModel
 
 @Composable
@@ -33,21 +36,20 @@ fun PricingDetailsCard(
     val state = rememberLazyListState()
 
     val propertyState = remember {
-        PricingViewModel.PropertyDataState()
+        PropertyDataState()
     }
 
     val domesticState = remember {
-        PricingViewModel.DomesticDataState()
+        DomesticDataState()
     }
 
     val commercialState = remember {
-        PricingViewModel.CommercialDataState()
+        CommercialDataState()
     }
 
     propertyState.setNewPropertyList(propertyList)
     domesticState.setNewDomesticList(domesticList)
     commercialState.setNewCommercialList(commercialList)
-
 
     Column(
         modifier = modifier
