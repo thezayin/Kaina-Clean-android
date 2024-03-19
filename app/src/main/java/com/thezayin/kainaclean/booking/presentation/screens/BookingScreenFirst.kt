@@ -53,16 +53,16 @@ import com.thezayin.kainaclean.util.Constants.TEXT_SIZE_NORMAL
 import com.thezayin.kainaclean.util.Constants.TOP_BAR_BOTTOM_PADDING
 import com.thezayin.kainaclean.util.checkForInternet
 
-
 @RequiresApi(Build.VERSION_CODES.Q)
 @Destination
 @Composable
 fun BookingScreenFirst(
     navigator: DestinationsNavigator
 ) {
-    val nameInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val phoneNumberInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val emailInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val name = remember { mutableStateOf(TextFieldValue()) }
+    val phone = remember { mutableStateOf(TextFieldValue()) }
+    val email = remember { mutableStateOf(TextFieldValue()) }
+
     val context = LocalContext.current
     val openDialog = remember { mutableStateOf(false) }
     var checkNetwork by remember { mutableStateOf(false) }
@@ -114,10 +114,10 @@ fun BookingScreenFirst(
             }
 
             TextField(
-                value = nameInputValue.value,
+                value = name.value,
                 onValueChange = {
                     if (it.text.length <= 18) {
-                        nameInputValue.value = it
+                        name.value = it
                     }
                 },
                 placeholder = {
@@ -168,10 +168,10 @@ fun BookingScreenFirst(
             }
 
             TextField(
-                value = emailInputValue.value,
+                value = email.value,
                 onValueChange = {
                     if (it.text.length <= 124) {
-                        emailInputValue.value = it
+                        email.value = it
                     }
                 },
                 placeholder = {
@@ -222,10 +222,10 @@ fun BookingScreenFirst(
             }
 
             TextField(
-                value = phoneNumberInputValue.value,
+                value = phone.value,
                 onValueChange = {
                     if (it.text.length <= 11) {
-                        phoneNumberInputValue.value = it
+                        phone.value = it
                     }
                 },
                 placeholder = {
@@ -261,18 +261,18 @@ fun BookingScreenFirst(
             ) {
                 Button(
                     onClick = {
-                        if (emailInputValue.value.text.isEmpty() || nameInputValue.value.text.isEmpty() || phoneNumberInputValue.value.text.isEmpty()) {
+                        if (email.value.text.isEmpty() || name.value.text.isEmpty() || phone.value.text.isEmpty()) {
                             openDialog.value = true
-                        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInputValue.value.text)
+                        } else if (!Patterns.EMAIL_ADDRESS.matcher(email.value.text)
                                 .matches()
                         ) {
                             Toast.makeText(context, "Enter valid Email", Toast.LENGTH_LONG).show()
                         } else {
                             navigator.navigate(
                                 BookingScreenSecondDestination(
-                                    nameInputValue.value.text,
-                                    emailInputValue.value.text,
-                                    phoneNumberInputValue.value.text
+                                    name.value.text,
+                                    email.value.text,
+                                    phone.value.text
                                 )
                             )
                         }

@@ -24,10 +24,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.kainaclean.R
-import com.thezayin.kainaclean.home.presentation.component.HomeBottomNav
-import com.thezayin.kainaclean.home.presentation.component.HomeImageSlider
-import com.thezayin.kainaclean.home.presentation.component.HomeMenuIcons
-import com.thezayin.kainaclean.home.presentation.component.HomeTopBar
+import com.thezayin.kainaclean.home.presentation.component.menu.HomeMenu
+import com.thezayin.kainaclean.home.presentation.component.navbottom.HomeBottomNav
+import com.thezayin.kainaclean.home.presentation.component.slider.HomeImageSlider
+import com.thezayin.kainaclean.home.presentation.component.topbar.HomeTopBar
 import com.thezayin.kainaclean.home.presentation.viewmodel.HomeViewModel
 import com.thezayin.kainaclean.main.component.dialogs.NetworkDialog
 import com.thezayin.kainaclean.util.checkForInternet
@@ -41,6 +41,7 @@ fun HomeScreen(
     val homeViewModel: HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     val activity = LocalContext.current.getActivity()
+    val analytic = homeViewModel.analytics
 
     BackHandler {
         activity?.finish()
@@ -50,6 +51,10 @@ fun HomeScreen(
 
     if (!checkForInternet(context)) {
         checkNetwork = true
+    }
+
+    if (!homeViewModel.stop) {
+        return
     }
 
     if (checkNetwork) {
@@ -68,9 +73,13 @@ fun HomeScreen(
 
                 .padding(horizontal = 20.dp),
         ) {
-            HomeTopBar(modifier = Modifier.weight(0.11f), navigator = navigator)
+            HomeTopBar(
+                modifier = Modifier.weight(0.11f),
+                navigator = navigator,
+                analytic = analytic
+            )
             HomeImageSlider(modifier = Modifier.weight(0.3f))
-            HomeMenuIcons(
+            HomeMenu(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.weight(0.4f),
                 navigator = navigator
@@ -82,7 +91,7 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom
             ) {
-                HomeBottomNav(navigator = navigator, modifier = Modifier)
+                HomeBottomNav(navigator = navigator, modifier = Modifier, viewModel = homeViewModel)
             }
         }
     }

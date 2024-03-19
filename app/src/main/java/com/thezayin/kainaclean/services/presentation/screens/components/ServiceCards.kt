@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.services.domain.model.ServiceOptions
 import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsViewModel
@@ -35,6 +37,7 @@ import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsVie
 fun ServiceCards(
     options: ServiceOptions,
     modifier: Modifier,
+    analytics: Analytics,
     onItemClick: (ServiceOptions) -> Unit,
 ) {
 
@@ -57,6 +60,7 @@ fun ServiceCards(
                 )
                 viewModel.selectedService = options.name!!
                 viewModel.details = options.details!!
+                analytics.logEvent(AnalyticsEvent.ServiceDetailsSelected(options.name))
             },
         colors = CardDefaults.cardColors(
             containerColor = if (options.isSelected == true) colorResource(id = R.color.btn_primary) else colorResource(

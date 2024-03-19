@@ -19,12 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.thezayin.analytics.dependencies.Analytics
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsViewModel
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun ServicesComponent(serviceViewModel: ServiceOptionsViewModel, modifier: Modifier) {
+fun ServicesComponent(serviceViewModel: ServiceOptionsViewModel, modifier: Modifier, analytics: Analytics) {
     val services = remember {
         serviceViewModel.getServiceState.list
     }
@@ -69,6 +70,7 @@ fun ServicesComponent(serviceViewModel: ServiceOptionsViewModel, modifier: Modif
                 ServiceCards(
                     options = item,
                     modifier = Modifier,
+                    analytics=analytics,
                     onItemClick = serviceDataState::itemSelected
                 )
             }

@@ -4,6 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.qualifiers.GoogleAnalytics
 import com.thezayin.kainaclean.auth.domain.usecases.AuthenticationUseCases
 import com.thezayin.kainaclean.booking.domain.usecases.BookingUseCases
 import com.thezayin.kainaclean.util.Response
@@ -14,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BookingViewModel @Inject constructor(
     private val useCases: BookingUseCases,
-    private val authUseCases: AuthenticationUseCases
+    private val authUseCases: AuthenticationUseCases,
+    @GoogleAnalytics val analytics: Analytics
 ) : ViewModel() {
 
     private val _sendBooking = mutableStateOf<Response<Boolean>>(Response.Success(false))

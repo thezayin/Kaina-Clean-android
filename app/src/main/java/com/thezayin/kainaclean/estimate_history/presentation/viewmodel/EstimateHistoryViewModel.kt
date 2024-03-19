@@ -41,7 +41,6 @@ class EstimateHistoryViewModel @Inject constructor(
         }
     }
 
-
     data class EstimateUiState(
         val estimateList: Response<List<EstimateHistory>> = Response.Loading
     )

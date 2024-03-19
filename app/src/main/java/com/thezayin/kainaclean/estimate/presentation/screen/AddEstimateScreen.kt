@@ -57,21 +57,25 @@ fun AddEstimateScreen(
 ) {
     val viewModel: AddEstimateViewModel = hiltViewModel()
     val serviceViewModel: ServiceOptionsViewModel = hiltViewModel()
-    val addressInputValue = remember { mutableStateOf(TextFieldValue()) }
-    var showDateDialog by remember { mutableStateOf(false) }
+
+    val analytics = serviceViewModel.analytics
+
+    val address = remember { mutableStateOf(TextFieldValue()) }
     var date by remember { mutableStateOf("Select") }
 
-    val propertyTypeList = arrayOf(
-        "Domestic", "Commercial"
-    )
-    val context = LocalContext.current
     var checkNetwork by remember { mutableStateOf(false) }
+    var showDateDialog by remember { mutableStateOf(false) }
+    var propertyExpanded by remember { mutableStateOf(false) }
+
+    val propertyList = arrayOf("Domestic", "Commercial")
+    var propertySelected by remember { mutableStateOf(propertyList[0]) }
+
+    val context = LocalContext.current
+
     if (!checkForInternet(context)) {
         checkNetwork = true
 
     }
-    var propertySelectedText by remember { mutableStateOf(propertyTypeList[0]) }
-    var propertyExpanded by remember { mutableStateOf(false) }
 
     if (showDateDialog) {
         DateSelectorDialog(setShowDialog = {
@@ -103,8 +107,6 @@ fun AddEstimateScreen(
             ) {
                 navigator.navigateUp()
             }
-
-
 
             Column(
                 modifier = Modifier
@@ -144,7 +146,7 @@ fun AddEstimateScreen(
                         .padding(horizontal = 20.dp)
                 ) {
                     TextField(
-                        value = propertySelectedText,
+                        value = propertySelected,
                         onValueChange = { },
                         readOnly = true,
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = propertyExpanded) },
@@ -170,7 +172,7 @@ fun AddEstimateScreen(
                         onDismissRequest = { propertyExpanded = false },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        propertyTypeList.forEach { item ->
+                        propertyList.forEach { item ->
                             DropdownMenuItem(text = {
                                 Text(
                                     text = item,
@@ -178,7 +180,7 @@ fun AddEstimateScreen(
                                     fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                                 )
                             }, onClick = {
-                                propertySelectedText = item
+                                propertySelected = item
                                 propertyExpanded = false
                             })
                         }
@@ -187,6 +189,7 @@ fun AddEstimateScreen(
 
                 ServicesComponent(
                     serviceViewModel = serviceViewModel,
+                    analytics = analytics,
                     modifier = Modifier.padding(top = 10.dp)
                 )
 
@@ -215,10 +218,10 @@ fun AddEstimateScreen(
                 }
 
                 TextField(
-                    value = addressInputValue.value,
+                    value = address.value,
                     onValueChange = {
                         if (it.text.length <= 30) {
-                            addressInputValue.value = it
+                            address.value = it
                         }
                     },
                     placeholder = {
@@ -306,13 +309,15 @@ fun AddEstimateScreen(
                     )
                 )
             }
+
             EstimateButton(
                 modifier = Modifier.weight(0.1f),
-                address = addressInputValue.value.text,
-                propertyType = propertySelectedText,
+                address = address.value.text,
+                propertyType = propertySelected,
                 date = date,
                 navigator = navigator,
                 viewModel = viewModel,
+                analytics = analytics,
                 serviceOptionsViewModel = serviceViewModel
             )
         }

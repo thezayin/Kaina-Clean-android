@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.destinations.HomeScreenDestination
 import com.thezayin.kainaclean.main.component.dialogs.CustomDialog
@@ -40,6 +42,7 @@ fun BottomButtonComponent(
     modifier: Modifier,
     address: String,
     quote: String,
+    analytics: Analytics,
     serviceViewModel: ServiceOptionsViewModel,
     viewModel: QuoteViewModel,
     navigator: DestinationsNavigator
@@ -85,6 +88,7 @@ fun BottomButtonComponent(
                         quote = quote,
                         serviceType = service
                     )
+                    analytics.logEvent(AnalyticsEvent.ServiceQuoteSelected(service))
                 }
             },
             modifier = Modifier

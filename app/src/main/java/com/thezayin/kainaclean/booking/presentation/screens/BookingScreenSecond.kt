@@ -55,16 +55,16 @@ fun BookingScreenSecond(
     email: String,
     phoneNumber: String
 ) {
-    val addressInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val cityInputValue = remember { mutableStateOf(TextFieldValue()) }
-    val postcodeInputValue = remember { mutableStateOf(TextFieldValue()) }
+    val address = remember { mutableStateOf(TextFieldValue()) }
+    val city = remember { mutableStateOf(TextFieldValue()) }
+    val postCode = remember { mutableStateOf(TextFieldValue()) }
+
     val openDialog = remember { mutableStateOf(false) }
     val context = LocalContext.current
     var checkNetwork by remember { mutableStateOf(false) }
 
     if (!checkForInternet(context)) {
         checkNetwork = true
-
     }
 
     if (openDialog.value) {
@@ -111,10 +111,10 @@ fun BookingScreenSecond(
             }
 
             TextField(
-                value = addressInputValue.value,
+                value = address.value,
                 onValueChange = {
                     if (it.text.length <= 30) {
-                        addressInputValue.value = it
+                        address.value = it
                     }
                 },
                 placeholder = {
@@ -165,10 +165,10 @@ fun BookingScreenSecond(
             }
 
             TextField(
-                value = cityInputValue.value,
+                value = city.value,
                 onValueChange = {
                     if (it.text.length <= 10) {
-                        cityInputValue.value = it
+                        city.value = it
                     }
                 },
                 placeholder = {
@@ -219,10 +219,10 @@ fun BookingScreenSecond(
             }
 
             TextField(
-                value = postcodeInputValue.value,
+                value = postCode.value,
                 onValueChange = {
                     if (it.text.length <= 7) {
-                        postcodeInputValue.value = it
+                        postCode.value = it
                     }
                 },
                 placeholder = {
@@ -257,7 +257,7 @@ fun BookingScreenSecond(
             ) {
                 Button(
                     onClick = {
-                        if (addressInputValue.value.text.isEmpty() || cityInputValue.value.text.isEmpty() || postcodeInputValue.value.text.isEmpty()) {
+                        if (address.value.text.isEmpty() || city.value.text.isEmpty() || postCode.value.text.isEmpty()) {
                             openDialog.value = true
                         } else {
                             navigator.navigate(
@@ -265,9 +265,9 @@ fun BookingScreenSecond(
                                     name,
                                     email,
                                     phoneNumber,
-                                    addressInputValue.value.text,
-                                    cityInputValue.value.text,
-                                    postcodeInputValue.value.text
+                                    address.value.text,
+                                    city.value.text,
+                                    postCode.value.text
                                 )
                             )
                         }

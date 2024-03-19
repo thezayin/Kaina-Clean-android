@@ -22,13 +22,14 @@ fun SettingScreen(
 ) {
     val context = LocalContext.current
     val viewModel: AuthViewModel = hiltViewModel()
+    val analytics = viewModel.analytics
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.btn_primary))
     ) {
 
-        InfoComponent(email = "zainshaidbuttt@gamil.com")
-        MenuComponent(viewModel = viewModel, navigator = navigator, context = context)
+        InfoComponent(email = "Kaina Cleaners")
+        MenuComponent(viewModel = viewModel, navigator = navigator, context = context, analytics=analytics)
     }
 }

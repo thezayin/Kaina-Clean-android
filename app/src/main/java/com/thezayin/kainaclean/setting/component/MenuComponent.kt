@@ -23,20 +23,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
+import com.thezayin.analytics.qualifiers.GoogleAnalytics
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.auth.presentation.viewmodel.AuthViewModel
 import com.thezayin.kainaclean.destinations.OnBoardingScreenDestination
 import com.thezayin.kainaclean.util.Response
-import com.thezayin.kainaclean.util.getActivity
-
 
 @Composable
 fun MenuComponent(
     viewModel: AuthViewModel,
     navigator: DestinationsNavigator,
-    context: Context
+    context: Context,
+   @GoogleAnalytics analytics: Analytics
 ) {
-    val state = viewModel.signOutState.value
+    viewModel.signOutState.value
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,6 +47,9 @@ fun MenuComponent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable {
+                    analytics.logEvent(AnalyticsEvent.PrivacySelected("privacy_selected"))
+                }
                 .padding(top = 35.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
@@ -85,6 +90,7 @@ fun MenuComponent(
                             )
                             .show()
                     }
+                    analytics.logEvent(AnalyticsEvent.ContactSelected("email_selected"))
                 },
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
@@ -116,6 +122,7 @@ fun MenuComponent(
                     } catch (t: Throwable) {
                         Response.Failure(t.localizedMessage ?: "Error")
                     }
+                    analytics.logEvent(AnalyticsEvent.CallSelected("call_selected"))
                 },
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
@@ -138,6 +145,9 @@ fun MenuComponent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable {
+                    analytics.logEvent(AnalyticsEvent.RateUsSelected("rate_selected"))
+                }
                 .padding(top = 35.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
@@ -162,6 +172,7 @@ fun MenuComponent(
                 .fillMaxWidth()
                 .clickable {
                     viewModel.logout()
+                    analytics.logEvent(AnalyticsEvent.LogOutSelected("logout_from"))
                     navigator.navigate(OnBoardingScreenDestination)
                 }
                 .padding(top = 35.dp),

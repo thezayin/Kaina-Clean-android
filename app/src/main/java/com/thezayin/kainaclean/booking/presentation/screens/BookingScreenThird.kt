@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.booking.presentation.viewmodel.BookingViewModel
 import com.thezayin.kainaclean.destinations.HomeScreenDestination
@@ -77,11 +78,13 @@ fun BookingScreenThird(
     val viewModel: BookingViewModel = hiltViewModel()
     var showDateDialog by remember { mutableStateOf(false) }
 
-    val propertyTypeList = arrayOf(
+    val analytics = viewModel.analytics
+
+    val propertyList = arrayOf(
         "Domestic", "Commercial"
     )
 
-    val serviceTypeList = arrayOf(
+    val serviceList = arrayOf(
         "General Cleaning",
         "Deep Cleaning",
         "After Builders Cleaning",
@@ -95,18 +98,20 @@ fun BookingScreenThird(
         "After Builders Cleaning",
         "Gyms & Clubs"
     )
+
     var propertyExpanded by remember { mutableStateOf(false) }
     var date by remember { mutableStateOf("Select") }
-    var propertySelectedText by remember { mutableStateOf(propertyTypeList[0]) }
-    var serviceSelectedText by remember { mutableStateOf(serviceTypeList[0]) }
+
+    var propertySelected by remember { mutableStateOf(propertyList[0]) }
+    var serviceSelected by remember { mutableStateOf(serviceList[0]) }
+
     var serviceExpanded by remember { mutableStateOf(false) }
     val showAlertDialog = remember { mutableStateOf(false) }
     var showLoadingDialog by remember { mutableStateOf(false) }
     var showSuccessDialog by remember { mutableStateOf(false) }
+    var checkNetwork by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-
-    var checkNetwork by remember { mutableStateOf(false) }
 
     if (!checkForInternet(context)) {
         checkNetwork = true
@@ -178,7 +183,7 @@ fun BookingScreenThird(
                 }, modifier = Modifier.fillMaxWidth()
             ) {
                 TextField(
-                    value = propertySelectedText,
+                    value = propertySelected,
                     onValueChange = { },
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = propertyExpanded) },
@@ -204,7 +209,7 @@ fun BookingScreenThird(
                     onDismissRequest = { propertyExpanded = false },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    propertyTypeList.forEach { item ->
+                    propertyList.forEach { item ->
                         DropdownMenuItem(text = {
                             Text(
                                 text = item,
@@ -212,7 +217,7 @@ fun BookingScreenThird(
                                 fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                             )
                         }, onClick = {
-                            propertySelectedText = item
+                            propertySelected = item
                             propertyExpanded = false
                         })
                     }
@@ -248,7 +253,7 @@ fun BookingScreenThird(
                 }, modifier = Modifier.fillMaxWidth()
             ) {
                 TextField(
-                    value = serviceSelectedText,
+                    value = serviceSelected,
                     onValueChange = { },
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = serviceExpanded) },
@@ -273,7 +278,7 @@ fun BookingScreenThird(
                     onDismissRequest = { serviceExpanded = false },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    serviceTypeList.forEach { item ->
+                    serviceList.forEach { item ->
                         DropdownMenuItem(text = {
                             Text(
                                 text = item,
@@ -281,7 +286,7 @@ fun BookingScreenThird(
                                 fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                             )
                         }, onClick = {
-                            serviceSelectedText = item
+                            serviceSelected = item
                             serviceExpanded = false
                         })
                     }
@@ -355,7 +360,7 @@ fun BookingScreenThird(
             ) {
                 Button(
                     onClick = {
-                        if (propertySelectedText.isEmpty() || serviceSelectedText.isEmpty() || date.length < DATE_LENGTH) {
+                        if (propertySelected.isEmpty() || serviceSelected.isEmpty() || date.length < DATE_LENGTH) {
                             showAlertDialog.value = true
                         } else {
                             showLoadingDialog = true
@@ -366,9 +371,15 @@ fun BookingScreenThird(
                                 address,
                                 city,
                                 postCode,
-                                propertySelectedText,
-                                serviceSelectedText,
+                                propertySelected,
+                                serviceSelected,
                                 date
+                            )
+                            analytics.logEvent(
+                                AnalyticsEvent.PropertySelected(propertySelected)
+                            )
+                            analytics.logEvent(
+                                AnalyticsEvent.ServiceSelected(serviceSelected)
                             )
                         }
 
