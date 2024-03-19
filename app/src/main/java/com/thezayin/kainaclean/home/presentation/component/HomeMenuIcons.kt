@@ -21,6 +21,7 @@ import com.thezayin.kainaclean.destinations.AddEstimateScreenDestination
 import com.thezayin.kainaclean.destinations.EstimateHistoryScreenDestination
 import com.thezayin.kainaclean.destinations.QuoteHistoryScreenDestination
 import com.thezayin.kainaclean.destinations.QuoteScreenDestination
+import com.thezayin.kainaclean.destinations.ServicesScreenDestination
 import com.thezayin.kainaclean.home.presentation.viewmodel.HomeViewModel
 import com.thezayin.kainaclean.util.Response
 
@@ -82,7 +83,7 @@ fun HomeMenuIcons(
                                         }
 
                                         "Services" -> {
-                                            //                                        navigator.navigate("services")
+                                            navigator.navigate(ServicesScreenDestination)
                                         }
 
                                         "Quote History" -> {

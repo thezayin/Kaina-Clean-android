@@ -4,7 +4,6 @@ import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -16,39 +15,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerScope
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
 import com.thezayin.kainaclean.home.presentation.component.slider.indicator.DotsIndicator
-
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AutoSlidingCarousel(
     modifier: Modifier = Modifier,
-    autoSlideDuration: Long = 4000L,
+    autoSlideDuration: Long = 5000L,
     pagerState: PagerState = remember { PagerState() },
     itemsCount: Int,
     itemContent: @Composable (index: Int) -> Unit,
 ) {
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
+
     LaunchedEffect(pagerState.currentPage) {
         delay(autoSlideDuration)
         pagerState.animateScrollToPage((pagerState.currentPage + 1) % itemsCount)
     }
+
     Box(
         modifier = modifier.fillMaxWidth(),
     ) {
-        PaddingValues(0.dp)
-        PagerDefaults.flingBehavior(
-            state = state,
-            endContentPadding = contentPadding.calculateEndPadding(LayoutDirection.Ltr),
-        )
-        fun PagerScope.(page: Int) {
+        HorizontalPager(count = itemsCount, state = pagerState) { page ->
             itemContent(page)
         }
 
-        // you can remove the surface in case you don't want
-        // the transparent background
         Surface(
             modifier = Modifier
                 .padding(bottom = 8.dp)

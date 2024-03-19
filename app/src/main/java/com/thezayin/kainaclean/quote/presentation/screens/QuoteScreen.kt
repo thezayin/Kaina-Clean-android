@@ -85,14 +85,13 @@ fun QuoteScreen(
                 navigator.navigateUp()
             }
 
-            ServicesComponent(serviceViewModel = serviceViewModel, modifier = Modifier.weight(0.2f))
+            ServicesComponent(serviceViewModel = serviceViewModel, modifier = Modifier.weight(0.3f))
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(0.6f)
                     .padding(horizontal = 20.dp)
-                    .padding(top = 10.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -205,7 +204,8 @@ fun QuoteScreen(
                 quote = quoteInput.value.text,
                 viewModel = viewModel,
                 navigator = navigator,
-                modifier = Modifier.weight(0.1f)
+                modifier = Modifier.weight(0.1f),
+                serviceViewModel = serviceViewModel
             )
         }
     }

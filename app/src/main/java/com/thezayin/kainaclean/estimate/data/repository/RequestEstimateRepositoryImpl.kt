@@ -36,6 +36,7 @@ class RequestEstimateRepositoryImpl @Inject constructor(val fireStore: FirebaseF
                 address = address,
                 date = date,
                 serviceRequired = service,
+                remarks ="pending",
                 addedDate = currentDate,
                 propertyType = propertyType,
                 status = false

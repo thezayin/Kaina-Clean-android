@@ -1,13 +1,16 @@
 package com.thezayin.kainaclean.services.presentation.screens.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
@@ -18,11 +21,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsViewModel
-import com.thezayin.kainaclean.util.Response
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun ServicesComponent(serviceViewModel: ServiceOptionsViewModel, modifier: Modifier) {
-    val services = serviceViewModel.getServiceState.list
+    val services = remember {
+        serviceViewModel.getServiceState.list
+    }
+    val state = rememberLazyListState()
+
+    val serviceDataState = remember {
+        ServiceOptionsViewModel.ServiceDataState()
+    }
+    serviceDataState.setNewList(services)
+
     Column(modifier = modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -47,32 +59,18 @@ fun ServicesComponent(serviceViewModel: ServiceOptionsViewModel, modifier: Modif
                 fontWeight = FontWeight.Medium,
             )
         }
-        when (services) {
-            is Response.Success -> {
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                ) {
-                    items(services.data.size) { item ->
-                        ServiceCards(
-                            options = services.data[item],
-                            modifier = Modifier,
-                            onItemClick = { serviceOptions ->
-//                                          if (serviceOptions.selected) {
-//                                              serviceViewModel.unSelectService(serviceOptions)
-//                                          } else {
-//                                              serviceViewModel.selectService(serviceOptions)
-//                                          }
-                            },
-                            selected = false
-                        )
-                    }
-                }
-            }
 
-            else -> {
-                CircularProgressIndicator()
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp), state = state
+        ) {
+            items(serviceDataState.service, key = { it.id }) { item ->
+                ServiceCards(
+                    options = item,
+                    modifier = Modifier,
+                    onItemClick = serviceDataState::itemSelected
+                )
             }
         }
     }

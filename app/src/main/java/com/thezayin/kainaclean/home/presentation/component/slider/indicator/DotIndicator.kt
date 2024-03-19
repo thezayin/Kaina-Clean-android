@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.thezayin.kainaclean.R
@@ -16,8 +18,8 @@ fun DotsIndicator(
     modifier: Modifier = Modifier,
     totalDots: Int,
     selectedIndex: Int,
-    selectedColor: Int = R.color.yellow /* Color.Yellow */,
-    unSelectedColor: Int = R.color.light_yellow_level_1 /* Color.Gray */,
+    selectedColor: Color = colorResource(id = R.color.yellow),
+    unSelectedColor: Color = colorResource(id = R.color.grey),
     dotSize: Dp
 ) {
     LazyRow(
@@ -27,7 +29,7 @@ fun DotsIndicator(
     ) {
         items(totalDots) { index ->
             IndicatorDot(
-                id = if (index == selectedIndex) selectedColor else unSelectedColor,
+                color = if (index == selectedIndex) selectedColor else unSelectedColor,
                 size = dotSize
             )
 

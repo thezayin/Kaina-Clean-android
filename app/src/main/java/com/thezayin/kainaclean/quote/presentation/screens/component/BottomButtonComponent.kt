@@ -1,5 +1,6 @@
 package com.thezayin.kainaclean.quote.presentation.screens.component
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +30,7 @@ import com.thezayin.kainaclean.main.component.dialogs.CustomDialog
 import com.thezayin.kainaclean.main.component.dialogs.LoadingDialog
 import com.thezayin.kainaclean.main.component.dialogs.SuccessDialog
 import com.thezayin.kainaclean.quote.presentation.viewmodel.QuoteViewModel
+import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsViewModel
 import com.thezayin.kainaclean.util.Response
 import com.thezayin.kainaclean.util.Toast
 import com.thezayin.kainaclean.util.Utils
@@ -38,12 +40,16 @@ fun BottomButtonComponent(
     modifier: Modifier,
     address: String,
     quote: String,
+    serviceViewModel: ServiceOptionsViewModel,
     viewModel: QuoteViewModel,
     navigator: DestinationsNavigator
 ) {
     val showAlertDialog = remember { mutableStateOf(false) }
     var showLoadingDialog by remember { mutableStateOf(false) }
     var showSuccessDialog by remember { mutableStateOf(false) }
+    Log.d("selected", "Button: ${serviceViewModel.selectedService}")
+    val service =serviceViewModel.selectedService
+    Log.d("selected", "btn: ${service}")
 
     if (showAlertDialog.value) {
         CustomDialog {
@@ -70,14 +76,14 @@ fun BottomButtonComponent(
     ) {
         Button(
             onClick = {
-                if (address.isEmpty() || quote.isEmpty()) {
+                if (address.isEmpty() || quote.isEmpty() || service.isEmpty()) {
                     showAlertDialog.value = true
                 } else {
                     showLoadingDialog = true
                     viewModel.sendQuote(
                         address = address,
                         quote = quote,
-                        serviceType = "General Cleaning"
+                        serviceType = service
                     )
                 }
             },

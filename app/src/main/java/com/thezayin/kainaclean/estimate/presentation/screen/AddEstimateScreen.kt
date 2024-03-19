@@ -98,7 +98,8 @@ fun AddEstimateScreen(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(top = 20.dp)
-                    .weight(0.1f), title = "Request a Quote"
+                    .weight(0.1f),
+                title = "Request a Quote"
             ) {
                 navigator.navigateUp()
             }
@@ -113,8 +114,7 @@ fun AddEstimateScreen(
                     .padding(top = 10.dp)
             ) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = "Address",
@@ -190,8 +190,7 @@ fun AddEstimateScreen(
 
                 TextField(
                     value = date,
-                    onValueChange = {
-                    },
+                    onValueChange = {},
                     placeholder = {
                         Text(
                             fontSize = Constants.TEXT_SIZE_NORMAL,
@@ -297,10 +296,11 @@ fun AddEstimateScreen(
             EstimateButton(
                 modifier = Modifier.weight(0.1f),
                 address = addressInputValue.value.text,
-                propertyType = "property",
-                date = "date",
+                propertyType = propertySelectedText,
+                date = date,
                 navigator = navigator,
-                viewModel = viewModel
+                viewModel = viewModel,
+                serviceOptionsViewModel = serviceViewModel
             )
         }
     }

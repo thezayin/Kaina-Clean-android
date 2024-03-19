@@ -2,11 +2,13 @@ package com.thezayin.kainaclean.home.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,6 +30,8 @@ import com.thezayin.kainaclean.home.domain.model.Home
 fun HomeItemCard(home: Home, modifier: Modifier, onItemClick: (Home) -> Unit) {
     Card(
         modifier = modifier
+            .height(180.dp)
+            .width(100.dp)
             .padding(
                 start = 8.dp,
                 end = 8.dp,
@@ -40,31 +44,27 @@ fun HomeItemCard(home: Home, modifier: Modifier, onItemClick: (Home) -> Unit) {
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.background),
         ),
-        elevation = CardDefaults.cardElevation(3.dp)
+        elevation = CardDefaults.cardElevation(5.dp)
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
             Image(
                 painter = painterResource(id = home.icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(
-                        vertical = 5.dp
-                    )
-                    .padding(10.dp)
-                    .size(80.dp),
-                alignment = Alignment.Center
+                    .align(Alignment.Center)
+                    .size(40.dp),
             )
 
             Text(
                 text = home.title,
                 modifier = Modifier
-                    .padding(bottom = 20.dp)
+                    .padding(bottom = 30.dp)
                     .widthIn(60.dp)
+                    .align(Alignment.BottomCenter)
                     .fillMaxWidth(),
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
                 color = colorResource(id = R.color.black),
                 textAlign = TextAlign.Center

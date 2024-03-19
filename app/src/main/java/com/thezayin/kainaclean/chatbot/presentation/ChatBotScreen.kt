@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -52,7 +53,12 @@ fun ChatBotScreen(
         .statusBarsPadding(),
         containerColor = colorResource(id = R.color.white),
         topBar = {
-            TopBar(modifier = Modifier, title = "Chat Bot") {
+            TopBar(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 20.dp),
+                title = "Chat Bot"
+            ) {
                 navigator.navigateUp()
             }
         },
