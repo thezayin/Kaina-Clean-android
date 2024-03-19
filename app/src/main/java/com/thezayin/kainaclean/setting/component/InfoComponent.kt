@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,14 +29,17 @@ fun InfoComponent(email: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 45.dp)
+            .padding(top = 95.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Card(
                 modifier = Modifier
                     .size(56.dp)
                     .align(Alignment.CenterHorizontally),
-                shape = RoundedCornerShape(150.dp)
+                shape = RoundedCornerShape(150.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = colorResource(id = R.color.white)
+                )
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_icon),

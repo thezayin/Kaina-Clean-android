@@ -4,8 +4,8 @@ import java.util.UUID
 
 data class CommercialServices(
     val id: UUID = UUID.randomUUID(),
-    val name: String? = "",
+    val name: String? = null,
     val icon: Int? = null,
-    val price:String? = "",
-    val isSelected: Boolean? = false
+    val price:String? = null,
+    val isSelected: Boolean? = null
 )

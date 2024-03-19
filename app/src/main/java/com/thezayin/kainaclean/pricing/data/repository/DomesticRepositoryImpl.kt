@@ -17,7 +17,7 @@ class DomesticRepositoryImpl @Inject constructor() : DomesticRepository {
                     name = "End of Tenancy Cleaning",
                     icon = R.drawable.ic_cleaning_tenc,
                     price = "150",
-                    isSelected = true
+                    isSelected = false
                 ),
                 DomesticServices(
                     name = "Deep Cleaning",

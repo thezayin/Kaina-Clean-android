@@ -37,12 +37,12 @@ fun PropertyList(
         modifier = modifier
             .width(150.dp)
             .clickable {
+                viewModel.selectedProperty = propertyType.name!!
                 onItemClick(
                     propertyType.copy(
                         isSelected = propertyType.isSelected?.not()
                     )
                 )
-                viewModel.selectedProperty = propertyType.name!!
             },
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.white)
@@ -71,5 +71,4 @@ fun PropertyList(
             )
         }
     }
-
 }
