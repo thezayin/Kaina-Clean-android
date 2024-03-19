@@ -1,0 +1,249 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="305.25dp"
+    android:height="270.44dp"
+    android:viewportWidth="305.25"
+    android:viewportHeight="270.44">
+  <path
+      android:pathData="m304.74,60.15c-10.64,-22.39 -21.52,-15.8 -38.5,-25.5 -11.17,-5.35 -15.24,-2.98 -19.5,4.5l-5.5,30.5c-1.99,6.5 -4.66,15.87 -7.03,21.45 -1.92,4.51 -11.26,21.63 -15.97,31.55l12,2 13,-22.5 4.5,-14c1.01,17.83 1.48,17.68 4.5,32l-18,37.5 -8.94,57.11 13.44,3.39 11.5,-45.5 15,-19 17,67 12,-7.5 -9,-76.5c1.99,-24.2 8.23,-46.42 -2,-71l10.5,2.5 -0.5,26.5 11.5,-1z"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m261.13,14.84c0,8.2 -6.65,14.85 -14.85,14.85 -8.2,0 -14.85,-6.65 -14.85,-14.85 0,-8.2 6.65,-14.85 14.85,-14.85 8.2,0 14.85,6.65 14.85,14.85z"
+      android:fillColor="@color/btn_primary"/>
+  <path
+      android:pathData="m146.5,219.55 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m154.36,208.25l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m112.35,187.32 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m120.22,176.02l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m124.37,199.21 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m132.24,187.92l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m117.22,192.73 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m125.09,181.44l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m139.9,214.74 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m147.77,203.45l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m130.59,206.4 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m138.46,195.1l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m121.66,195.67 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m129.53,184.37l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m127.08,202.76 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m134.95,191.47l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m135.71,210.22 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m143.58,198.93l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m143.53,217.59 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m151.4,206.29l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m115.07,190.86 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m122.93,179.57l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m161.68,216.41 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m169.55,205.12l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m156.62,217.46 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m164.49,206.16l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m151.31,220.09 l7.87,-11.29 -4.87,11.63"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m159.18,208.8l-1.88,11.98"
+      android:strokeWidth="4.3605"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m119.49,169.08 l17.29,-6.13 35.12,36.39 -17.29,6.13z"
+      android:strokeWidth="1"
+      android:fillColor="#333333"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m119.49,169.08 l-1.25,7.96 35.12,36.39 17.29,-6.13 1.25,-7.96 -17.29,6.13z"
+      android:strokeWidth="1"
+      android:fillColor="#808080"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m93.71,210.15c0.62,-3.91 -1.63,-8.53 -4.68,-11.3 -3.05,-2.77 -14.23,-10.31 -18.06,-9.3 -1.71,0.45 2.85,9.64 2.85,9.64l16.38,14.84s3.23,-2.13 3.51,-3.88z"
+      android:strokeWidth=".53766"
+      android:fillColor="#666666"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m137.52,231.75c0.62,-3.91 -1.63,-8.53 -4.68,-11.3 -3.05,-2.77 -14.23,-10.31 -18.06,-9.3 -1.71,0.45 2.85,9.64 2.85,9.64l16.38,14.84s3.23,-2.13 3.51,-3.88z"
+      android:strokeWidth=".53766"
+      android:fillColor="#666666"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m109.63,200.96c0.62,-3.91 -1.63,-8.53 -4.68,-11.3 -3.05,-2.77 -14.23,-10.31 -18.06,-9.3 -1.71,0.45 2.85,9.64 2.85,9.64l16.38,14.84s3.23,-2.13 3.51,-3.88z"
+      android:strokeWidth=".53766"
+      android:fillColor="#666666"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m116.2,247.18c0.62,-3.91 -1.63,-8.53 -4.68,-11.3 -3.05,-2.77 -14.23,-10.31 -18.06,-9.3 -1.71,0.45 2.85,9.64 2.85,9.64l16.38,14.84s3.23,-2.13 3.51,-3.88z"
+      android:strokeWidth=".53766"
+      android:fillColor="#666666"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m78.74,181.37 l-11.56,-34.15"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m84.86,177.84 l-5.31,-30.41"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m67.6,180.46 l-14.92,-21.6"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m47.77,119.17c-9.02,-3.25 -14.13,-0.92 -13.79,9.18 -13.67,-0.27 -5.17,5.39 -1.79,9.69 -3.8,11.17 1.6,13.42 9.37,13.35 10.84,11.17 16.14,2.81 21.58,-5.06 12.5,5.97 20.11,-0.25 19.75,-10.29l-10.89,-7.66c2.5,-8.52 -2.23,-11.7 -10.46,-12.29 -11.5,-10.36 -12.46,-3.35 -13.77,3.09z"
+      android:strokeWidth=".35762"
+      android:fillColor="#f9f9f9"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m71.05,211.4 l-27.08,-23.8"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m74.59,205.28 l-19.81,-23.68"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m60.95,216.18 l-23.72,-11.24"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m13.13,173.02c-9.43,1.7 -12.69,6.27 -7.35,14.85 -11.97,6.6 -1.78,7.25 3.3,9.28 2.3,11.57 8.09,10.82 14.79,6.88 14.98,4.25 15.38,-5.64 16.16,-15.17 13.81,-1.08 17.29,-10.27 11.96,-18.79l-13.27,-1.19c-2.1,-8.63 -7.78,-9.02 -15.2,-5.41 -15.14,-3.22 -12.47,3.33 -10.39,9.56z"
+      android:strokeWidth=".35762"
+      android:fillColor="#f9f9f9"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m98.51,246.33 l-35.35,-7.07"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m98.51,239.25 l-28.99,-10.6"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m92.14,255.52 l-26.16,2.12"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m29.15,242.04c-7.32,6.19 -7.86,11.78 1.06,16.53 -7.07,11.7 2.08,7.17 7.5,6.39 7.78,8.88 12.42,5.33 16.25,-1.44 15.1,-3.8 10.5,-12.58 6.41,-21.22 11.42,-7.84 9.84,-17.54 0.96,-22.25l-12.08,5.6c-6.13,-6.42 -11.25,-3.92 -15.88,2.91 -14.72,4.78 -9.13,9.12 -4.21,13.47z"
+      android:strokeWidth=".35762"
+      android:fillColor="#f9f9f9"
+      android:strokeColor="@color/btn_primary"/>
+  <path
+      android:pathData="m143.28,180.03 l152.71,-94.7c8.48,-1.63 7.03,2.47 4.24,7.35l-151.75,94.96c-3.17,-1.27 -8.77,-0.41 -5.21,-7.61z"
+      android:strokeWidth="1"
+      android:fillColor="@color/btn_primary"
+      android:strokeColor="@color/btn_primary"/>
+</vector>

@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,16 +26,19 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.services.domain.model.ServiceOptions
+import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsViewModel
 
 @Composable
 fun ServiceCards(
     options: ServiceOptions,
     modifier: Modifier,
     onItemClick: (ServiceOptions) -> Unit,
-    selected: Boolean
 ) {
+
+    val viewModel: ServiceOptionsViewModel = hiltViewModel()
     Card(
         modifier = modifier
             .padding(
@@ -45,17 +47,23 @@ fun ServiceCards(
                 top = 2.dp,
                 bottom = 2.dp,
             )
-            .height(140.dp)
             .width(115.dp)
+            .height(if (options.isSelected == true) 150.dp else 140.dp)
             .clickable {
-                onItemClick(options)
+                onItemClick(
+                    options.copy(
+                        isSelected = options.isSelected?.not()
+                    )
+                )
+                viewModel.selectedService = options.name!!
+                viewModel.details = options.details!!
             },
         colors = CardDefaults.cardColors(
-            containerColor = if (selected) colorResource(id = R.color.btn_primary) else colorResource(
+            containerColor = if (options.isSelected == true) colorResource(id = R.color.btn_primary) else colorResource(
                 id = R.color.white
             ),
         ),
-        elevation = CardDefaults.cardElevation(3.dp)
+        elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth()
@@ -71,28 +79,34 @@ fun ServiceCards(
                     modifier = Modifier.size(50.dp),
                     shape = CircleShape,
                     colors = CardDefaults.cardColors(
-                        containerColor = colorResource(id = R.color.transparent)
+                        containerColor = colorResource(id = R.color.white)
                     )
                 ) {
-                    Image(
-                        painter = painterResource(id = options.icon),
-                        contentDescription = null,
-                        alignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Image(
+                            painter = painterResource(id = options.icon!!),
+                            contentDescription = null,
+                            alignment = Alignment.Center,
+                            modifier = Modifier
+                                .size(35.dp)
+                                .align(Alignment.Center),
+                            contentScale = ContentScale.Fit
+                        )
+                    }
+
                 }
                 Text(
-                    text = options.name,
+                    text = options.name!!,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 10.dp, top = 10.dp)
-                        .widthIn(max = 100.dp)
                         .align(Alignment.CenterHorizontally)
                         .padding(horizontal = 10.dp),
                     fontSize = 12.sp,
                     fontFamily = FontFamily(Font(R.font.noto_sans_regular)),
-                    color = if (selected) colorResource(id = R.color.white) else colorResource(id = R.color.black),
+                    color = if (options.isSelected == true) colorResource(id = R.color.white) else colorResource(
+                        id = R.color.black
+                    ),
                     textAlign = TextAlign.Center,
                 )
             }

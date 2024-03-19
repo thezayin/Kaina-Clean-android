@@ -29,6 +29,7 @@ import com.thezayin.kainaclean.estimate.presentation.viewmodel.AddEstimateViewMo
 import com.thezayin.kainaclean.main.component.dialogs.CustomDialog
 import com.thezayin.kainaclean.main.component.dialogs.LoadingDialog
 import com.thezayin.kainaclean.main.component.dialogs.SuccessDialog
+import com.thezayin.kainaclean.services.presentation.viewmodel.ServiceOptionsViewModel
 import com.thezayin.kainaclean.util.Response
 import com.thezayin.kainaclean.util.Toast
 import com.thezayin.kainaclean.util.Utils
@@ -40,11 +41,13 @@ fun EstimateButton(
     date: String,
     propertyType: String,
     viewModel: AddEstimateViewModel,
+    serviceOptionsViewModel: ServiceOptionsViewModel,
     navigator: DestinationsNavigator
 ) {
     val showAlertDialog = remember { mutableStateOf(false) }
     var showLoadingDialog by remember { mutableStateOf(false) }
     var showSuccessDialog by remember { mutableStateOf(false) }
+    val service = serviceOptionsViewModel.selectedService
 
     if (showAlertDialog.value) {
         CustomDialog {
@@ -66,12 +69,11 @@ fun EstimateButton(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp)
-            .padding(0.dp, 0.dp, 0.dp, 15.dp),
-        verticalArrangement = Arrangement.Bottom
+            .padding(0.dp, 0.dp, 0.dp, 15.dp), verticalArrangement = Arrangement.Bottom
     ) {
         Button(
             onClick = {
-                if (address.isEmpty() || date.isEmpty() || propertyType.isEmpty()) {
+                if (address.isEmpty() || date.isEmpty() || propertyType.isEmpty() || service.isEmpty()) {
                     showAlertDialog.value = true
                 } else {
                     showLoadingDialog = true
@@ -79,7 +81,7 @@ fun EstimateButton(
                         address = address,
                         date = date,
                         propertyType = propertyType,
-                        service = "General Cleaning"
+                        service = service
                     )
                 }
             },
@@ -87,8 +89,7 @@ fun EstimateButton(
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id = R.color.btn_primary),
-                contentColor = Color.White
+                containerColor = colorResource(id = R.color.btn_primary), contentColor = Color.White
             ),
             shape = RoundedCornerShape(12.dp),
         ) {

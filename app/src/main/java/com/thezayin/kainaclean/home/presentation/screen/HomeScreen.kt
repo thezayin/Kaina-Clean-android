@@ -42,7 +42,7 @@ fun HomeScreen(
     val context = LocalContext.current
     val activity = LocalContext.current.getActivity()
 
-    BackHandler() {
+    BackHandler {
         activity?.finish()
     }
 

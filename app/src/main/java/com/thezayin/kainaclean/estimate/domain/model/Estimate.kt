@@ -7,6 +7,7 @@ data class Estimate(
     val date: String? = null,
     val status: Boolean? = false,
     val addedDate: String? = null,
+    val remarks: String? = null,
     val serviceRequired: String? = null,
     val propertyType: String? = null
 )

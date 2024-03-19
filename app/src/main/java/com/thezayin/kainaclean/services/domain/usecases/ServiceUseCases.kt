@@ -1,4 +1,4 @@
-package com.thezayin.kainaclean.quote.domain.usecases.service
+package com.thezayin.kainaclean.services.domain.usecases
 
 import com.thezayin.kainaclean.services.domain.usecases.ServicesOptionCase
 

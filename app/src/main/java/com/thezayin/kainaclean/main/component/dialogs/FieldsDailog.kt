@@ -87,7 +87,7 @@ fun CustomDialog(setShowDialog: (Boolean) -> Unit) {
                                 .padding(bottom = 20.dp)
                                 .height(50.dp)
                         ) {
-                            Text(text = "Done")
+                            Text(text = "Done",color=  colorResource(id = R.color.white))
                         }
                     }
                 }
