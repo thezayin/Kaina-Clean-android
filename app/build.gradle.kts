@@ -5,6 +5,8 @@ plugins {
     id("kotlin-parcelize")
     id ("com.google.devtools.ksp") version "1.9.22-1.0.17"
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
     id("kotlin-kapt")
 }
 
@@ -57,6 +59,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":analytics"))
+    implementation(project(":core"))
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -66,10 +70,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("com.google.firebase:firebase-auth:22.3.1")
-    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
-    implementation("com.google.firebase:firebase-messaging:23.4.1")
-    implementation("com.google.firebase:firebase-inappmessaging-display:20.4.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -85,14 +85,17 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("com.google.firebase:firebase-appcheck-debug:17.1.2")
-    // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("com.google.firebase:firebase-inappmessaging-display:20.4.0")
+    implementation("com.google.firebase:firebase-perf:20.5.2")
 
     // Add the dependency for the App Check library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-appcheck")
     implementation ("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
-
 
     //Splash Api
     implementation("androidx.core:core-splashscreen:1.0.1")
@@ -123,13 +126,12 @@ dependencies {
     //Compose Foundation
     implementation("androidx.compose.foundation:foundation:1.6.3")
 
-
     //Paging 3
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("androidx.paging:paging-compose:3.2.1")
 
     //slider
-    implementation ("com.google.accompanist:accompanist-pager:0.22.0-rc")
+    implementation ("com.google.accompanist:accompanist-pager:0.34.0")
 
     //Room
     implementation("androidx.room:room-runtime:2.6.1")
@@ -150,4 +152,11 @@ dependencies {
     // Retrofit with Moshi Converter
     implementation ("com.squareup.moshi:moshi-kotlin:1.15.1")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.google.firebase:firebase-core:21.1.1")
+
 }

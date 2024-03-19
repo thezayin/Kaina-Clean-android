@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.qualifiers.GoogleAnalytics
 import com.thezayin.kainaclean.auth.domain.usecases.AuthenticationUseCases
 import com.thezayin.kainaclean.home.domain.model.Home
 import com.thezayin.kainaclean.home.domain.usecases.HomeUseCase
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class QuoteViewModel @Inject constructor(
     private val useCases: QuoteUseCases,
     private val authUseCases: AuthenticationUseCases,
-    private val homeUseCase: HomeUseCase
+    private val homeUseCase: HomeUseCase,
+    @GoogleAnalytics val analytics: Analytics
 ) : ViewModel() {
 
     private val _sendQuote = mutableStateOf<Response<Boolean>>(Response.Success(false))

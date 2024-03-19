@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/App.Starting.Theme"
         android:usesCleartextTraffic="true"
+        tools:replace="android:fullBackupContent"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="tiramisu">
 
@@ -36,6 +37,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
     </application>
 
 </manifest>

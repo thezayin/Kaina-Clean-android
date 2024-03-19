@@ -23,6 +23,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.destinations.HomeScreenDestination
 import com.thezayin.kainaclean.estimate.presentation.viewmodel.AddEstimateViewModel
@@ -39,6 +41,7 @@ fun EstimateButton(
     modifier: Modifier,
     address: String,
     date: String,
+    analytics: Analytics,
     propertyType: String,
     viewModel: AddEstimateViewModel,
     serviceOptionsViewModel: ServiceOptionsViewModel,
@@ -83,6 +86,8 @@ fun EstimateButton(
                         propertyType = propertyType,
                         service = service
                     )
+                    analytics.logEvent(AnalyticsEvent.ServiceEstimateSelected(service))
+                    analytics.logEvent(AnalyticsEvent.PropertyEstimateSelected(propertyType))
                 }
             },
             modifier = Modifier

@@ -172,7 +172,6 @@ fun SignUpScreen(navigator: DestinationsNavigator) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp, bottom = 5.dp)
-
             )
 
             OutlinedTextField(

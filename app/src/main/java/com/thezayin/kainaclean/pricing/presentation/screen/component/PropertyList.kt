@@ -20,6 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.pricing.domain.model.PropertyType
 import com.thezayin.kainaclean.pricing.presentation.viewmodel.PricingViewModel
@@ -30,6 +32,7 @@ fun PropertyList(
     propertyType: PropertyType,
     modifier: Modifier,
     onItemClick: (PropertyType) -> Unit,
+    analytics: Analytics
 ) {
 
     val viewModel: PricingViewModel = hiltViewModel()
@@ -43,6 +46,7 @@ fun PropertyList(
                         isSelected = propertyType.isSelected?.not()
                     )
                 )
+                analytics.logEvent(AnalyticsEvent.PropertyPriceSelected(propertyType.name))
             },
         colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.white)

@@ -51,6 +51,7 @@ fun QuoteScreen(
 ) {
     val viewModel: QuoteViewModel = hiltViewModel()
     val serviceViewModel: ServiceOptionsViewModel = hiltViewModel()
+    val analytics = viewModel.analytics
 
     val addressInputValue = remember { mutableStateOf(TextFieldValue()) }
     val quoteInput = remember { mutableStateOf(TextFieldValue()) }
@@ -85,7 +86,11 @@ fun QuoteScreen(
                 navigator.navigateUp()
             }
 
-            ServicesComponent(serviceViewModel = serviceViewModel, modifier = Modifier.weight(0.3f))
+            ServicesComponent(
+                serviceViewModel = serviceViewModel,
+                modifier = Modifier.weight(0.3f),
+                analytics = analytics
+            )
 
             Column(
                 modifier = Modifier
@@ -205,6 +210,7 @@ fun QuoteScreen(
                 viewModel = viewModel,
                 navigator = navigator,
                 modifier = Modifier.weight(0.1f),
+                analytics = analytics,
                 serviceViewModel = serviceViewModel
             )
         }

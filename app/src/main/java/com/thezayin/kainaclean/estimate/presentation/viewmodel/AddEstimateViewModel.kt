@@ -4,6 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.qualifiers.GoogleAnalytics
 import com.thezayin.kainaclean.auth.domain.usecases.AuthenticationUseCases
 import com.thezayin.kainaclean.estimate.domain.usecases.AddEstimateUseCases
 import com.thezayin.kainaclean.util.Response
@@ -14,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddEstimateViewModel @Inject constructor(
     private val useCases: AddEstimateUseCases,
-    private val authUseCases: AuthenticationUseCases
+    private val authUseCases: AuthenticationUseCases,
+    @GoogleAnalytics val analytics: Analytics
 ) : ViewModel() {
     private val _sendEstimate = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val sendEstimate: State<Response<Boolean>> = _sendEstimate

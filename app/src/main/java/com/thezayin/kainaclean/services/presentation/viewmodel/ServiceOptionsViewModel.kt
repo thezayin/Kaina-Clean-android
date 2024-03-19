@@ -8,6 +8,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.qualifiers.GoogleAnalytics
 import com.thezayin.kainaclean.services.domain.model.ServiceOptions
 import com.thezayin.kainaclean.services.domain.usecases.ServiceUseCases
 import com.thezayin.kainaclean.util.Response
@@ -18,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ServiceOptionsViewModel @Inject constructor(
     private val useCase: ServiceUseCases,
+    @GoogleAnalytics val analytics: Analytics
 ) : ViewModel() {
     var getServiceState by mutableStateOf(ServiceState())
         private set

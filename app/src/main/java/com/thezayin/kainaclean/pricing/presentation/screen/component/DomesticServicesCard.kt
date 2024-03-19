@@ -28,6 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.kainaclean.R
 import com.thezayin.kainaclean.pricing.domain.model.DomesticServices
 import com.thezayin.kainaclean.pricing.presentation.viewmodel.PricingViewModel
@@ -36,6 +38,7 @@ import com.thezayin.kainaclean.pricing.presentation.viewmodel.PricingViewModel
 fun DomesticServicesCard(
     options: DomesticServices,
     modifier: Modifier,
+    analytics: Analytics,
     onItemClick: (DomesticServices) -> Unit,
 ) {
     val viewModel: PricingViewModel = hiltViewModel()
@@ -53,6 +56,7 @@ fun DomesticServicesCard(
                 )
                 viewModel.selectedService = options.name!!
                 viewModel.price = options.price!!
+                analytics.logEvent(AnalyticsEvent.ServicePriceSelected(options.name))
             },
         colors = CardDefaults.cardColors(
             containerColor = if (options.isSelected == true) colorResource(id = R.color.btn_primary) else colorResource(

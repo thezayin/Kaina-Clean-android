@@ -73,7 +73,6 @@ fun ForgetPasswordScreen(navigator: DestinationsNavigator) {
         LoadingDialog()
     }
 
-
     Box(
         modifier = Modifier
             .fillMaxSize()

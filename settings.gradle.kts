@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kaina Clean"
 include(":app")
+include(":core")
+include(":analytics")

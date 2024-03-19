@@ -25,6 +25,7 @@ fun ServicesScreen(
     navigator: DestinationsNavigator
 ) {
     val serviceViewModel: ServiceOptionsViewModel = hiltViewModel()
+    val analytics = serviceViewModel.analytics
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,10 +41,14 @@ fun ServicesScreen(
             TopBar(
                 modifier = Modifier
                     .padding(horizontal = 20.dp),
-                        title = "Services",
+                title = "Services",
                 callBack = { navigator.navigateUp() }
             )
-            ServicesComponent(serviceViewModel = serviceViewModel, modifier = Modifier.padding(top = 30.dp))
+            ServicesComponent(
+                serviceViewModel = serviceViewModel,
+                analytics = analytics,
+                modifier = Modifier.padding(top = 30.dp)
+            )
             ServiceDetailsCard(viewModel = serviceViewModel)
         }
     }

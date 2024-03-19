@@ -78,8 +78,8 @@ fun ChatBotScreen(
             contentPadding = PaddingValues(),
             state = listState
         ) {
-            items(chatViewModel._messageState.size) { message ->
-                ChatMessageBody(message = chatViewModel._messageState[message])
+            items(chatViewModel._Bot_messageState.size) { message ->
+                ChatMessageBody(botMessage = chatViewModel._Bot_messageState[message])
             }
         }
     }

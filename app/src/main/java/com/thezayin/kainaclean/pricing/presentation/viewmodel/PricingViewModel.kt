@@ -2,15 +2,12 @@ package com.thezayin.kainaclean.pricing.presentation.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thezayin.kainaclean.pricing.domain.model.CommercialServices
-import com.thezayin.kainaclean.pricing.domain.model.DomesticServices
-import com.thezayin.kainaclean.pricing.domain.model.PropertyType
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.qualifiers.GoogleAnalytics
 import com.thezayin.kainaclean.pricing.domain.usecase.property.PropertyUseCases
 import com.thezayin.kainaclean.pricing.domain.usecase.serices.ServicesUseCases
 import com.thezayin.kainaclean.pricing.presentation.screen.state.model.CommercialState
@@ -23,7 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PricingViewModel @Inject constructor(
-    private val useCase: PropertyUseCases, var servicesUseCases: ServicesUseCases
+    private val useCase: PropertyUseCases,
+    var servicesUseCases: ServicesUseCases,
+    @GoogleAnalytics val analytics: Analytics
 ) : ViewModel() {
     var getPropertyType by mutableStateOf(PropertyState())
         private set
@@ -91,7 +90,6 @@ class PricingViewModel @Inject constructor(
             }
         }
     }
-
 
 
 }

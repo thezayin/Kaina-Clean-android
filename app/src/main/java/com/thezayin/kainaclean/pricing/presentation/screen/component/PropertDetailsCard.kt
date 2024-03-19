@@ -21,6 +21,7 @@ import com.thezayin.kainaclean.pricing.presentation.viewmodel.PricingViewModel
 fun PricingDetailsCard(
     viewModel: PricingViewModel, modifier: Modifier
 ) {
+    val analytics = viewModel.analytics
     val propertyList = remember {
         viewModel.getPropertyType.list
     }
@@ -66,6 +67,7 @@ fun PricingDetailsCard(
                 PropertyList(
                     propertyType = item,
                     modifier = Modifier,
+                    analytics = analytics,
                     onItemClick = propertyState::itemSelected
                 )
             }
@@ -77,6 +79,7 @@ fun PricingDetailsCard(
                     DomesticServicesCard(
                         options = item,
                         modifier = Modifier,
+                        analytics = analytics,
                         onItemClick = domesticState::itemSelected
                     )
                 }
@@ -87,6 +90,7 @@ fun PricingDetailsCard(
                     CommercialServicesCard(
                         options = item,
                         modifier = Modifier,
+                        analytics = analytics,
                         onItemClick = commercialState::itemSelected
                     )
                 }

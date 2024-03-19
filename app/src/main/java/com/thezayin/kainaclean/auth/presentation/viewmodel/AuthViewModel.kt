@@ -4,6 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thezayin.analytics.dependencies.Analytics
+import com.thezayin.analytics.qualifiers.GoogleAnalytics
 import com.thezayin.kainaclean.auth.domain.usecases.AuthenticationUseCases
 import com.thezayin.kainaclean.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,9 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val auth: AuthenticationUseCases
+    private val auth: AuthenticationUseCases,
+    @GoogleAnalytics val analytics: Analytics
 ) : ViewModel() {
-
     val isUserAuthenticated get() = auth.isUserAuthenticated()
 
     private val _signInState = mutableStateOf<Response<Boolean>>(Response.Success(false))
@@ -62,7 +64,7 @@ class AuthViewModel @Inject constructor(
                     }
 
                     is Response.Loading -> {
-                      _signOutState.value = false
+                        _signOutState.value = false
                     }
                 }
             }
