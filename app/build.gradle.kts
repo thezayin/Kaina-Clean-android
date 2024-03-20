@@ -114,8 +114,8 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.10.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.10.0")
 
     //Coil
     implementation("io.coil-kt:coil-compose:2.6.0")
@@ -148,10 +148,10 @@ dependencies {
     //Moshi
     implementation ("com.squareup.moshi:moshi:1.15.1")
     // Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.10.0")
     // Retrofit with Moshi Converter
     implementation ("com.squareup.moshi:moshi-kotlin:1.15.1")
-    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.10.0")
 
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
