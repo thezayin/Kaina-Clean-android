@@ -42,11 +42,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-measurement-api:21.5.1")
     kapt("com.google.dagger:hilt-compiler:2.51")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.10.0")
 
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.10.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -55,6 +55,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
 
-    implementation ("com.amplitude:android-sdk:2.36.1")
-    implementation ("com.appsflyer:af-android-sdk:6.3.2")
+    implementation ("com.amplitude:android-sdk:3.35.1")
+    implementation ("com.appsflyer:af-android-sdk:6.13.0")
 }
